@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>স্বপ্নপূরণ - Result</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;--p2:#8b5cf6;--teal:#0ea5e9;
+  --green:#10b981;--rose:#f43f5e;--amber:#f59e0b;
+  --bg:#f0f4ff;--card:#ffffff;
+  --text:#1e1b4b;--text2:#4c4b73;--text3:#7c7a9e;
+  --border:#ddd8ff;
+  --shadow:0 4px 20px rgba(108,59,255,.10);
+  --shadow2:0 8px 32px rgba(108,59,255,.18);
+}
+
+html{font-size:16px}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  padding-bottom:40px;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 40% at 0% 0%,rgba(108,59,255,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%,rgba(14,165,233,.07) 0%,transparent 60%);
+}
+
+/* ── Header ── */
+header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.93);
+  backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  padding:0 16px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 16px rgba(108,59,255,.08);
+}
+.hdr-back{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--bg);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text2);font-size:.9rem;
+  transition:all .22s;flex-shrink:0;
+}
+.hdr-back:hover{border-color:var(--p1);color:var(--p1)}
+.hdr-title{
+  font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;
+  color:var(--text);text-align:center;flex:1;padding:0 10px;
+}
+
+/* ── Wrap ── */
+.wrap{padding:16px;max-width:640px;margin:0 auto;position:relative;z-index:10}
+
+/* ── Score hero card ── */
+.hero-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:24px;
+  padding:28px 20px 22px;
+  text-align:center;
+  box-shadow:var(--shadow2);
+  margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.hero-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--p1),var(--teal),var(--green));
+}
+
+/* Confetti dots decoration */
+.hero-card::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle 2px at 15% 20%,rgba(108,59,255,.3) 0%,transparent 100%),
+    radial-gradient(circle 2px at 85% 15%,rgba(14,165,233,.3) 0%,transparent 100%),
+    radial-gradient(circle 2px at 75% 80%,rgba(16,185,129,.25) 0%,transparent 100%),
+    radial-gradient(circle 2px at 20% 75%,rgba(245,158,11,.25) 0%,transparent 100%);
+}
+
+.rank-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Sora',sans-serif;font-size:.72rem;font-weight:700;
+  padding:5px 14px;border-radius:20px;margin-bottom:18px;
+  letter-spacing:.03em;
+}
+.rank-badge.gold{background:rgba(245,158,11,.12);border:1.5px solid rgba(245,158,11,.4);color:#b45309}
+.rank-badge.silver{background:rgba(148,163,184,.12);border:1.5px solid rgba(148,163,184,.4);color:#475569}
+.rank-badge.bronze{background:rgba(180,83,9,.1);border:1.5px solid rgba(180,83,9,.3);color:#9a3412}
+.rank-badge.blue{background:rgba(108,59,255,.1);border:1.5px solid rgba(108,59,255,.3);color:var(--p1)}
+
+/* Circle score */
+.score-ring{
+  width:130px;height:130px;
+  border-radius:50%;
+  margin:0 auto 18px;
+  position:relative;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+}
+.score-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.score-ring-bg{fill:none;stroke:rgba(108,59,255,.1);stroke-width:8}
+.score-ring-fill{
+  fill:none;stroke-width:8;stroke-linecap:round;
+  stroke:url(#scoreGrad);
+  stroke-dasharray:345;stroke-dashoffset:345;
+  transition:stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1);
+}
+.score-num{
+  font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--p1),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.score-lbl{font-size:.68rem;color:var(--text3);font-weight:600;margin-top:2px}
+
+.pts-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.35);
+  color:#b45309;font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;
+  padding:7px 18px;border-radius:20px;margin-bottom:18px;
+}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.stat-box{
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:16px;padding:14px 8px;text-align:center;
+}
+.stat-val{
+  font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;
+  display:block;line-height:1.1;
+}
+.stat-lbl{font-size:.65rem;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:4px;display:block}
+
+/* Accuracy bar */
+.acc-wrap{margin-bottom:16px}
+.acc-label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--text3);margin-bottom:6px}
+.acc-label span:last-child{font-weight:700;color:var(--text)}
+.acc-rail{height:8px;background:rgba(108,59,255,.1);border-radius:10px;overflow:hidden}
+.acc-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--p1),var(--teal));transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+/* Action buttons */
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-home{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px;border:none;border-radius:14px;
+  font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;
+  cursor:pointer;transition:all .25s;
+}
+.btn-home.primary{
+  background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;
+  box-shadow:0 4px 16px rgba(108,59,255,.35);
+}
+.btn-home.primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,59,255,.45)}
+.btn-home.ghost{
+  background:var(--bg);border:2px solid var(--border);color:var(--text2);
+}
+.btn-home.ghost:hover{border-color:var(--p1);color:var(--p1)}
+
+/* ── Filter tabs ── */
+.filter-tabs{
+  display:flex;gap:8px;margin-bottom:16px;
+  background:var(--card);border:2px solid var(--border);
+  border-radius:16px;padding:6px;
+  box-shadow:var(--shadow);
+}
+.tab{
+  flex:1;padding:9px 6px;border:none;border-radius:10px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.78rem;font-weight:600;
+  cursor:pointer;transition:all .22s;background:transparent;color:var(--text3);
+}
+.tab.on{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;box-shadow:0 2px 10px rgba(108,59,255,.3)}
+.tab.correct-tab.on{background:linear-gradient(135deg,var(--green),#059669)}
+.tab.wrong-tab.on{background:linear-gradient(135deg,var(--rose),#e11d48)}
+.tab.skip-tab.on{background:linear-gradient(135deg,var(--amber),#d97706)}
+
+/* ── Section divider ── */
+.sec-div{
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(135deg,rgba(108,59,255,.08),rgba(14,165,233,.05));
+  border:1.5px solid rgba(108,59,255,.18);
+  border-radius:14px;padding:11px 16px;margin:20px 0 12px;
+}
+.sec-div-left{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Sora',sans-serif;font-size:.84rem;font-weight:700;color:var(--p1);
+}
+.sec-div-left .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--p1),var(--teal))}
+
+/* ── Question review card ── */
+.q-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:18px;
+  padding:18px 16px 14px;
+  margin-bottom:12px;
+  box-shadow:0 2px 10px rgba(108,59,255,.06);
+  border-left:4px solid var(--border);
+  transition:all .25s;
+}
+.q-card.correct{border-left-color:var(--green)}
+.q-card.wrong{border-left-color:var(--rose)}
+.q-card.skipped{border-left-color:var(--amber)}
+
+.q-card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.q-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;flex-shrink:0;border-radius:8px;
+  font-family:'Sora',sans-serif;font-size:.7rem;font-weight:700;color:#fff;
+}
+.correct .q-num{background:linear-gradient(135deg,var(--green),#059669)}
+.wrong .q-num{background:linear-gradient(135deg,var(--rose),#e11d48)}
+.skipped .q-num{background:linear-gradient(135deg,var(--amber),#d97706)}
+.q-txt{font-size:.9rem;font-weight:500;color:var(--text);line-height:1.6}
+
+/* Options */
+.opt{
+  display:flex;align-items:flex-start;gap:10px;
+  border:1.5px solid var(--border);
+  border-radius:12px;padding:10px 12px;
+  margin-bottom:7px;background:#f8f7ff;
+  font-size:.83rem;color:var(--text2);line-height:1.4;
+}
+.opt.is-correct{background:rgba(16,185,129,.08);border-color:var(--green);color:#065f46}
+.opt.is-wrong{background:rgba(244,63,94,.07);border-color:var(--rose);color:#9f1239}
+.opt-ltr{
+  width:24px;height:24px;flex-shrink:0;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:.68rem;font-weight:700;
+  background:#fff;border:1.5px solid var(--border);color:var(--text3);
+}
+.opt.is-correct .opt-ltr{background:var(--green);border-color:var(--green);color:#fff}
+.opt.is-wrong .opt-ltr{background:var(--rose);border-color:var(--rose);color:#fff}
+.opt-tags{display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.tag{
+  font-size:.62rem;padding:3px 8px;border-radius:10px;
+  font-weight:700;white-space:nowrap;
+}
+.tag-c{background:rgba(16,185,129,.15);color:#065f46}
+.tag-u{background:rgba(108,59,255,.12);color:var(--p1)}
+.tag-w{background:rgba(244,63,94,.12);color:var(--rose)}
+.tag-s{background:rgba(245,158,11,.12);color:#b45309}
+
+/* Status pill on card */
+.status-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:10px;
+  margin-bottom:8px;
+}
+.status-pill.c{background:rgba(16,185,129,.1);color:#065f46}
+.status-pill.w{background:rgba(244,63,94,.1);color:var(--rose)}
+.status-pill.s{background:rgba(245,158,11,.1);color:#b45309}
+
+/* Explanation */
+.exp-box{
+  margin-top:14px;padding:14px 14px;
+  background:linear-gradient(135deg,rgba(108,59,255,.06),rgba(14,165,233,.04));
+  border:1.5px solid rgba(108,59,255,.18);
+  border-radius:14px;
+  font-size:.82rem;color:var(--text2);line-height:1.7;
+}
+.exp-box strong{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Sora',sans-serif;font-size:.78rem;color:var(--p1);
+  margin-bottom:7px;
+}
+
+/* Lock box */
+.lock-box{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:14px;text-align:center;
+}
+.lock-icon{
+  width:40px;height:40px;border-radius:12px;
+  background:rgba(108,59,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--p1);
+}
+.lock-box p{font-size:.78rem;color:var(--text3);filter:blur(3px);line-height:1.5}
+.btn-unlock{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,var(--amber),#d97706);
+  color:#fff;border:none;border-radius:10px;
+  padding:9px 18px;font-family:'Sora',sans-serif;
+  font-size:.78rem;font-weight:700;cursor:pointer;
+  box-shadow:0 3px 12px rgba(245,158,11,.35);
+  transition:all .22s;
+}
+.btn-unlock:hover{transform:translateY(-1px)}
+
+/* Empty filter */
+.empty-filter{
+  text-align:center;padding:40px 20px;
+  background:var(--card);border:2px solid var(--border);
+  border-radius:18px;
+}
+.empty-filter i{font-size:2rem;color:var(--text3);margin-bottom:10px;display:block}
+.empty-filter p{color:var(--text3);font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-back" onclick="goBack()"><i class="fas fa-arrow-left"></i></div>
+  <div class="hdr-title">📊 Exam Result</div>
+  <div style="width:40px"></div>
+</header>
+
+<div class="wrap">
+
+  <!-- Hero score card -->
+  <div class="hero-card">
+    <div class="rank-badge blue" id="rankBadge">🏅 Result</div>
+
+    <div class="score-ring">
+      <svg viewBox="0 0 120 120" width="130" height="130">
+        <defs>
+          <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#6c3bff"/>
+            <stop offset="100%" stop-color="#0ea5e9"/>
+          </linearGradient>
+        </defs>
+        <circle class="score-ring-bg" cx="60" cy="60" r="54"/>
+        <circle class="score-ring-fill" id="scoreRing" cx="60" cy="60" r="54"/>
+      </svg>
+      <div class="score-num" id="scoreNum">0.0</div>
+      <div class="score-lbl">Score %</div>
+    </div>
+
+    <div class="pts-pill"><i class="fas fa-star"></i> <span id="ptsText">+0 Points</span></div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="stat-val" id="cVal" style="color:var(--green)">0</span>
+        <span class="stat-lbl">✅ Correct</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val" id="wVal" style="color:var(--rose)">0</span>
+        <span class="stat-lbl">❌ Wrong</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val" id="sVal" style="color:var(--amber)">0</span>
+        <span class="stat-lbl">⏭️ Skipped</span>
+      </div>
+    </div>
+
+    <div class="acc-wrap">
+      <div class="acc-label">
+        <span>Accuracy</span>
+        <span id="accPct">0%</span>
+      </div>
+      <div class="acc-rail"><div class="acc-fill" id="accFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-home ghost" onclick="location.href='home.html'">
+        <i class="fas fa-home"></i> Home
+      </button>
+      <button class="btn-home primary" onclick="scrollToReview()">
+        <i class="fas fa-book-open"></i> Review
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="filter-tabs" id="reviewAnchor">
+    <button class="tab on" onclick="filterQ('all',this)">All</button>
+    <button class="tab correct-tab" onclick="filterQ('correct',this)">✅ Correct</button>
+    <button class="tab wrong-tab" onclick="filterQ('wrong',this)">❌ Wrong</button>
+    <button class="tab skip-tab" onclick="filterQ('skipped',this)">⏭️ Skipped</button>
+  </div>
+
+  <div id="reviewList"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",
+  authDomain:"sbopnporn.firebaseapp.com",
+  projectId:"sbopnporn",
+  storageBucket:"sbopnporn.firebasestorage.app",
+  messagingSenderId:"217423916538",
+  appId:"1:217423916538:web:9f8dc21358c2ad03cec843"
+});
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+const p = new URLSearchParams(location.search);
+const C = parseInt(p.get('c')||0);
+const W = parseInt(p.get('w')||0);
+const S = parseInt(p.get('s')||0);
+const T = parseFloat(p.get('t')||0);
+const P = parseFloat(p.get('p')||0);
+const total = C + W + S;
+
+/* ── Fill hero card ── */
+document.getElementById('cVal').textContent = C;
+document.getElementById('wVal').textContent = W;
+document.getElementById('sVal').textContent = S;
+document.getElementById('scoreNum').textContent = T;
+document.getElementById('ptsText').textContent  = `+${P} Points Earned`;
+
+const acc = total > 0 ? Math.round((C/total)*100) : 0;
+document.getElementById('accPct').textContent = `${acc}%`;
+
+/* Rank badge */
+const rb = document.getElementById('rankBadge');
+if      (T >= 80){ rb.textContent='🥇 Excellent'; rb.className='rank-badge gold'; }
+else if (T >= 60){ rb.textContent='🥈 Good'; rb.className='rank-badge silver'; }
+else if (T >= 40){ rb.textContent='🥉 Average'; rb.className='rank-badge bronze'; }
+else             { rb.textContent='📘 Keep Trying'; rb.className='rank-badge blue'; }
+
+/* Animate ring */
+setTimeout(()=>{
+  const circumference = 345;
+  const offset = circumference - (T / 100) * circumference;
+  document.getElementById('scoreRing').style.strokeDashoffset = offset;
+  document.getElementById('accFill').style.width = `${acc}%`;
+}, 200);
+
+/* ── Review data ── */
+let allData = [];
+let isPremium = false;
+let curFilter = 'all';
+
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    try {
+      const snap = await getDoc(doc(db,'users',user.uid));
+      if (snap.exists()) {
+        const d = snap.data();
+        isPremium = d.isPremium || false;
+        if (isPremium && d.premiumExpiry && new Date() > new Date(d.premiumExpiry)) {
+          await updateDoc(doc(db,'users',user.uid),{isPremium:false});
+          isPremium = false;
+        }
+      }
+    } catch(e){ console.error(e); }
+  }
+  loadReview();
+});
+
+function loadReview() {
+  const raw = sessionStorage.getItem('lastExamReview');
+  if (!raw) {
+    document.getElementById('reviewList').innerHTML =
+      `<div class="empty-filter"><i class="fas fa-database"></i><p>কোনো ডাটা পাওয়া যায়নি।</p></div>`;
+    return;
+  }
+  allData = JSON.parse(raw);
+  renderReview();
+}
+
+function renderReview() {
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+
+  const filtered = curFilter === 'all'
+    ? allData
+    : allData.filter(q => q.status === curFilter);
+
+  if (filtered.length === 0) {
+    list.innerHTML =
+      `<div class="empty-filter"><i class="fas fa-check-double"></i><p>এই ক্যাটেগরিতে কোনো প্রশ্ন নেই।</p></div>`;
+    return;
+  }
+
+  /* Group by subject */
+  const subjects = [...new Set(filtered.map(q => q.subject || 'General'))];
+
+  subjects.forEach(sub => {
+    const subQs = filtered.filter(q => (q.subject||'General') === sub);
+
+    /* Subject divider — only show if more than 1 subject */
+    if (subjects.length > 1) {
+      const div = document.createElement('div');
+      div.className = 'sec-div';
+      div.innerHTML = `
+        <div class="sec-div-left"><div class="dot"></div><span>${sub}</span></div>
+        <div style="font-size:.72rem;color:var(--text3);font-weight:600;
+             background:rgba(255,255,255,.7);padding:3px 10px;border-radius:10px">
+          ${subQs.length} Qs
+        </div>`;
+      list.appendChild(div);
+    }
+
+    subQs.forEach(item => {
+      const globalIdx = allData.indexOf(item) + 1;
+      const labels = ['a','b','c','d'];
+      // correctIndex can be 0,1,2,3 (number) or 'a','b','c','d' (letter)
+      let correctLetter;
+      const ci = item.correctIndex;
+      if (ci !== null && ci !== undefined && ci !== '' && !isNaN(parseInt(ci))) {
+        correctLetter = labels[parseInt(ci)] || 'a';
+      } else if (typeof ci === 'string' && ['a','b','c','d'].includes(ci)) {
+        correctLetter = ci;
+      } else {
+        correctLetter = 'a';
+      }
+      const ua = item.userAnswer || null;
+
+      /* Status */
+      const statusMap = {
+        correct: {cls:'c', icon:'✅', label:'Correct'},
+        wrong:   {cls:'w', icon:'❌', label:'Wrong'},
+        skipped: {cls:'s', icon:'⏭️', label:'Skipped'},
+      };
+      const st = statusMap[item.status] || statusMap.skipped;
+
+      /* Options HTML */
+      const optsHTML = labels.map((lbl,i) => {
+        if (!item.options[i]) return '';
+        const isCorrect = lbl === correctLetter;
+        const isUser    = lbl === ua;
+        const isWrong   = isUser && !isCorrect;
+
+        let cls = isCorrect ? 'is-correct' : isWrong ? 'is-wrong' : '';
+        let tags = '';
+        if (isCorrect) tags += `<span class="tag tag-c">✓ Correct</span>`;
+        if (isUser && isCorrect) tags += `<span class="tag tag-u">Your Answer</span>`;
+        if (isWrong) tags += `<span class="tag tag-w">Your Answer</span>`;
+
+        return `<div class="opt ${cls}">
+          <div class="opt-ltr">${lbl.toUpperCase()}</div>
+          <div style="flex:1">${item.options[i]}</div>
+          <div class="opt-tags">${tags}</div>
+        </div>`;
+      }).join('');
+
+      /* Explanation */
+      const expText = (item.exp && item.exp.trim()) || (item.explanation && item.explanation.trim()) || '';
+      let expHTML;
+      if (isPremium) {
+        expHTML = `<div class="exp-box">
+          <strong><i class="fas fa-lightbulb"></i> Explanation</strong>
+          ${expText || '<span style="color:var(--text3)">No explanation available.</span>'}
+        </div>`;
+      } else {
+        expHTML = `<div class="exp-box">
+          <strong><i class="fas fa-lock"></i> Explanation</strong>
+          <div class="lock-box">
+            <div class="lock-icon"><i class="fas fa-crown"></i></div>
+            <p>বিস্তারিত ব্যাখ্যা শুধুমাত্র প্রিমিয়াম মেম্বারদের জন্য।<br>বিস্তারিত জানতে আনলক করুন।</p>
+            <button class="btn-unlock" onclick="location.href='subscription.html'">
+              <i class="fas fa-crown"></i> Unlock Premium
+            </button>
+          </div>
+        </div>`;
+      }
+
+      const card = document.createElement('div');
+      card.className = `q-card ${item.status}`;
+      card.innerHTML = `
+        <div class="q-card-head">
+          <div class="q-num">${globalIdx}</div>
+          <div>
+            <div class="status-pill ${st.cls}">${st.icon} ${st.label}</div>
+            <div class="q-txt">${item.q}</div>
+          </div>
+        </div>
+        ${optsHTML}
+        ${expHTML}`;
+      list.appendChild(card);
+    });
+  });
+}
+
+/* Filter tabs */
+window.filterQ = (type, el) => {
+  curFilter = type;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  renderReview();
+};
+
+window.scrollToReview = () => {
+  document.getElementById('reviewAnchor').scrollIntoView({behavior:'smooth', block:'start'});
+};
+
+window.goBack = () => {
+  if (window.history.length > 1) window.history.back();
+  else location.href = 'home.html';
+};
+</script>
+</body>
+</html>

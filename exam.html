@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>স্বপ্নপূরণ - Live Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;
+  --p2:#8b5cf6;
+  --teal:#0ea5e9;
+  --green:#10b981;
+  --rose:#f43f5e;
+  --amber:#f59e0b;
+  --bg:#f0f4ff;
+  --card:#ffffff;
+  --text:#1e1b4b;
+  --text2:#4c4b73;
+  --text3:#7c7a9e;
+  --border:#ddd8ff;
+  --shadow:0 4px 20px rgba(108,59,255,.10);
+  --shadow2:0 8px 32px rgba(108,59,255,.18);
+}
+
+html{font-size:16px}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 40% at 0% 0%,rgba(108,59,255,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%,rgba(14,165,233,.06) 0%,transparent 60%);
+}
+
+/* ── Progress bar ── */
+.prog-rail{
+  position:fixed;top:0;left:0;right:0;height:3px;
+  background:rgba(108,59,255,.15);z-index:500;
+}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--p1),var(--teal));
+  width:0%;transition:width .4s ease;
+  box-shadow:0 0 8px rgba(108,59,255,.5);
+}
+
+/* ── Header ── */
+header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.93);
+  backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  padding:0 16px;
+  height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 16px rgba(108,59,255,.08);
+}
+
+.hdr-back{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--bg);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text2);font-size:.9rem;
+  transition:all .22s;flex-shrink:0;
+}
+.hdr-back:hover{border-color:var(--p1);color:var(--p1)}
+
+.hdr-title{
+  font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;
+  color:var(--text);text-align:center;flex:1;padding:0 10px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+.timer-pill{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(245,158,11,.1);
+  border:1.5px solid rgba(245,158,11,.4);
+  color:#b45309;
+  font-family:'Sora',sans-serif;font-weight:700;font-size:.88rem;
+  padding:6px 12px;border-radius:30px;
+  flex-shrink:0;transition:all .3s;
+}
+.timer-pill.danger{
+  background:rgba(244,63,94,.1);
+  border-color:rgba(244,63,94,.5);
+  color:var(--rose);
+  animation:tpulse 1s infinite;
+}
+@keyframes tpulse{50%{opacity:.65}}
+
+/* ── Exam info card ── */
+.wrap{padding:16px;max-width:640px;margin:0 auto;position:relative;z-index:10}
+
+.info-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:20px;
+  padding:18px 16px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.info-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--p1),var(--teal));
+}
+.info-card h2{
+  font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;
+  color:var(--text);margin-bottom:12px;line-height:1.3;text-align:center;
+}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.badge{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(108,59,255,.07);
+  border:1.5px solid rgba(108,59,255,.18);
+  color:var(--p1);font-size:.74rem;font-weight:600;
+  padding:5px 12px;border-radius:20px;
+}
+.badge i{font-size:.7rem}
+
+/* ── Section divider ── */
+.sec-div{
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(135deg,rgba(108,59,255,.08),rgba(14,165,233,.05));
+  border:1.5px solid rgba(108,59,255,.18);
+  border-radius:14px;
+  padding:11px 16px;
+  margin:22px 0 12px;
+}
+.sec-div-left{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Sora',sans-serif;font-size:.84rem;font-weight:700;color:var(--p1);
+}
+.sec-div-left .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--p1),var(--teal));
+}
+.sec-div-right{
+  font-size:.72rem;color:var(--text3);font-weight:600;
+  background:rgba(255,255,255,.7);
+  padding:3px 10px;border-radius:10px;
+}
+
+/* ── Question card ── */
+.q-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:18px;
+  padding:18px 16px 14px;
+  margin-bottom:12px;
+  box-shadow:0 2px 10px rgba(108,59,255,.06);
+  transition:border-color .25s;
+}
+.q-card.answered{border-color:rgba(108,59,255,.3)}
+
+.q-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  color:#fff;font-family:'Sora',sans-serif;font-size:.7rem;font-weight:700;
+  margin-right:8px;flex-shrink:0;vertical-align:middle;
+  box-shadow:0 2px 8px rgba(108,59,255,.3);
+}
+.q-text{
+  font-size:.95rem;font-weight:500;
+  color:var(--text);line-height:1.6;
+  margin-bottom:14px;
+}
+
+/* ── Options ── */
+.opt{
+  display:flex;align-items:center;gap:10px;
+  background:#f8f7ff;
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:11px 13px;
+  margin-bottom:8px;
+  cursor:pointer;
+  transition:all .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.opt:active{transform:scale(.98)}
+.opt:hover{background:rgba(108,59,255,.06);border-color:rgba(108,59,255,.3)}
+.opt.selected{
+  background:rgba(108,59,255,.09);
+  border-color:var(--p1);
+}
+.opt-letter{
+  width:30px;height:30px;border-radius:8px;
+  background:#fff;border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:.75rem;font-weight:700;
+  color:var(--text3);flex-shrink:0;transition:all .2s;
+}
+.opt.selected .opt-letter{
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  border-color:var(--p1);color:#fff;
+  box-shadow:0 2px 8px rgba(108,59,255,.35);
+}
+.opt-text{font-size:.88rem;color:var(--text);line-height:1.4}
+.opt.selected .opt-text{color:var(--p1);font-weight:600}
+
+/* ── Submit button ── */
+.btn-submit{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--green),#059669);
+  color:#fff;border:none;border-radius:16px;
+  font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;
+  cursor:pointer;margin-top:22px;
+  box-shadow:0 6px 20px rgba(16,185,129,.35);
+  transition:all .25s;
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(16,185,129,.45)}
+.btn-submit:active{transform:translateY(0)}
+
+/* ── Loading state ── */
+.loading-state{
+  text-align:center;padding:60px 20px;
+}
+.spinner{
+  width:44px;height:44px;border-radius:50%;
+  border:3px solid var(--border);
+  border-top-color:var(--p1);
+  animation:spin .8s linear infinite;
+  margin:0 auto 16px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-state p{color:var(--text3);font-size:.9rem}
+
+/* ── Empty state ── */
+.empty-state{text-align:center;padding:60px 20px}
+.empty-icon{
+  width:64px;height:64px;border-radius:18px;
+  background:linear-gradient(135deg,rgba(108,59,255,.1),rgba(14,165,233,.08));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;margin:0 auto 16px;
+}
+.empty-state h3{font-family:'Sora',sans-serif;font-size:1rem;color:var(--text);margin-bottom:8px}
+.empty-state p{color:var(--text3);font-size:.85rem;margin-bottom:20px}
+.btn-back-empty{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  color:#fff;border:none;border-radius:12px;
+  padding:12px 24px;font-family:'Sora',sans-serif;font-size:.88rem;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 14px rgba(108,59,255,.35);
+}
+
+/* ── Modal ── */
+.modal-bg{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(30,27,75,.55);
+  backdrop-filter:blur(6px);
+  justify-content:center;align-items:center;
+}
+.modal-bg.on{display:flex}
+
+.modal-box{
+  background:#fff;
+  border-radius:28px;
+  padding:28px 24px;
+  width:88%;max-width:320px;
+  text-align:center;
+  animation:mpop .3s cubic-bezier(.34,1.56,.64,1) both;
+  border:2px solid var(--border);
+  box-shadow:0 24px 60px rgba(108,59,255,.2);
+}
+@keyframes mpop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+.modal-icon{
+  width:56px;height:56px;border-radius:16px;
+  background:rgba(245,158,11,.1);border:2px solid rgba(245,158,11,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin:0 auto 14px;
+}
+.modal-box h4{
+  font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:800;
+  color:var(--text);margin-bottom:8px;
+}
+.modal-box p{color:var(--text3);font-size:.83rem;line-height:1.5;margin-bottom:20px}
+
+.modal-btns{display:flex;gap:10px}
+.modal-btns button{
+  flex:1;padding:13px;border:none;border-radius:14px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.88rem;font-weight:700;
+  cursor:pointer;transition:all .22s;
+}
+.mbtn-cancel{
+  background:rgba(108,59,255,.08);
+  border:1.5px solid rgba(108,59,255,.2)!important;
+  color:var(--p1);
+}
+.mbtn-cancel:hover{background:rgba(108,59,255,.15)}
+.mbtn-confirm{
+  background:linear-gradient(135deg,var(--rose),#e11d48);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(244,63,94,.35);
+}
+.mbtn-confirm:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(244,63,94,.45)}
+
+/* ── Answer counter pill (floating) ── */
+.ans-counter{
+  position:fixed;bottom:24px;right:16px;z-index:100;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  color:#fff;
+  border-radius:20px;
+  padding:10px 16px;
+  display:flex;align-items:center;gap:8px;
+  font-family:'Sora',sans-serif;font-size:.8rem;font-weight:700;
+  box-shadow:0 6px 20px rgba(108,59,255,.4);
+  transition:all .3s;
+  pointer-events:none;
+}
+.ans-counter span{font-size:1rem}
+
+@media(max-width:400px){
+  .wrap{padding:12px}
+  .q-text{font-size:.88rem}
+  .opt-text{font-size:.83rem}
+}
+</style>
+</head>
+<body>
+
+<div class="prog-rail"><div class="prog-fill" id="progFill"></div></div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <h4>Exit Exam?</h4>
+    <p>পরীক্ষা বাতিল হয়ে যাবে।<br>আপনার উত্তর সংরক্ষণ হবে না।</p>
+    <div class="modal-btns">
+      <button class="mbtn-cancel" onclick="closeModal()">থাকুন</button>
+      <button class="mbtn-confirm" onclick="confirmBack()">বের হন</button>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="hdr-back" id="backBtn"><i class="fas fa-arrow-left"></i></div>
+  <div class="hdr-title" id="hdrTitle">Live Exam</div>
+  <div class="timer-pill" id="timer"><i class="fas fa-clock"></i> 00:00</div>
+</header>
+
+<!-- Content -->
+<div class="wrap">
+  <div class="info-card">
+    <h2 id="uniName">লোড হচ্ছে...</h2>
+    <div class="badges">
+      <div class="badge"><i class="fas fa-clock"></i> <span id="timeDisplay">0 মিনিট</span></div>
+      <div class="badge"><i class="fas fa-list-ol"></i> <span id="qCount">0টি প্রশ্ন</span></div>
+      <div class="badge"><i class="fas fa-check-circle"></i> <span id="markDisplay">+1 | -0.25</span></div>
+    </div>
+  </div>
+
+  <div id="examArea">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>প্রশ্নপত্র তৈরি হচ্ছে...</p>
+    </div>
+  </div>
+
+  <button class="btn-submit" id="submitBtn" onclick="finishExam()" style="display:none">
+    <i class="fas fa-paper-plane"></i> পরীক্ষা জমা দিন
+  </button>
+  <div style="height:80px"></div>
+</div>
+
+<!-- Floating answer counter -->
+<div class="ans-counter" id="ansCounter" style="display:none">
+  <i class="fas fa-check"></i>
+  <span id="ansCount">0</span>/<span id="totalCount">0</span>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, doc, updateDoc, increment, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",
+  authDomain:"sbopnporn.firebaseapp.com",
+  projectId:"sbopnporn",
+  storageBucket:"sbopnporn.firebasestorage.app",
+  messagingSenderId:"217423916538",
+  appId:"1:217423916538:web:9f8dc21358c2ad03cec843"
+});
+const db  = getFirestore(app);
+const auth = getAuth(app);
+
+const params   = new URLSearchParams(location.search);
+const category = params.get('cat');
+const unit     = params.get('unit');
+const session  = params.get('val');
+
+let questions = [], userAnswers = {}, timerId;
+let examStarted = false;
+
+const MARKING = {
+  BCS:     {correct:1, negative:.5,   time:120},
+  default: {correct:1, negative:.25,  time:60}
+};
+const mark = MARKING[category] || MARKING.default;
+
+const UNI_NAMES = {
+  DU:'Dhaka University', RU:'Rajshahi University', CU:'Chittagong University',
+  JU:'Jahangirnagar University', BCS:'BCS Preliminary', Job:'Bank & Govt Job',
+  JNU:'Jagannath University', KU:'Khulna University', COU:'Comilla University',
+  HSTU:'HSTU', GST:'GST', SUST:'SUST', NSTU:'NSTU', PSTU:'PSTU', JUST:'JUST',
+  BUET:'BUET', RUET:'RUET', KUET:'KUET', CUET:'CUET', DUET:'DUET',
+  BAU:'Bangladesh Agricultural University', SAU:'Sylhet Agricultural University',
+  SAU_SB:'Sher-e-Bangla Agricultural University',
+  BUP:'BUP', BUTEX:'BUTEX'
+};
+
+function setHeader() {
+  let name = UNI_NAMES[category] || category;
+  if (unit && unit !== 'null')    name += ` · ${unit}`;
+  if (session && session !== 'null') name += ` · ${session}`;
+  document.getElementById('uniName').textContent    = name;
+  document.getElementById('hdrTitle').textContent   = category === 'BCS' ? 'BCS Prelim' : 'Admission Exam';
+  document.getElementById('timeDisplay').textContent = `${mark.time} min`;
+  document.getElementById('markDisplay').textContent = `+${mark.correct} | -${mark.negative}`;
+}
+
+onAuthStateChanged(auth, async user => {
+  if (!user) { location.href = 'index.html'; return; }
+  setHeader();
+  await loadQuestions();
+});
+
+async function loadQuestions() {
+  try {
+    const ref = collection(db, 'questions');
+    let q;
+    if      (category === 'BCS') q = query(ref, where('category','==',category), where('val','==',session));
+    else if (category === 'Job') q = query(ref, where('category','==',category), where('unit','==','General'), where('val','==',session));
+    else                          q = query(ref, where('category','==',category), where('unit','==',unit), where('val','==',session));
+
+    const snap = await getDocs(q);
+    if (snap.empty) { showEmpty(); return; }
+
+    questions = snap.docs.map(d => ({id:d.id,...d.data()}));
+    questions.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.sl||999)-(b.sl||999));
+
+    document.getElementById('qCount').textContent    = `${questions.length} প্রশ্ন`;
+    document.getElementById('totalCount').textContent = questions.length;
+    document.getElementById('ansCounter').style.display = 'flex';
+    renderQuestions();
+    startTimer(mark.time * 60);
+    document.getElementById('submitBtn').style.display = 'flex';
+  } catch(e) { console.error(e); }
+}
+
+function showEmpty() {
+  document.getElementById('examArea').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>কোনো প্রশ্ন পাওয়া যায়নি</h3>
+      <p>এই পরীক্ষার প্রশ্ন এখনো যোগ করা হয়নি।</p>
+      <button class="btn-back-empty" onclick="window.location.href='home.html'">
+        <i class="fas fa-arrow-left"></i> ফিরে যান
+      </button>
+    </div>`;
+}
+
+function renderQuestions() {
+  const area = document.getElementById('examArea');
+  area.innerHTML = '';
+  const subjects = [...new Set(questions.map(q => q.subject || 'General'))];
+  let serial = 1;
+
+  subjects.forEach(sub => {
+    const subQs = questions.filter(q => (q.subject || 'General') === sub);
+    const divEl = document.createElement('div');
+    divEl.className = 'sec-div';
+    divEl.innerHTML = `
+      <div class="sec-div-left">
+        <div class="dot"></div>
+        <span>${sub}</span>
+      </div>
+      <div class="sec-div-right">${subQs.length} Questions</div>`;
+    area.appendChild(divEl);
+
+    subQs.forEach(q => {
+      const idx = questions.indexOf(q);
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = `qc-${idx}`;
+      card.innerHTML = `
+        <div class="q-text">
+          <span class="q-num">${serial}</span>${q.q || q.question}
+        </div>
+        <div id="opts-${idx}">
+          ${['a','b','c','d'].map(k => q[k] ? `
+            <div class="opt" onclick="pick(${idx},'${k}',this)">
+              <div class="opt-letter">${k.toUpperCase()}</div>
+              <div class="opt-text">${q[k]}</div>
+            </div>` : '').join('')}
+        </div>`;
+      area.appendChild(card);
+      serial++;
+    });
+  });
+}
+
+window.pick = (idx, key, el) => {
+  examStarted = true;
+  document.querySelectorAll(`#opts-${idx} .opt`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  userAnswers[idx] = key;
+  document.getElementById(`qc-${idx}`).classList.add('answered');
+
+  const answered = Object.keys(userAnswers).length;
+  document.getElementById('ansCount').textContent = answered;
+  document.getElementById('progFill').style.width = `${(answered / questions.length) * 100}%`;
+};
+
+function startTimer(sec) {
+  const el = document.getElementById('timer');
+  timerId = setInterval(() => {
+    sec--;
+    const m = Math.floor(sec/60), s = sec%60;
+    el.innerHTML = `<i class="fas fa-clock"></i> ${m}:${s<10?'0':''}${s}`;
+    if (sec < 60) el.classList.add('danger');
+    if (sec <= 0)  { clearInterval(timerId); finishExam(); }
+  }, 1000);
+}
+
+window.finishExam = async () => {
+  if (!confirm('পরীক্ষা জমা দিতে চান?')) return;
+  clearInterval(timerId);
+
+  // Disable button to prevent double submit
+  const submitBtn = document.getElementById('submitBtn');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> জমা হচ্ছে...'; }
+
+  let correct=0, wrong=0, skipped=0;
+  const review = questions.map((q,i) => {
+    // Support both numeric index and letter-based correct answer
+    let correctLetter;
+    if (q.correct_index !== undefined && q.correct_index !== null && q.correct_index !== '') {
+      correctLetter = String.fromCharCode(97 + parseInt(q.correct_index));
+    } else if (q.correct !== undefined) {
+      correctLetter = String.fromCharCode(97 + parseInt(q.correct));
+    } else {
+      correctLetter = 'a';
+    }
+    const ua = userAnswers[i] || null;
+    const status = ua === correctLetter ? 'correct' : (ua ? 'wrong' : 'skipped');
+    if (status==='correct') correct++;
+    else if (status==='wrong') wrong++;
+    else skipped++;
+    return {
+      q: q.q || q.question || '',
+      options: [q.a||'', q.b||'', q.c||'', q.d||''],
+      correctIndex: q.correct_index ?? q.correct ?? 0,
+      userAnswer: ua,
+      status,
+      exp: q.exp || q.explanation || '',
+      subject: q.subject || 'General'
+    };
+  });
+  sessionStorage.setItem('lastExamReview', JSON.stringify(review));
+
+  const pts   = Math.max(0, parseFloat(((correct*mark.correct)-(wrong*mark.negative)).toFixed(2)));
+  const score = questions.length > 0 ? ((correct/questions.length)*100).toFixed(1) : '0.0';
+  const user  = auth.currentUser;
+
+  try {
+    if (user) {
+      await updateDoc(doc(db,'users',user.uid), {points:increment(pts), examCount:increment(1)});
+      await addDoc(collection(db,'results'), {
+        uid:user.uid, category, unit:unit||'', session:session||'',
+        score:parseFloat(score), points:pts,
+        correct, wrong, skipped,
+        timestamp:serverTimestamp()
+      });
+    }
+  } catch(e) {
+    console.error('Firebase save error:', e);
+    // Still navigate even if save fails
+  }
+  location.href = `result.html?c=${correct}&w=${wrong}&s=${skipped}&p=${pts}&t=${score}`;
+};
+
+/* Modal */
+function showModal() { document.getElementById('modal').classList.add('on'); }
+window.closeModal  = () => document.getElementById('modal').classList.remove('on');
+window.confirmBack = () => {
+  clearInterval(timerId);
+  location.href = 'home.html';
+};
+
+document.getElementById('backBtn').onclick = () => {
+  if (examStarted || Object.keys(userAnswers).length > 0) showModal();
+  else { clearInterval(timerId); location.href = 'home.html'; }
+};
+</script>
+</body>
+</html>

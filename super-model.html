@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সুপার মডেল টেস্ট - স্বপ্নপূরণ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;--p2:#8b5cf6;--p3:#a78bfa;--p4:#ede9fe;
+  --acc:#f59e0b;--acc2:#fbbf24;--acc3:#fef3c7;
+  --teal:#0ea5e9;--green:#10b981;--rose:#f43f5e;
+  --bg:#f0f4ff;--bg2:#e8eeff;--card:#fff;
+  --text:#1e1b4b;--text2:#4c4b73;--text3:#7c7a9e;
+  --border:#ddd8ff;--nav-h:64px;
+  --shadow:0 4px 24px rgba(108,59,255,.10);
+  --shadow2:0 12px 40px rgba(108,59,255,.20);
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  padding-bottom:90px;
+}
+
+/* ── Orbs ── */
+.orb{position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0;animation:orbFloat 8s ease-in-out infinite}
+.orb1{width:320px;height:320px;background:rgba(108,59,255,.09);top:-80px;left:-80px;animation-delay:0s}
+.orb2{width:260px;height:260px;background:rgba(14,165,233,.07);bottom:140px;right:-60px;animation-delay:3s}
+.orb3{width:180px;height:180px;background:rgba(245,158,11,.06);top:45%;left:45%;animation-delay:5s}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-24px) scale(1.05)}}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;height:var(--nav-h);
+  box-shadow:0 2px 16px rgba(108,59,255,.07);
+}
+.hdr-left{display:flex;align-items:center;gap:12px;cursor:pointer;transition:transform .22s}
+.hdr-left:hover{transform:translateX(3px)}
+.avatar-ring{
+  width:40px;height:40px;border-radius:50%;
+  border:2.5px solid var(--p1);overflow:hidden;flex-shrink:0;
+  box-shadow:0 0 0 3px var(--p4);
+}
+.avatar-ring img{width:100%;height:100%;object-fit:cover}
+.hdr-user-name{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:800;color:var(--text)}
+.hdr-online{font-size:.62rem;color:var(--green);display:flex;align-items:center;gap:4px;font-weight:700}
+.hdr-online i{font-size:6px;animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Hamburger */
+.hamburger{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--bg2);border:1.5px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  cursor:pointer;transition:all .25s;
+}
+.hamburger:hover{background:var(--p4);border-color:var(--p3)}
+.hamburger span{width:20px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* ── SIDE DRAWER ── */
+.drawer-overlay{
+  position:fixed;inset:0;background:rgba(30,27,75,.35);
+  backdrop-filter:blur(4px);z-index:300;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.drawer-overlay.show{opacity:1;pointer-events:all}
+.drawer{
+  position:fixed;top:0;right:-310px;width:290px;height:100vh;
+  background:var(--card);z-index:301;
+  border-left:2px solid var(--border);
+  box-shadow:-8px 0 40px rgba(108,59,255,.18);
+  transition:right .38s cubic-bezier(.34,1.2,.64,1);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.drawer.open{right:0}
+.drawer-top{
+  background:linear-gradient(135deg,var(--p1),var(--p2),var(--teal));
+  padding:50px 20px 22px;position:relative;overflow:hidden;
+}
+.drawer-top::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='20' cy='20' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+.drawer-avatar{
+  width:56px;height:56px;border-radius:50%;
+  border:3px solid rgba(255,255,255,.5);overflow:hidden;
+  margin-bottom:10px;position:relative;z-index:1;
+}
+.drawer-avatar img{width:100%;height:100%;object-fit:cover}
+.drawer-name{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:#fff;position:relative;z-index:1}
+.drawer-email{font-size:.7rem;color:rgba(255,255,255,.75);font-weight:600;position:relative;z-index:1;margin-top:2px}
+.drawer-close{
+  position:absolute;top:14px;right:14px;z-index:2;
+  width:30px;height:30px;border-radius:10px;
+  background:rgba(255,255,255,.2);border:none;
+  color:#fff;font-size:.8rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.drawer-close:hover{background:rgba(255,255,255,.3)}
+.drawer-body{flex:1;overflow-y:auto;padding:14px 12px}
+.drawer-body::-webkit-scrollbar{width:4px}
+.drawer-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.drawer-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:14px;
+  text-decoration:none;color:var(--text2);font-weight:600;font-size:.85rem;
+  transition:all .22s;margin-bottom:4px;
+}
+.drawer-item:hover{background:var(--bg2);color:var(--p1);transform:translateX(-4px)}
+.drawer-item-icon{
+  width:32px;height:32px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.8rem;
+}
+.drawer-item i.chevron{margin-left:auto;font-size:.65rem;color:var(--text3)}
+.drawer-pill{
+  font-size:.6rem;font-weight:800;padding:2px 8px;
+  border-radius:20px;margin-left:auto;
+}
+.pill-offer{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
+.pill-new{background:linear-gradient(135deg,var(--green),#34d399);color:#fff}
+.drawer-divider{height:1px;background:var(--border);margin:8px 0}
+.drawer-version{text-align:center;font-size:.65rem;color:var(--text3);font-weight:600;padding:12px}
+
+/* ── CONTENT ── */
+.content{position:relative;z-index:10;padding:0 18px;max-width:560px;margin:0 auto}
+
+/* ── BACK BTN ── */
+.back-row{display:flex;align-items:center;gap:12px;padding:18px 0 8px}
+.back-btn{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--card);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text2);font-size:.9rem;cursor:pointer;
+  transition:all .22s;box-shadow:var(--shadow);
+}
+.back-btn:hover{border-color:var(--p1);color:var(--p1);transform:translateX(-2px)}
+.back-page-title{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:800;color:var(--text3)}
+
+/* ── HERO BANNER ── */
+.hero-banner{
+  background:linear-gradient(135deg,var(--p1) 0%,var(--p2) 55%,var(--teal) 100%);
+  border-radius:24px;padding:24px 22px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+  box-shadow:0 12px 40px rgba(108,59,255,.28);
+  animation:cardIn .4s ease both;
+}
+.hero-banner::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='25' cy='25' r='2'/%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-deco{
+  position:absolute;right:-20px;bottom:-20px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(255,255,255,.07);
+}
+.hero-deco2{
+  position:absolute;right:40px;bottom:10px;
+  width:70px;height:70px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+}
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;position:relative;z-index:1}
+.hero-icon{
+  width:52px;height:52px;border-radius:16px;
+  background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+}
+.hero-free-tag{
+  background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.4);
+  border-radius:20px;padding:4px 12px;
+  font-size:.68rem;font-weight:800;color:#fff;
+  display:flex;align-items:center;gap:5px;
+}
+.hero-title{
+  font-family:'Sora',sans-serif;font-size:1.25rem;font-weight:800;
+  color:#fff;margin:14px 0 4px;position:relative;z-index:1;
+}
+.hero-sub{font-size:.78rem;color:rgba(255,255,255,.8);position:relative;z-index:1;margin-bottom:16px}
+.hero-stats{
+  display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;
+}
+.hero-stat{
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  border-radius:12px;padding:7px 12px;
+  display:flex;align-items:center;gap:6px;
+}
+.hero-stat i{font-size:.7rem;color:rgba(255,255,255,.9)}
+.hero-stat span{font-size:.72rem;font-weight:700;color:#fff}
+
+/* ── SEARCH BAR ── */
+.search-wrap{
+  position:relative;margin-bottom:14px;
+  animation:cardIn .4s .05s ease both;
+}
+.search-input{
+  width:100%;padding:13px 18px 13px 44px;
+  border:2px solid var(--border);border-radius:16px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.9rem;
+  color:var(--text);background:var(--card);
+  outline:none;transition:all .22s;
+  box-shadow:var(--shadow);
+}
+.search-input:focus{border-color:var(--p1);box-shadow:0 0 0 4px rgba(108,59,255,.08)}
+.search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--text3);font-size:.88rem;pointer-events:none;
+}
+.search-clear{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  color:var(--text3);font-size:.8rem;cursor:pointer;display:none;
+  transition:color .2s;
+}
+.search-clear:hover{color:var(--rose)}
+
+/* ── FILTER TABS ── */
+.filter-tabs{
+  display:flex;gap:8px;overflow-x:auto;
+  padding-bottom:4px;scrollbar-width:none;
+  margin-bottom:14px;animation:cardIn .4s .08s ease both;
+}
+.filter-tabs::-webkit-scrollbar{display:none}
+.ftab{
+  flex-shrink:0;padding:7px 16px;border-radius:20px;
+  font-size:.75rem;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--border);background:var(--card);
+  color:var(--text3);transition:all .22s;
+  font-family:'Hind Siliguri',sans-serif;
+}
+.ftab.on{
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  border-color:transparent;color:#fff;
+  box-shadow:0 4px 14px rgba(108,59,255,.3);
+}
+
+/* ── PROGRESS OVERVIEW ── */
+.progress-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:20px;padding:16px 18px;margin-bottom:14px;
+  box-shadow:var(--shadow);animation:cardIn .4s .1s ease both;
+  display:flex;align-items:center;gap:16px;
+}
+.prog-ring-wrap{position:relative;flex-shrink:0}
+.prog-ring{width:62px;height:62px}
+.prog-ring-track{fill:none;stroke:var(--bg2);stroke-width:5}
+.prog-ring-fill{
+  fill:none;stroke:url(#ringGrad);stroke-width:5;
+  stroke-linecap:round;stroke-dasharray:163;
+  stroke-dashoffset:163;transition:stroke-dashoffset 1.2s cubic-bezier(.34,1,.64,1);
+  transform:rotate(-90deg);transform-origin:50% 50%;
+}
+.prog-pct{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:.78rem;font-weight:800;color:var(--p1);
+}
+.prog-info{flex:1;min-width:0}
+.prog-title{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.prog-sub{font-size:.72rem;color:var(--text3);font-weight:600}
+.prog-bar-wrap{margin-top:8px;background:var(--bg2);border-radius:20px;height:6px;overflow:hidden}
+.prog-bar-fill{
+  height:100%;background:linear-gradient(90deg,var(--p1),var(--teal));
+  border-radius:20px;transition:width 1s ease;width:0%;
+}
+
+/* ── SECTION LABEL ── */
+.sec-label{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--text2);padding:4px 0 10px;
+}
+.sec-label::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* ── TEST GRID ── */
+.test-grid{
+  display:flex;flex-direction:column;gap:10px;
+  animation:cardIn .4s .12s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.test-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:18px;padding:16px 16px;
+  cursor:pointer;transition:all .25s;
+  box-shadow:var(--shadow);display:flex;
+  align-items:center;gap:14px;
+  position:relative;overflow:hidden;
+}
+.test-card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--p1),var(--teal));
+  opacity:0;transition:opacity .25s;
+}
+.test-card:hover{border-color:var(--p2);box-shadow:var(--shadow2);transform:translateX(3px)}
+.test-card:hover::before{opacity:1}
+.test-card.completed{border-color:rgba(16,185,129,.3);background:linear-gradient(135deg,rgba(16,185,129,.03),rgba(52,211,153,.01))}
+.test-card.completed::before{background:linear-gradient(180deg,var(--green),#34d399);opacity:1}
+
+.test-num{
+  width:44px;height:44px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:.95rem;font-weight:800;
+  transition:all .25s;
+}
+.test-num.default{background:linear-gradient(135deg,var(--p4),rgba(167,139,250,.2));color:var(--p1)}
+.test-num.done{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(52,211,153,.1));color:var(--green)}
+
+.test-body{flex:1;min-width:0}
+.test-name{font-family:'Sora',sans-serif;font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.test-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.meta-chip{
+  display:flex;align-items:center;gap:4px;
+  font-size:.65rem;font-weight:700;color:var(--text3);
+}
+.meta-chip i{font-size:.6rem;color:var(--p3)}
+
+.test-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.free-pill{
+  background:linear-gradient(135deg,var(--green),#34d399);
+  color:#fff;font-size:.62rem;font-weight:800;
+  border-radius:20px;padding:3px 10px;
+  box-shadow:0 2px 8px rgba(16,185,129,.3);
+}
+.done-pill{
+  background:linear-gradient(135deg,var(--green),#34d399);
+  color:#fff;font-size:.62rem;font-weight:800;
+  border-radius:20px;padding:3px 10px;
+  display:flex;align-items:center;gap:3px;
+}
+.score-pill{
+  background:var(--acc3);border:1px solid rgba(245,158,11,.3);
+  color:var(--acc);font-size:.62rem;font-weight:800;
+  border-radius:20px;padding:3px 10px;
+}
+.arrow-btn{
+  width:28px;height:28px;border-radius:10px;
+  background:var(--bg2);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--p1);font-size:.7rem;transition:all .22s;
+}
+.test-card:hover .arrow-btn{background:var(--p1);color:#fff;border-color:var(--p1)}
+
+/* ── MODEL CARDS ── */
+.model-grid{display:flex;flex-direction:column;gap:10px}
+.model-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:18px;padding:16px 16px;
+  cursor:pointer;transition:all .25s;
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;
+  animation:cardIn .3s ease both;
+}
+.model-card:hover{border-color:var(--p2);box-shadow:var(--shadow2);transform:translateX(3px)}
+.model-badge{
+  width:44px;height:44px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:#fff;
+  box-shadow:0 4px 12px rgba(108,59,255,.25);
+}
+.model-body{flex:1}
+.model-name{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.model-meta{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{
+  display:flex;align-items:center;gap:6px;
+  padding:12px 0 4px;
+  font-size:.72rem;font-weight:700;color:var(--text3);
+  animation:cardIn .3s ease both;
+}
+.breadcrumb .bc-item{cursor:pointer;color:var(--p2);transition:color .2s}
+.breadcrumb .bc-item:hover{color:var(--p1)}
+.breadcrumb .bc-sep{color:var(--text3);font-size:.6rem}
+.breadcrumb .bc-cur{color:var(--text2)}
+
+/* ── MODEL HERO ── */
+.model-hero{
+  background:linear-gradient(135deg,var(--acc) 0%,var(--acc2) 60%,#fcd34d 100%);
+  border-radius:20px;padding:18px 20px;margin-bottom:14px;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(245,158,11,.3);
+  animation:cardIn .35s ease both;
+}
+.model-hero::before{
+  content:'🏆';position:absolute;right:16px;bottom:10px;
+  font-size:3.5rem;opacity:.2;
+}
+.model-hero-label{font-size:.68rem;font-weight:700;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.model-hero-title{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:#fff}
+.model-hero-sub{font-size:.75rem;color:rgba(255,255,255,.85);margin-top:4px}
+
+/* ── EMPTY STATE ── */
+.empty-state{
+  text-align:center;padding:48px 20px;
+  display:none;flex-direction:column;align-items:center;gap:12px;
+}
+.empty-icon{font-size:2.8rem;opacity:.4}
+.empty-text{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:800;color:var(--text2)}
+.empty-sub{font-size:.75rem;color:var(--text3)}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:rgba(255,255,255,.95);backdrop-filter:blur(20px);
+  border-top:2px solid var(--border);
+  display:flex;align-items:center;padding:8px 18px 12px;
+  box-shadow:0 -4px 24px rgba(108,59,255,.10);
+  gap:4px;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:6px 4px;border-radius:14px;cursor:pointer;
+  transition:all .22s;text-decoration:none;
+  font-size:.6rem;font-weight:700;color:var(--text3);
+}
+.nav-item:hover,.nav-item.active{color:var(--p1);background:var(--p4)}
+.nav-item i{font-size:1.1rem}
+.nav-item.active i{color:var(--p1)}
+
+/* ── TOAST ── */
+#toastBox{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);
+  z-index:999;display:flex;flex-direction:column;gap:8px;
+  pointer-events:none;width:max-content;max-width:90vw;
+}
+.toast{
+  background:#fff;border-radius:24px;padding:10px 18px;
+  font-size:.82rem;font-weight:600;color:var(--text);
+  box-shadow:0 8px 24px rgba(108,59,255,.18);
+  border:1.5px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+  animation:toastIn .3s ease both;transition:opacity .3s,transform .3s;
+}
+@keyframes toastIn{from{transform:translateY(-14px);opacity:0}to{transform:translateY(0);opacity:1}}
+.toast.hiding{opacity:0;transform:translateY(-10px)}
+.toast.ok{border-color:var(--green);background:#f0fdf4;color:#065f46}
+.toast.warn{border-color:var(--acc);background:#fffbeb;color:#92400e}
+.toast.err{border-color:var(--rose);background:#fff1f2;color:#9f1239}
+
+/* No results */
+.no-result{
+  text-align:center;padding:40px 20px;
+  font-family:'Sora',sans-serif;font-size:.88rem;font-weight:700;
+  color:var(--text3);display:none;
+}
+
+@media(max-width:380px){
+  .hero-title{font-size:1.1rem}
+  .test-name{font-size:.85rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Orbs -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div id="toastBox"></div>
+
+<!-- SVG gradient for ring -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6c3bff"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- SIDE DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-top">
+    <button class="drawer-close" onclick="closeDrawer()"><i class="fas fa-times"></i></button>
+    <div class="drawer-avatar"><img id="drawerAvatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt=""></div>
+    <div class="drawer-name" id="drawerName">লোড হচ্ছে...</div>
+    <div class="drawer-email" id="drawerEmail">—</div>
+  </div>
+  <div class="drawer-body">
+    <a href="profile.html" class="drawer-item">
+      <div class="drawer-item-icon" style="background:var(--p4)"><i class="fas fa-user-circle" style="color:var(--p1)"></i></div>
+      প্রোফাইল <i class="fas fa-chevron-right chevron"></i>
+    </a>
+    <a href="home.html" class="drawer-item">
+      <div class="drawer-item-icon" style="background:#f0fdf4"><i class="fas fa-home" style="color:var(--green)"></i></div>
+      হোম <i class="fas fa-chevron-right chevron"></i>
+    </a>
+    <a href="notice.html" class="drawer-item">
+      <div class="drawer-item-icon" style="background:#fef3c7"><i class="fas fa-bullhorn" style="color:var(--acc)"></i></div>
+      জরুরি সেবা
+      <span class="drawer-pill pill-new" id="noticePill" style="display:none">3</span>
+    </a>
+    <a href="leaderboard.html" class="drawer-item">
+      <div class="drawer-item-icon" style="background:#fef3c7"><i class="fas fa-trophy" style="color:var(--acc)"></i></div>
+      লিডারবোর্ড <i class="fas fa-chevron-right chevron"></i>
+    </a>
+    <div class="drawer-divider"></div>
+    <a href="subscription.html" class="drawer-item">
+      <div class="drawer-item-icon" style="background:linear-gradient(135deg,var(--acc),var(--acc2))"><i class="fas fa-crown" style="color:#fff"></i></div>
+      প্রিমিয়াম সাবস্ক্রাইব
+      <span class="drawer-pill pill-offer">OFFER</span>
+    </a>
+    <div class="drawer-version"><i class="fas fa-code"></i> ভার্সন ২.০.০</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-left" onclick="window.location.href='profile.html'">
+    <div class="avatar-ring"><img id="hdrAvatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt=""></div>
+    <div>
+      <div class="hdr-user-name" id="hdrName">লোড হচ্ছে...</div>
+      <div class="hdr-online"><i class="fas fa-circle"></i> অনলাইন</div>
+    </div>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="openDrawer()">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- BACK ROW -->
+  <div class="back-row">
+    <div class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></div>
+    <div class="back-page-title" id="pageTitle">হোম / সুপার মডেল টেস্ট</div>
+  </div>
+
+  <!-- ═══════════════ MAIN LIST VIEW ═══════════════ -->
+  <div id="view-main">
+
+    <!-- Hero -->
+    <div class="hero-banner">
+      <div class="hero-deco"></div><div class="hero-deco2"></div>
+      <div class="hero-top">
+        <div class="hero-icon">📋</div>
+        <div class="hero-free-tag"><i class="fas fa-gift"></i> সম্পূর্ণ ফ্রি</div>
+      </div>
+      <div class="hero-title">সুপার মডেল টেস্ট সিরিজ</div>
+      <div class="hero-sub">২০টি ফুল মডেল টেস্ট — বিসিএস সহ সকল প্রতিযোগিতামূলক পরীক্ষার প্রস্তুতি নিন</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><i class="fas fa-layer-group"></i><span>২০টি টেস্ট</span></div>
+        <div class="hero-stat"><i class="fas fa-question-circle"></i><span>১০০০+ প্রশ্ন</span></div>
+        <div class="hero-stat"><i class="fas fa-clock"></i><span>৬০ মিনিট/টেস্ট</span></div>
+      </div>
+    </div>
+
+    <!-- Progress card -->
+    <div class="progress-card">
+      <div class="prog-ring-wrap">
+        <svg class="prog-ring" viewBox="0 0 62 62">
+          <circle class="prog-ring-track" cx="31" cy="31" r="26"/>
+          <circle class="prog-ring-fill" id="ringFill" cx="31" cy="31" r="26"/>
+        </svg>
+        <div class="prog-pct" id="progPct">০%</div>
+      </div>
+      <div class="prog-info">
+        <div class="prog-title">আপনার অগ্রগতি</div>
+        <div class="prog-sub" id="progSub">০/২০ টেস্ট সম্পন্ন</div>
+        <div class="prog-bar-wrap"><div class="prog-bar-fill" id="progBar"></div></div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <i class="fas fa-search search-icon"></i>
+      <input class="search-input" id="searchInput" placeholder="টেস্ট খুঁজুন..." oninput="handleSearch()">
+      <i class="fas fa-times search-clear" id="searchClear" onclick="clearSearch()"></i>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="filter-tabs">
+      <div class="ftab on" onclick="filterTests('all',this)">সব</div>
+      <div class="ftab" onclick="filterTests('done',this)">সম্পন্ন</div>
+      <div class="ftab" onclick="filterTests('pending',this)">বাকি</div>
+      <div class="ftab" onclick="filterTests('recent',this)">সাম্প্রতিক</div>
+    </div>
+
+    <div class="sec-label"><i class="fas fa-list-check" style="color:var(--p1)"></i>মডেল টেস্ট সমূহ</div>
+
+    <!-- Test list -->
+    <div class="test-grid" id="testGrid"></div>
+    <div class="no-result" id="noResult">🔍 কোনো টেস্ট পাওয়া যায়নি</div>
+
+  </div>
+
+  <!-- ═══════════════ MODEL LIST VIEW ═══════════════ -->
+  <div id="view-models" style="display:none">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span class="bc-item" onclick="showMain()"><i class="fas fa-home"></i> সব টেস্ট</span>
+      <i class="fas fa-chevron-right bc-sep"></i>
+      <span class="bc-cur" id="bcCurrent">সুপার মডেল টেস্ট ১</span>
+    </div>
+
+    <!-- Model hero -->
+    <div class="model-hero">
+      <div class="model-hero-label">নির্বাচিত সিরিজ</div>
+      <div class="model-hero-title" id="modelHeroTitle">সুপার মডেল টেস্ট ১</div>
+      <div class="model-hero-sub">৫টি আলাদা মডেল • প্রতিটি ৫০ প্রশ্ন • ৬০ মিনিট</div>
+    </div>
+
+    <div class="sec-label"><i class="fas fa-layer-group" style="color:var(--p1)"></i>মডেল বেছে নিন</div>
+    <div class="model-grid" id="modelGrid"></div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="home.html"        class="nav-item"><i class="fas fa-home"></i><span>হোম</span></a>
+  <a href="leaderboard.html" class="nav-item active"><i class="fas fa-trophy"></i><span>র‍্যাংকিং</span></a>
+  <a href="notice.html"      class="nav-item"><i class="fas fa-bullhorn"></i><span>নোটিশ</span></a>
+  <a href="support.html"     class="nav-item"><i class="fas fa-headset"></i><span>সাপোর্ট</span></a>
+  <a href="profile.html"     class="nav-item"><i class="fas fa-user-circle"></i><span>প্রোফাইল</span></a>
+</nav>
+
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+const app  = initializeApp({apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",authDomain:"sbopnporn.firebaseapp.com",projectId:"sbopnporn",storageBucket:"sbopnporn.firebasestorage.app",messagingSenderId:"217423916538",appId:"1:217423916538:web:9f8dc21358c2ad03cec843"});
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+const urlParams   = new URLSearchParams(window.location.search);
+let activeFilter  = 'all';
+let searchVal     = '';
+let completedTests = new Set(); // store completed test numbers
+
+// ── Toast ──
+window.toast = function(msg,type='ok',dur=3000){
+  const box=document.getElementById('toastBox');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;
+  const icons={ok:'✅',warn:'⚠️',err:'❌'};
+  t.innerHTML=`<span>${icons[type]||'ℹ️'}</span>${msg}`;
+  box.appendChild(t);
+  setTimeout(()=>{t.classList.add('hiding');setTimeout(()=>t.remove(),320)},dur);
+};
+
+// ── Drawer ──
+window.openDrawer = function(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('show');
+  document.getElementById('hamburger').classList.add('open');
+};
+window.closeDrawer = function(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('show');
+  document.getElementById('hamburger').classList.remove('open');
+};
+
+// ── Back ──
+window.goBack = function(){
+  const vm = document.getElementById('view-models');
+  if(vm.style.display!=='none'){ showMain(); return; }
+  if(document.referrer && document.referrer.includes(window.location.hostname)) history.back();
+  else window.location.href='home.html';
+};
+
+// ── Progress ring ──
+function setProgress(done,total){
+  const pct = total>0 ? Math.round(done/total*100) : 0;
+  const circumference = 163;
+  const offset = circumference - (pct/100)*circumference;
+  const fill = document.getElementById('ringFill');
+  const pctEl = document.getElementById('progPct');
+  const subEl = document.getElementById('progSub');
+  const barEl = document.getElementById('progBar');
+  setTimeout(()=>{
+    if(fill) fill.style.strokeDashoffset = offset;
+    if(barEl) barEl.style.width = pct+'%';
+  },300);
+  if(pctEl) pctEl.textContent = pct+'%';
+  if(subEl) subEl.textContent = done+'/'+total+' টেস্ট সম্পন্ন';
+}
+
+// ── Generate tests ──
+function buildTestList(filter='all', search=''){
+  const grid = document.getElementById('testGrid');
+  const noRes = document.getElementById('noResult');
+  grid.innerHTML='';
+  let count=0;
+
+  for(let i=1;i<=20;i++){
+    const isDone = completedTests.has(i);
+    if(filter==='done' && !isDone) continue;
+    if(filter==='pending' && isDone) continue;
+    if(filter==='recent' && i>5) continue; // recent = first 5 for demo
+
+    const name=`সুপার মডেল টেস্ট ${i}`;
+    if(search && !name.includes(search)) continue;
+    count++;
+
+    const card = document.createElement('div');
+    card.className='test-card'+(isDone?' completed':'');
+    card.style.animationDelay=(count*.04)+'s';
+    card.onclick=()=>handleClick(i);
+
+    card.innerHTML=`
+      <div class="test-num ${isDone?'done':'default'}">${i}</div>
+      <div class="test-body">
+        <div class="test-name">${name}</div>
+        <div class="test-meta">
+          ${i===1?`<div class="meta-chip"><i class="fas fa-layer-group"></i>৫টি মডেল</div>`:`<div class="meta-chip"><i class="fas fa-question-circle"></i>৫০টি প্রশ্ন</div>`}
+          <div class="meta-chip"><i class="fas fa-clock"></i>৬০ মিনিট</div>
+          ${isDone?`<div class="meta-chip"><i class="fas fa-check-circle" style="color:var(--green)"></i><span style="color:var(--green)">সম্পন্ন</span></div>`:''}
+        </div>
+      </div>
+      <div class="test-right">
+        <span class="free-pill">ফ্রি</span>
+        ${isDone?`<span class="done-pill"><i class="fas fa-check" style="font-size:.55rem"></i>সম্পন্ন</span>`:''}
+        <div class="arrow-btn"><i class="fas fa-chevron-right"></i></div>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+
+  noRes.style.display = count===0 ? 'block' : 'none';
+}
+
+// ── Click handler ──
+function handleClick(n){
+  if(n===1){
+    showModels(n);
+  } else {
+    toast(`সুপার মডেল টেস্ট ${n} শুরু হচ্ছে...`,'ok');
+    setTimeout(()=>window.location.href=`exam.html?cat=SuperModel&val=${n}`,1000);
+  }
+}
+
+// ── Model view ──
+function showModels(testNum){
+  document.getElementById('view-main').style.display='none';
+  document.getElementById('view-models').style.display='block';
+  document.getElementById('bcCurrent').textContent='সুপার মডেল টেস্ট '+testNum;
+  document.getElementById('modelHeroTitle').textContent='সুপার মডেল টেস্ট '+testNum;
+  document.getElementById('pageTitle').textContent='সুপার মডেল টেস্ট / মডেল বেছে নিন';
+  buildModelList(testNum);
+}
+window.showMain = function(){
+  document.getElementById('view-main').style.display='block';
+  document.getElementById('view-models').style.display='none';
+  document.getElementById('pageTitle').textContent='হোম / সুপার মডেল টেস্ট';
+};
+
+function buildModelList(testNum){
+  const grid = document.getElementById('modelGrid');
+  grid.innerHTML='';
+  for(let m=1;m<=5;m++){
+    const card=document.createElement('div');
+    card.className='model-card';
+    card.style.animationDelay=(m*.07)+'s';
+    card.onclick=()=>{
+      toast(`মডেল টেস্ট ${m} শুরু হচ্ছে...`,'ok');
+      setTimeout(()=>window.location.href=`exam.html?cat=SuperModel&val=${testNum}&model=${m}`,1000);
+    };
+    card.innerHTML=`
+      <div class="model-badge">${m}</div>
+      <div class="model-body">
+        <div class="model-name">মডেল টেস্ট ${m}</div>
+        <div class="model-meta">
+          <div class="meta-chip"><i class="fas fa-question-circle"></i>৫০টি প্রশ্ন</div>
+          <div class="meta-chip"><i class="fas fa-clock"></i>৬০ মিনিট</div>
+          <span class="free-pill">ফ্রি</span>
+        </div>
+      </div>
+      <div class="arrow-btn"><i class="fas fa-chevron-right"></i></div>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+// ── Filter ──
+window.filterTests = function(f,el){
+  activeFilter=f;
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  buildTestList(f,searchVal);
+};
+
+// ── Search ──
+window.handleSearch = function(){
+  searchVal=document.getElementById('searchInput').value;
+  document.getElementById('searchClear').style.display=searchVal?'block':'none';
+  buildTestList(activeFilter,searchVal);
+};
+window.clearSearch = function(){
+  document.getElementById('searchInput').value='';
+  searchVal='';
+  document.getElementById('searchClear').style.display='none';
+  buildTestList(activeFilter,'');
+};
+
+// ── Auth + user ──
+onAuthStateChanged(auth, async user=>{
+  if(!user){ window.location.href='index.html'; return; }
+  try{
+    const snap = await getDoc(doc(db,'users',user.uid));
+    if(snap.exists()){
+      const d=snap.data();
+      // premium expiry check
+      if(d.isPremium&&d.premiumExpiry){
+        const exp=new Date(d.premiumExpiry);
+        if(!isNaN(exp)&&new Date()>exp){
+          await updateDoc(doc(db,'users',user.uid),{isPremium:false,premiumExpiry:null});
+          toast('প্রিমিয়াম মেয়াদ শেষ হয়েছে','warn');
+        }
+      }
+      const name=d.name||user.displayName||'User';
+      const email=d.email||user.email||'';
+      const pic=d.profilePic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+      ['hdrName','drawerName'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=name; });
+      document.getElementById('drawerEmail').textContent=email;
+      ['hdrAvatar','drawerAvatar'].forEach(id=>{ const el=document.getElementById(id); if(el) el.src=pic; });
+      // completed tests — read from user data if stored
+      if(d.completedTests) completedTests=new Set(d.completedTests);
+    }
+  }catch(e){ console.warn(e); }
+  finally{
+    // Build list after auth
+    const done = completedTests.size;
+    setProgress(done,20);
+    if(urlParams.get('showModels')==='1') showModels(1);
+    else buildTestList('all','');
+  }
+});
+</script>
+</body>
+</html>

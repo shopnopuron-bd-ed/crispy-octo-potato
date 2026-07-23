@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>প্রিমিয়াম - স্বপ্নপূরণ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;--p2:#8b5cf6;--p3:#a78bfa;--p4:#ede9fe;
+  --acc:#f59e0b;--acc2:#fbbf24;--acc3:#fef3c7;
+  --teal:#0ea5e9;--green:#10b981;--rose:#f43f5e;
+  --bg:#f0f4ff;--bg2:#e8eeff;--card:#fff;
+  --text:#1e1b4b;--text2:#4c4b73;--text3:#7c7a9e;
+  --border:#ddd8ff;--nav-h:68px;
+  --shadow:0 4px 24px rgba(108,59,255,.10);
+  --shadow2:0 12px 40px rgba(108,59,255,.20);
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  padding-bottom:calc(var(--nav-h)+24px);
+}
+
+/* ── Animated BG orbs ── */
+.orb{
+  position:fixed;border-radius:50%;filter:blur(70px);
+  pointer-events:none;z-index:0;animation:orbFloat 8s ease-in-out infinite;
+}
+.orb1{width:320px;height:320px;background:rgba(108,59,255,.10);top:-80px;left:-80px;animation-delay:0s}
+.orb2{width:260px;height:260px;background:rgba(14,165,233,.08);bottom:100px;right:-60px;animation-delay:3s}
+.orb3{width:200px;height:200px;background:rgba(245,158,11,.07);top:50%;left:50%;animation-delay:5s}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-24px) scale(1.05)}}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+  padding:0 18px;height:64px;
+  box-shadow:0 2px 16px rgba(108,59,255,.07);
+}
+.hdr-back{
+  width:38px;height:38px;border-radius:12px;flex-shrink:0;
+  background:var(--bg2);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text2);font-size:.9rem;text-decoration:none;
+  transition:all .22s;
+}
+.hdr-back:hover{border-color:var(--p1);color:var(--p1)}
+.hdr-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:var(--text)}
+.hdr-title span{color:var(--p1)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:10;
+  background:linear-gradient(135deg,var(--p1) 0%,var(--p2) 50%,var(--teal) 100%);
+  padding:36px 20px 80px;text-align:center;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-crown{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(255,255,255,.18);border:2.5px solid rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin:0 auto 16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+  animation:crownPop .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes crownPop{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
+.hero h1{
+  font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;
+  color:#fff;margin-bottom:8px;line-height:1.2;
+}
+.hero p{font-size:.88rem;color:rgba(255,255,255,.8);max-width:300px;margin:0 auto}
+
+/* ── BENEFITS STRIP ── */
+.benefits-strip{
+  position:relative;z-index:20;
+  display:flex;gap:8px;overflow-x:auto;
+  padding:0 18px;margin-top:-28px;margin-bottom:4px;
+  scrollbar-width:none;
+}
+.benefits-strip::-webkit-scrollbar{display:none}
+.benefit-chip{
+  flex-shrink:0;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:20px;padding:8px 14px;
+  display:flex;align-items:center;gap:7px;
+  font-size:.72rem;font-weight:700;color:var(--text2);
+  box-shadow:0 4px 14px rgba(108,59,255,.08);
+  white-space:nowrap;animation:chipIn .4s ease both;
+}
+.benefit-chip:nth-child(1){animation-delay:.05s}
+.benefit-chip:nth-child(2){animation-delay:.1s}
+.benefit-chip:nth-child(3){animation-delay:.15s}
+.benefit-chip:nth-child(4){animation-delay:.2s}
+.benefit-chip:nth-child(5){animation-delay:.25s}
+@keyframes chipIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.benefit-chip .chip-icon{
+  width:24px;height:24px;border-radius:8px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:.65rem;flex-shrink:0;
+}
+
+/* ── SECTION LABEL ── */
+.sec-label{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--text2);padding:20px 18px 10px;
+  position:relative;z-index:10;
+}
+.sec-label::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* ── DURATION TABS ── */
+.dur-tabs{
+  display:flex;gap:8px;padding:0 18px 14px;
+  overflow-x:auto;scrollbar-width:none;
+  position:relative;z-index:10;
+}
+.dur-tabs::-webkit-scrollbar{display:none}
+.dur-tab{
+  flex-shrink:0;padding:7px 16px;border-radius:20px;
+  font-size:.75rem;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--border);background:var(--card);
+  color:var(--text3);transition:all .22s;
+  font-family:'Hind Siliguri',sans-serif;
+}
+.dur-tab.on{
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  border-color:transparent;color:#fff;
+  box-shadow:0 4px 14px rgba(108,59,255,.3);
+}
+
+/* ── PLANS GRID ── */
+.plans-wrap{
+  padding:0 18px;display:flex;flex-direction:column;gap:12px;
+  position:relative;z-index:10;
+}
+
+.plan-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:22px;padding:18px 18px 16px;
+  cursor:pointer;transition:all .25s;
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+  animation:planIn .4s ease both;
+}
+@keyframes planIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.plan-card:hover{border-color:var(--p2);box-shadow:var(--shadow2);transform:translateY(-2px)}
+.plan-card.selected{
+  border-color:var(--p1);
+  background:linear-gradient(135deg,rgba(108,59,255,.04),rgba(139,92,246,.02));
+}
+.plan-card.featured{border-color:var(--acc);background:linear-gradient(135deg,rgba(245,158,11,.04),rgba(251,191,36,.02))}
+.plan-card.featured.selected{border-color:var(--p1)}
+
+/* glow line on selected */
+.plan-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--p1),var(--teal));
+  opacity:0;transition:opacity .25s;border-radius:22px 22px 0 0;
+}
+.plan-card.selected::before{opacity:1}
+
+.plan-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.plan-badge{
+  font-size:.65rem;font-weight:800;padding:4px 12px;border-radius:20px;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.badge-hot{background:linear-gradient(135deg,#ff4d4d,#f43f5e);color:#fff;box-shadow:0 3px 10px rgba(244,63,94,.3)}
+.badge-best{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 3px 10px rgba(245,158,11,.3)}
+.badge-popular{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;box-shadow:0 3px 10px rgba(108,59,255,.3)}
+.badge-new{background:linear-gradient(135deg,var(--green),#34d399);color:#fff;box-shadow:0 3px 10px rgba(16,185,129,.3)}
+
+.plan-check{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid var(--border);background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;color:transparent;transition:all .25s;flex-shrink:0;
+}
+.plan-card.selected .plan-check{
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  border-color:transparent;color:#fff;
+  box-shadow:0 3px 10px rgba(108,59,255,.3);
+}
+
+.plan-body{display:flex;align-items:flex-end;justify-content:space-between}
+.plan-name{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.plan-meta{font-size:.72rem;color:var(--text3);display:flex;align-items:center;gap:5px}
+.plan-meta i{color:var(--p3);font-size:.65rem}
+
+.plan-price-wrap{text-align:right}
+.plan-price{
+  font-family:'Sora',sans-serif;font-size:1.7rem;font-weight:800;
+  color:var(--p1);line-height:1;
+}
+.plan-card.featured .plan-price{color:var(--acc)}
+.plan-per-day{font-size:.65rem;color:var(--text3);margin-top:3px;font-weight:600}
+
+/* savings pill */
+.plan-save{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);
+  color:var(--green);font-size:.62rem;font-weight:700;
+  border-radius:20px;padding:2px 9px;margin-top:6px;
+}
+
+/* ── FEATURES BOX ── */
+.features-box{
+  margin:18px 18px 0;
+  background:var(--card);border:2px solid var(--border);
+  border-radius:20px;padding:18px 18px 14px;
+  position:relative;z-index:10;
+  box-shadow:var(--shadow);
+}
+.features-title{
+  font-family:'Sora',sans-serif;font-size:.88rem;font-weight:700;
+  color:var(--text);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.feat-icon{
+  width:26px;height:26px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:#fff;
+}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.feat-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:.75rem;color:var(--text2);font-weight:600;
+}
+.feat-item i{color:var(--green);font-size:.7rem;flex-shrink:0}
+
+/* ── COMPARISON TABLE ── */
+.compare-wrap{
+  margin:18px 18px 0;
+  background:var(--card);border:2px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  position:relative;z-index:10;
+  box-shadow:var(--shadow);
+}
+.compare-head{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  padding:12px 16px;
+}
+.compare-head span{
+  font-size:.72rem;font-weight:700;color:rgba(255,255,255,.85);
+  text-align:center;
+}
+.compare-head span:first-child{text-align:left}
+.compare-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  padding:11px 16px;border-bottom:1px solid var(--border);
+  align-items:center;
+}
+.compare-row:last-child{border-bottom:none}
+.compare-row:nth-child(even){background:var(--bg)}
+.compare-feat{font-size:.75rem;font-weight:600;color:var(--text2)}
+.compare-val{text-align:center;font-size:.8rem;font-weight:700}
+.v-no{color:var(--text3)}
+.v-yes{color:var(--green)}
+.v-inf{color:var(--p1);font-family:'Sora',sans-serif}
+
+/* ── STICKY BOTTOM ── */
+.sticky-bottom{
+  position:fixed;bottom:0;left:0;right:0;z-index:300;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(20px);
+  border-top:2px solid var(--border);
+  padding:12px 18px 16px;
+  box-shadow:0 -4px 24px rgba(108,59,255,.12);
+  transform:translateY(100%);transition:transform .35s cubic-bezier(.34,1.2,.64,1);
+}
+.sticky-bottom.show{transform:translateY(0)}
+.sticky-inner{display:flex;align-items:center;gap:12px}
+.sticky-info{flex:1;min-width:0}
+.sticky-plan{font-family:'Sora',sans-serif;font-size:.82rem;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sticky-price{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:var(--p1)}
+.pay-btn{
+  flex-shrink:0;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  border:none;border-radius:16px;padding:13px 22px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.9rem;font-weight:700;
+  color:#fff;cursor:pointer;
+  box-shadow:0 6px 20px rgba(108,59,255,.35);
+  display:flex;align-items:center;gap:8px;
+  transition:all .22s;white-space:nowrap;
+}
+.pay-btn:hover{box-shadow:0 8px 28px rgba(108,59,255,.45);transform:translateY(-1px)}
+
+/* ── TOAST ── */
+#toastBox{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);
+  z-index:999;display:flex;flex-direction:column;gap:8px;
+  pointer-events:none;width:max-content;max-width:88vw;
+}
+.toast{
+  background:#fff;border-radius:24px;padding:10px 18px;
+  font-size:.82rem;font-weight:600;color:var(--text);
+  box-shadow:0 8px 24px rgba(108,59,255,.18);
+  border:1.5px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+  animation:toastIn .3s ease both;
+  transition:opacity .3s,transform .3s;
+}
+@keyframes toastIn{from{transform:translateY(-14px);opacity:0}to{transform:translateY(0);opacity:1}}
+.toast.hiding{opacity:0;transform:translateY(-10px)}
+.toast.ok{border-color:var(--green);background:#f0fdf4;color:#065f46}
+.toast.warn{border-color:var(--acc);background:#fffbeb;color:#92400e}
+.toast.err{border-color:var(--rose);background:#fff1f2;color:#9f1239}
+
+/* ── SPACER ── */
+.spacer{height:90px}
+
+@media(max-width:400px){
+  .hero h1{font-size:1.35rem}
+  .feat-grid{grid-template-columns:1fr}
+  .plan-price{font-size:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div id="toastBox"></div>
+
+<!-- HEADER -->
+<header>
+  <a class="hdr-back" href="home.html"><i class="fas fa-arrow-left"></i></a>
+  <div class="hdr-title">প্রিমিয়াম <span>মেম্বারশিপ</span></div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-crown">👑</div>
+  <h1>আনলিমিটেড পরীক্ষা দিন</h1>
+  <p>প্রিমিয়াম নিয়ে আপনার স্বপ্নের চাকরির প্রস্তুতি সম্পন্ন করুন</p>
+</div>
+
+<!-- BENEFIT CHIPS -->
+<div class="benefits-strip">
+  <div class="benefit-chip"><div class="chip-icon"><i class="fas fa-infinity"></i></div>আনলিমিটেড পরীক্ষা</div>
+  <div class="benefit-chip"><div class="chip-icon"><i class="fas fa-chart-bar"></i></div>বিস্তারিত রিপোর্ট</div>
+  <div class="benefit-chip"><div class="chip-icon"><i class="fas fa-bolt"></i></div>দ্রুত লোডিং</div>
+  <div class="benefit-chip"><div class="chip-icon"><i class="fas fa-trophy"></i></div>র‍্যাংকিং অ্যাক্সেস</div>
+  <div class="benefit-chip"><div class="chip-icon"><i class="fas fa-headset"></i></div>প্রিমিয়াম সাপোর্ট</div>
+</div>
+
+<!-- DURATION FILTER -->
+<div class="sec-label"><i class="fas fa-filter" style="color:var(--p1)"></i>প্ল্যান ফিল্টার</div>
+<div class="dur-tabs">
+  <div class="dur-tab on" onclick="filterPlans('all',this)">সব</div>
+  <div class="dur-tab" onclick="filterPlans('short',this)">স্বল্প মেয়াদ</div>
+  <div class="dur-tab" onclick="filterPlans('mid',this)">মধ্যমেয়াদ</div>
+  <div class="dur-tab" onclick="filterPlans('long',this)">দীর্ঘমেয়াদ</div>
+</div>
+
+<!-- PLANS -->
+<div class="sec-label"><i class="fas fa-crown" style="color:var(--acc)"></i>প্ল্যান বেছে নিন</div>
+<div class="plans-wrap" id="plansWrap">
+
+  <!-- 1 day -->
+  <div class="plan-card" data-group="short" data-amount="9" data-name="ডেইলি প্যাক" data-days="1" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span class="plan-badge badge-new">নতুন</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">২৪ ঘণ্টা প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ০১ দিন</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳৯</div>
+        <div class="plan-per-day">৳৯/দিন</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 days -->
+  <div class="plan-card" data-group="short" data-amount="49" data-name="সাপ্তাহিক প্যাক" data-days="7" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span style="opacity:0" class="plan-badge">_</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">৭ দিন প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ০৭ দিন</div>
+        <div class="plan-save"><i class="fas fa-tag"></i> দিনপ্রতি মাত্র ৳৭</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳৪৯</div>
+        <div class="plan-per-day">৳৭/দিন</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15 days -->
+  <div class="plan-card" data-group="short" data-amount="89" data-name="১৫ দিন প্যাক" data-days="15" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span style="opacity:0" class="plan-badge">_</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">১৫ দিন প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ১৫ দিন</div>
+        <div class="plan-save"><i class="fas fa-tag"></i> দিনপ্রতি মাত্র ৳৫.৯</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳৮৯</div>
+        <div class="plan-per-day">৳৫.৯/দিন</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 30 days FEATURED -->
+  <div class="plan-card featured" data-group="mid" data-amount="170" data-name="মাসিক প্যাক" data-days="30" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span class="plan-badge badge-best">সেরা মূল্য ⭐</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">৩০ দিন প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ৩০ দিন</div>
+        <div class="plan-save"><i class="fas fa-tag"></i> দিনপ্রতি মাত্র ৳৫.৭</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳১৭০</div>
+        <div class="plan-per-day">৳৫.৭/দিন</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 60 days -->
+  <div class="plan-card" data-group="mid" data-amount="339" data-name="৬০ দিন প্যাক" data-days="60" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span style="opacity:0" class="plan-badge">_</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">৬০ দিন প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ৬০ দিন</div>
+        <div class="plan-save"><i class="fas fa-tag"></i> দিনপ্রতি মাত্র ৳৫.৭</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳৩৩৯</div>
+        <div class="plan-per-day">৳৫.৭/দিন</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 90 days POPULAR -->
+  <div class="plan-card" data-group="mid" data-amount="499" data-name="৯০ দিন প্যাক" data-days="90" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span class="plan-badge badge-popular">জনপ্রিয় 🔥</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">৯০ দিন প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ৯০ দিন</div>
+        <div class="plan-save"><i class="fas fa-tag"></i> দিনপ্রতি মাত্র ৳৫.৫</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳৪৯৯</div>
+        <div class="plan-per-day">৳৫.৫/দিন</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 180 days -->
+  <div class="plan-card" data-group="long" data-amount="899" data-name="১৮০ দিন প্যাক" data-days="180" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span class="plan-badge badge-hot">হট অফার 🌶️</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">১৮০ দিন প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ১৮০ দিন</div>
+        <div class="plan-save"><i class="fas fa-tag"></i> দিনপ্রতি মাত্র ৳৫</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳৮৯৯</div>
+        <div class="plan-per-day">৳৫/দিন</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 365 days -->
+  <div class="plan-card" data-group="long" data-amount="1600" data-name="বার্ষিক প্যাক" data-days="365" onclick="selectPlan(this)">
+    <div class="plan-top">
+      <span class="plan-badge badge-best">সর্বোচ্চ সাশ্রয় 💎</span>
+      <div class="plan-check"><i class="fas fa-check"></i></div>
+    </div>
+    <div class="plan-body">
+      <div>
+        <div class="plan-name">৩৬৫ দিন প্যাক</div>
+        <div class="plan-meta"><i class="far fa-clock"></i> মেয়াদ ৩৬৫ দিন</div>
+        <div class="plan-save"><i class="fas fa-tag"></i> দিনপ্রতি মাত্র ৳৪.৪</div>
+      </div>
+      <div class="plan-price-wrap">
+        <div class="plan-price">৳১৬০০</div>
+        <div class="plan-per-day">৳৪.৪/দিন</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FEATURES BOX -->
+<div class="features-box">
+  <div class="features-title"><div class="feat-icon">✨</div>প্রিমিয়ামে যা পাবেন</div>
+  <div class="feat-grid">
+    <div class="feat-item"><i class="fas fa-check-circle"></i>আনলিমিটেড পরীক্ষা</div>
+    <div class="feat-item"><i class="fas fa-check-circle"></i>সব বিষয়ের প্রশ্ন</div>
+    <div class="feat-item"><i class="fas fa-check-circle"></i>বিস্তারিত ব্যাখ্যা</div>
+    <div class="feat-item"><i class="fas fa-check-circle"></i>পারফরম্যান্স রিপোর্ট</div>
+    <div class="feat-item"><i class="fas fa-check-circle"></i>লাইভ র‍্যাংকিং</div>
+    
+    <div class="feat-item"><i class="fas fa-check-circle"></i>পরীক্ষার ইতিহাস</div>
+    <div class="feat-item"><i class="fas fa-check-circle"></i>২৪/৭ সাপোর্ট</div>
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="sec-label" style="padding-top:22px"><i class="fas fa-table" style="color:var(--p1)"></i>ফ্রি vs প্রিমিয়াম</div>
+<div class="compare-wrap">
+  <div class="compare-head">
+    <span>সুবিধা</span>
+    <span>ফ্রি</span>
+    <span>প্রিমিয়াম</span>
+  </div>
+  <div class="compare-row">
+    <span class="compare-feat">পরীক্ষার সংখ্যা</span>
+    <span class="compare-val v-no">১৪টি</span>
+    <span class="compare-val v-inf">∞</span>
+  </div>
+  <div class="compare-row">
+    <span class="compare-feat">সব বিষয়</span>
+    <span class="compare-val v-no">✗</span>
+    <span class="compare-val v-yes">✓</span>
+  </div>
+  <div class="compare-row">
+    <span class="compare-feat">বিস্তারিত রিপোর্ট</span>
+    <span class="compare-val v-no">✗</span>
+    <span class="compare-val v-yes">✓</span>
+  </div>
+  <div class="compare-row">
+    <span class="compare-feat">র‍্যাংকিং</span>
+    <span class="compare-val v-no">✗</span>
+    <span class="compare-val v-yes">✓</span>
+  </div>
+  <div class="compare-row">
+    
+  
+  </div
+  <div class="compare-row">
+    <span class="compare-feat">সাপোর্ট</span>
+    <span class="compare-val v-no">সীমিত</span>
+    <span class="compare-val v-yes">২৪/৭</span>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- STICKY BOTTOM BAR -->
+<div class="sticky-bottom" id="stickyBar">
+  <div class="sticky-inner">
+    <div class="sticky-info">
+      <div class="sticky-plan" id="stickyPlan">প্ল্যান নির্বাচন করুন</div>
+      <div class="sticky-price" id="stickyPrice">—</div>
+    </div>
+    <button class="pay-btn" onclick="goToPayment()">
+      <i class="fas fa-lock"></i> পেমেন্ট করুন
+    </button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+const app  = initializeApp({apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",authDomain:"sbopnporn.firebaseapp.com",projectId:"sbopnporn",storageBucket:"sbopnporn.firebasestorage.app",messagingSenderId:"217423916538",appId:"1:217423916538:web:9f8dc21358c2ad03cec843"});
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+let selected = null; // {amount, name, days}
+
+// ── Toast ──
+window.toast = function(msg, type='ok', dur=3000){
+  const box=document.getElementById('toastBox');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;
+  const icons={ok:'✅',warn:'⚠️',err:'❌'};
+  t.innerHTML=`<span>${icons[type]||'ℹ️'}</span>${msg}`;
+  box.appendChild(t);
+  setTimeout(()=>{ t.classList.add('hiding'); setTimeout(()=>t.remove(),320); }, dur);
+};
+
+// ── Select Plan ──
+window.selectPlan = function(el){
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  const amount = parseInt(el.dataset.amount);
+  const name   = el.dataset.name;
+  const days   = parseInt(el.dataset.days);
+  selected = {amount, name, days};
+
+  document.getElementById('stickyPlan').textContent  = name + ' · ' + days + ' দিন';
+  document.getElementById('stickyPrice').textContent = '৳' + amount;
+  document.getElementById('stickyBar').classList.add('show');
+
+  // haptic feel via scale
+  el.style.transform='scale(.97)';
+  setTimeout(()=>{ el.style.transform=''; }, 180);
+};
+
+// ── Filter tabs ──
+window.filterPlans = function(group, tabEl){
+  document.querySelectorAll('.dur-tab').forEach(t=>t.classList.remove('on'));
+  tabEl.classList.add('on');
+
+  document.querySelectorAll('.plan-card').forEach(card=>{
+    if(group==='all' || card.dataset.group===group){
+      card.style.display='block';
+    } else {
+      card.style.display='none';
+      if(card.classList.contains('selected')){
+        card.classList.remove('selected');
+        selected=null;
+        document.getElementById('stickyBar').classList.remove('show');
+      }
+    }
+  });
+};
+
+// ── Go to payment ──
+window.goToPayment = function(){
+  if(!selected){ toast('দয়া করে একটি প্ল্যান বেছে নিন','warn'); return; }
+  window.location.href=`payment.html?amount=${selected.amount}&name=${encodeURIComponent(selected.name)}&days=${selected.days}`;
+};
+
+// ── Auth + premium expiry check ──
+onAuthStateChanged(auth, async user=>{
+  if(!user){ window.location.href='index.html'; return; }
+  try{
+    const snap = await getDoc(doc(db,'users',user.uid));
+    if(snap.exists()){
+      const d = snap.data();
+      if(d.isPremium && d.premiumExpiry){
+        const exp = new Date(d.premiumExpiry);
+        if(!isNaN(exp) && new Date()>exp){
+          await updateDoc(doc(db,'users',user.uid),{isPremium:false,premiumExpiry:null});
+          toast('প্রিমিয়াম মেয়াদ শেষ হয়েছে','warn');
+        } else if(!isNaN(exp)){
+          const days=Math.ceil((exp-new Date())/(86400000));
+          toast(`আপনার প্রিমিয়াম এখনো সক্রিয় — ${days} দিন বাকি 👑`,'ok',5000);
+        }
+      }
+    }
+  }catch(e){ console.warn('Auth check:', e); }
+});
+</script>
+</body>
+</html>

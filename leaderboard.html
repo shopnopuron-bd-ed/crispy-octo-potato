@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>স্বপ্নপূরণ - লিডারবোর্ড</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;
+  --p2:#8b5cf6;
+  --p3:#a78bfa;
+  --acc:#f59e0b;
+  --acc2:#fbbf24;
+  --teal:#0ea5e9;
+  --green:#10b981;
+  --rose:#f43f5e;
+  --bg:#f0f4ff;
+  --bg2:#e8eeff;
+  --card:#ffffff;
+  --text:#1e1b4b;
+  --text2:#4c4b73;
+  --text3:#7c7a9e;
+  --border:#ddd8ff;
+  --border2:#c4b8ff;
+  --shadow:0 4px 20px rgba(108,59,255,.10);
+  --shadow2:0 8px 32px rgba(108,59,255,.18);
+  --gold:#f59e0b;
+  --silver:#94a3b8;
+  --bronze:#b45309;
+  --nav-h:68px;
+  --head-h:64px;
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  padding-bottom:calc(var(--nav-h) + 80px);
+}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 40% at 0% 0%,rgba(108,59,255,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%,rgba(14,165,233,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%,rgba(245,158,11,.05) 0%,transparent 70%);
+}
+
+/* ══ HEADER ══ */
+header{
+  position:sticky;top:0;z-index:200;
+  height:var(--head-h);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;
+  box-shadow:0 2px 16px rgba(108,59,255,.08);
+  animation:hdrIn .4s ease both;
+}
+@keyframes hdrIn{from{transform:translateY(-64px)}to{transform:translateY(0)}}
+
+.hdr-left{display:flex;align-items:center;gap:12px}
+.back-btn{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--bg2);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text2);font-size:.9rem;
+  transition:all .22s;box-shadow:var(--shadow);text-decoration:none;
+}
+.back-btn:hover{border-color:var(--p1);color:var(--p1);background:rgba(108,59,255,.06)}
+
+.hdr-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:var(--text)}
+.hdr-title span{color:var(--p1)}
+
+.hdr-right{display:flex;align-items:center;gap:8px}
+.hdr-badge{
+  background:linear-gradient(135deg,rgba(108,59,255,.12),rgba(139,92,246,.08));
+  border:1.5px solid rgba(108,59,255,.25);
+  border-radius:20px;padding:5px 12px;
+  font-size:.7rem;font-weight:700;color:var(--p1);
+  display:flex;align-items:center;gap:5px;
+}
+
+/* ══ TAB BAR ══ */
+.tab-bar{
+  position:sticky;top:var(--head-h);z-index:150;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(16px);
+  border-bottom:2px solid var(--border);
+  display:flex;padding:10px 18px;gap:8px;
+  box-shadow:0 2px 10px rgba(108,59,255,.05);
+}
+.tab-btn{
+  flex:1;padding:9px 6px;border-radius:12px;
+  border:1.5px solid var(--border);background:var(--bg2);
+  font-family:'Hind Siliguri',sans-serif;font-size:.78rem;font-weight:600;
+  color:var(--text2);cursor:pointer;transition:all .22s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.tab-btn.on{
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  border-color:var(--p1);color:#fff;
+  box-shadow:0 4px 14px rgba(108,59,255,.3);
+}
+.tab-btn:not(.on):hover{border-color:var(--p2);color:var(--p1)}
+
+/* ══ HERO / STATS ROW ══ */
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  padding:16px 18px 0;position:relative;z-index:10;
+}
+.stat-pill{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:16px;padding:12px 10px;text-align:center;
+  box-shadow:var(--shadow);transition:all .22s;
+}
+.stat-pill:hover{border-color:var(--p2);transform:translateY(-2px);box-shadow:var(--shadow2)}
+.stat-pill .val{
+  font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:800;
+  color:var(--p1);display:block;
+}
+.stat-pill .lbl{font-size:.65rem;color:var(--text3);font-weight:600;letter-spacing:.03em;margin-top:2px}
+
+/* ══ PODIUM ══ */
+.podium-wrap{
+  padding:20px 18px 10px;
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:12px;position:relative;z-index:10;
+}
+
+/* Animated particles behind podium */
+.podium-bg{
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;
+}
+.particle{
+  position:absolute;border-radius:50%;opacity:.18;
+  animation:pfloat 6s ease-in-out infinite;
+}
+@keyframes pfloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-14px) scale(1.1)}
+}
+
+.podium-card{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+  background:var(--card);border-radius:22px;
+  border:2px solid var(--border);
+  padding:18px 10px 14px;flex:1;
+  box-shadow:var(--shadow);transition:all .3s;
+  animation:podIn .5s ease both;
+}
+@keyframes podIn{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+.podium-card:nth-child(1){animation-delay:.15s}
+.podium-card:nth-child(2){animation-delay:.05s}
+.podium-card:nth-child(3){animation-delay:.25s}
+
+.podium-card.p1{
+  border-color:var(--gold);
+  background:linear-gradient(160deg,#fffbeb,#fef3c7 60%,#fff);
+  box-shadow:0 8px 30px rgba(245,158,11,.2);
+  transform:scale(1.04);
+  flex:1.1;
+}
+.podium-card.p2{
+  border-color:var(--silver);
+  background:linear-gradient(160deg,#f8fafc,#f1f5f9 60%,#fff);
+  box-shadow:0 6px 20px rgba(148,163,184,.18);
+}
+.podium-card.p3{
+  border-color:var(--bronze);
+  background:linear-gradient(160deg,#fff7ed,#ffedd5 60%,#fff);
+  box-shadow:0 6px 20px rgba(180,83,9,.15);
+}
+
+.pod-crown{
+  font-size:1.5rem;margin-bottom:4px;
+  animation:crownBob 2.5s ease-in-out infinite;
+}
+@keyframes crownBob{
+  0%,100%{transform:translateY(0) rotate(-4deg)}
+  50%{transform:translateY(-5px) rotate(4deg)}
+}
+.p1 .pod-crown{font-size:1.8rem}
+
+.pod-av{
+  position:relative;width:64px;height:64px;margin-bottom:10px;
+}
+.p1 .pod-av{width:76px;height:76px}
+.pod-av img{
+  width:100%;height:100%;border-radius:50%;object-fit:cover;
+  border:3px solid var(--silver);
+  box-shadow:0 4px 14px rgba(0,0,0,.1);transition:transform .3s;
+}
+.p1 .pod-av img{border-color:var(--gold);border-width:3.5px;box-shadow:0 4px 18px rgba(245,158,11,.3)}
+.p2 .pod-av img{border-color:var(--silver)}
+.p3 .pod-av img{border-color:var(--bronze)}
+.podium-card:hover .pod-av img{transform:scale(1.06)}
+
+/* Online dot on avatar */
+.pod-dot{
+  position:absolute;bottom:4px;right:4px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--green);border:2.5px solid #fff;
+}
+
+.pod-name{
+  font-family:'Sora',sans-serif;font-size:.78rem;font-weight:700;
+  color:var(--text);text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:90px;margin-bottom:5px;
+}
+.pod-pts{
+  font-family:'Sora',sans-serif;font-size:.88rem;font-weight:800;
+  color:var(--p1);
+}
+.p1 .pod-pts{color:var(--acc);font-size:1rem}
+.pod-sub{font-size:.62rem;color:var(--text3);margin-top:2px}
+
+.pod-rank-badge{
+  position:absolute;top:-10px;right:-8px;
+  width:26px;height:26px;border-radius:50%;
+  font-family:'Sora',sans-serif;font-size:.72rem;font-weight:800;
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.p1 .pod-rank-badge{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+.p2 .pod-rank-badge{background:linear-gradient(135deg,#94a3b8,#cbd5e1)}
+.p3 .pod-rank-badge{background:linear-gradient(135deg,#b45309,#d97706)}
+
+/* Podium base */
+.pod-base{
+  width:100%;border-radius:0 0 12px 12px;
+  display:flex;align-items:center;justify-content:center;
+  padding:6px 0 0;margin-top:8px;
+}
+.pod-bar{
+  width:70%;border-radius:8px 8px 0 0;
+  background:linear-gradient(180deg,rgba(108,59,255,.12),rgba(108,59,255,.04));
+  border-top:2px solid rgba(108,59,255,.15);
+}
+.p1 .pod-bar{background:linear-gradient(180deg,rgba(245,158,11,.2),rgba(245,158,11,.05));border-top-color:rgba(245,158,11,.3);height:32px}
+.p2 .pod-bar{height:22px}
+.p3 .pod-bar{height:16px}
+
+/* ══ SECTION DIVIDER ══ */
+.sec-div{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Sora',sans-serif;font-size:.8rem;font-weight:700;
+  color:var(--text);padding:16px 18px 10px;
+  position:relative;z-index:10;
+}
+.sec-div::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--border),transparent)}
+.sec-icon{
+  width:26px;height:26px;border-radius:8px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(108,59,255,.25);
+}
+
+/* ══ RANK LIST ══ */
+.rank-list{
+  padding:0 18px;display:flex;flex-direction:column;gap:9px;
+  position:relative;z-index:10;
+}
+
+.r-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:16px;
+  padding:12px 14px;
+  display:flex;align-items:center;gap:11px;
+  cursor:pointer;
+  transition:all .22s;
+  box-shadow:0 2px 10px rgba(108,59,255,.05);
+  animation:rIn .3s ease both;
+  position:relative;overflow:hidden;
+}
+@keyframes rIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
+.r-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:transparent;transition:background .22s;border-radius:0 3px 3px 0;
+}
+.r-card:hover{border-color:var(--p2);transform:translateX(5px);box-shadow:var(--shadow2)}
+.r-card:hover::before{background:linear-gradient(180deg,var(--p1),var(--teal))}
+
+.r-card.me{
+  background:linear-gradient(135deg,rgba(108,59,255,.06),rgba(139,92,246,.04));
+  border-color:var(--p1);border-width:2px;
+}
+.r-card.me::before{background:linear-gradient(180deg,var(--p1),var(--p3))}
+
+/* Rank number */
+.r-num{
+  width:32px;flex-shrink:0;
+  font-family:'Sora',sans-serif;font-size:.78rem;font-weight:800;
+  color:var(--text3);text-align:center;
+}
+.r-num.top{color:var(--p1)}
+
+/* Avatar */
+.r-av-wrap{position:relative;flex-shrink:0}
+.r-av-wrap img{
+  width:46px;height:46px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--border);transition:transform .22s;
+  background:var(--bg2);
+}
+.r-card:hover .r-av-wrap img{transform:scale(1.05)}
+.r-card.me .r-av-wrap img{border-color:var(--p1)}
+
+.r-online{
+  position:absolute;bottom:1px;right:1px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--green);border:2px solid #fff;
+}
+
+/* Info */
+.r-info{flex:1;min-width:0}
+.r-name{
+  font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;
+  color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.r-meta{font-size:.68rem;color:var(--text3);margin-top:3px;display:flex;align-items:center;gap:8px}
+.r-meta i{font-size:.6rem;color:var(--p3)}
+
+/* Score */
+.r-score-wrap{flex-shrink:0;text-align:right}
+.r-score{
+  font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;
+  color:var(--acc);display:block;
+}
+.r-score-lbl{font-size:.6rem;color:var(--text3);font-weight:600;letter-spacing:.04em}
+
+/* Progress bar inside card */
+.r-prog-wrap{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:transparent;border-radius:0 0 14px 14px;overflow:hidden;
+}
+.r-prog{
+  height:100%;border-radius:0 0 14px 14px;
+  background:linear-gradient(90deg,var(--p1),var(--teal));
+  transform-origin:left;transform:scaleX(0);
+  transition:transform .6s ease .1s;
+}
+.r-card.vis .r-prog{transform:scaleX(var(--pw,0))}
+
+/* ME badge */
+.me-tag{
+  font-size:.58rem;font-weight:700;letter-spacing:.04em;
+  color:var(--p1);background:rgba(108,59,255,.1);
+  border:1px solid rgba(108,59,255,.2);
+  border-radius:20px;padding:2px 7px;margin-left:4px;
+  vertical-align:middle;white-space:nowrap;
+}
+
+/* Trend arrow */
+.r-trend{font-size:.72rem;flex-shrink:0;width:20px;text-align:center}
+.trend-up{color:var(--green)}
+.trend-dn{color:var(--rose)}
+.trend-eq{color:var(--text3)}
+
+/* ══ SEARCH BAR ══ */
+.search-wrap{
+  padding:14px 18px 6px;position:relative;z-index:10;
+}
+.search-inner{
+  display:flex;align-items:center;gap:10px;
+  background:var(--card);border:2px solid var(--border);
+  border-radius:14px;padding:10px 14px;
+  box-shadow:var(--shadow);transition:all .22s;
+}
+.search-inner:focus-within{border-color:var(--p1);box-shadow:0 0 0 3px rgba(108,59,255,.1)}
+.search-inner i{color:var(--text3);font-size:.85rem;flex-shrink:0}
+.search-inner input{
+  flex:1;border:none;outline:none;background:transparent;
+  font-family:'Hind Siliguri',sans-serif;font-size:.88rem;color:var(--text);
+}
+.search-inner input::placeholder{color:var(--text3)}
+
+/* ══ STICKY MY RANK BAR ══ */
+.my-rank-bar{
+  position:fixed;
+  bottom:var(--nav-h);left:0;right:0;z-index:180;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(16px);
+  border-top:2px solid var(--border);
+  padding:10px 18px;
+  display:flex;align-items:center;gap:11px;
+  box-shadow:0 -4px 20px rgba(108,59,255,.1);
+  animation:barUp .4s ease both;
+}
+@keyframes barUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+.mrb-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.mrb-rank{
+  font-family:'Sora',sans-serif;font-size:.85rem;font-weight:800;
+  color:var(--p1);background:rgba(108,59,255,.1);
+  border:1.5px solid rgba(108,59,255,.2);
+  border-radius:10px;padding:5px 9px;flex-shrink:0;
+}
+.mrb-av{width:38px;height:38px;border-radius:50%;border:2px solid var(--p1);object-fit:cover;flex-shrink:0}
+.mrb-info{flex:1;min-width:0}
+.mrb-name{font-family:'Sora',sans-serif;font-size:.8rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrb-meta{font-size:.65rem;color:var(--text3);margin-top:1px}
+.mrb-score{
+  font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:800;
+  color:var(--acc);flex-shrink:0;
+}
+.mrb-lbl{font-size:.58rem;color:var(--text3);display:block;text-align:right;font-weight:600;letter-spacing:.04em}
+
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(20px);
+  border-top:2px solid var(--border);
+  display:flex;justify-content:space-around;align-items:center;
+  box-shadow:0 -4px 20px rgba(108,59,255,.1);
+}
+.nav-it{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--text3);font-size:.6rem;font-weight:600;letter-spacing:.03em;
+  text-decoration:none;padding:8px 14px;border-radius:14px;
+  transition:all .25s;cursor:pointer;
+}
+.nav-it i{font-size:1.2rem;transition:transform .3s}
+.nav-it:hover i,.nav-it:hover{color:var(--p1)}
+.nav-it:hover i{transform:translateY(-3px)}
+.nav-it.on{
+  color:var(--p1);
+  background:linear-gradient(135deg,rgba(108,59,255,.1),rgba(139,92,246,.07));
+  border:1.5px solid rgba(108,59,255,.2);
+}
+.nav-it.on i{filter:drop-shadow(0 0 6px rgba(108,59,255,.4))}
+
+/* ══ EMPTY / LOADING ══ */
+.spinner-wrap{display:flex;justify-content:center;padding:40px;position:relative;z-index:10}
+.spinner{
+  width:38px;height:38px;border-radius:50%;
+  border:3px solid var(--border);border-top-color:var(--p1);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.empty{
+  text-align:center;padding:40px 20px;color:var(--text3);
+  font-size:.9rem;position:relative;z-index:10;
+}
+.empty i{font-size:2rem;display:block;margin-bottom:10px;color:var(--border2)}
+
+/* ══ TOAST ══ */
+#toastBox{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{
+  background:#fff;border-radius:24px;padding:10px 20px;
+  font-size:.82rem;font-weight:600;color:var(--text);
+  box-shadow:0 8px 24px rgba(108,59,255,.18);
+  border:1.5px solid var(--border);
+  animation:toastIn .3s ease both;
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+}
+@keyframes toastIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.toast.success{border-color:var(--green);background:#f0fdf4;color:#065f46}
+.toast.warn{border-color:var(--acc);background:#fffbeb;color:#92400e}
+.toast.err{border-color:var(--rose);background:#fff1f2;color:#9f1239}
+
+/* ══ CONFETTI (top 3) ══ */
+.confetti-piece{
+  position:fixed;top:-10px;pointer-events:none;z-index:500;
+  width:8px;height:8px;border-radius:2px;
+  animation:confettiFall linear forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0);opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+
+/* ══ RANK CHANGE BADGE ══ */
+.badge-new{
+  font-size:.58rem;font-weight:700;
+  background:linear-gradient(135deg,var(--green),#34d399);
+  color:#fff;border-radius:20px;padding:2px 7px;
+  margin-left:4px;vertical-align:middle;
+}
+
+@media(max-width:400px){
+  .podium-wrap{gap:8px;padding:14px 14px 6px}
+  .pod-name{max-width:72px;font-size:.72rem}
+  .rank-list{padding:0 14px}
+  .stats-row{padding:12px 14px 0}
+}
+</style>
+</head>
+<body>
+
+<div id="toastBox"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-left">
+    <a class="back-btn" href="home.html"><i class="fas fa-arrow-left"></i></a>
+    <div class="hdr-title">🏆 লিডার<span>বোর্ড</span></div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-badge" id="hdrBadge"><i class="fas fa-users"></i><span id="totalCount">—</span> জন</div>
+  </div>
+</header>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn on" onclick="switchTab('all',this)" id="tab-all">
+    <i class="fas fa-globe"></i> সবাই
+  </button>
+  <button class="tab-btn" onclick="switchTab('weekly',this)" id="tab-weekly">
+    <i class="fas fa-calendar-week"></i> সাপ্তাহিক
+  </button>
+  <button class="tab-btn" onclick="switchTab('monthly',this)" id="tab-monthly">
+    <i class="fas fa-calendar-alt"></i> মাসিক
+  </button>
+</div>
+
+<!-- STATS ROW -->
+<div class="stats-row">
+  <div class="stat-pill">
+    <span class="val" id="statExams">—</span>
+    <div class="lbl">মোট পরীক্ষা</div>
+  </div>
+  <div class="stat-pill">
+    <span class="val" id="statAvg">—</span>
+    <div class="lbl">গড় স্কোর</div>
+  </div>
+  <div class="stat-pill">
+    <span class="val" id="statTop">—</span>
+    <div class="lbl">শীর্ষে আছেন</div>
+  </div>
+</div>
+
+<!-- PODIUM -->
+<div class="podium-wrap" id="podiumWrap">
+  <!-- 2nd -->
+  <div class="podium-card p2" id="pod2">
+    <span class="pod-crown">🥈</span>
+    <div class="pod-rank-badge">2</div>
+    <div class="pod-av">
+      <img id="pod2-img" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+    </div>
+    <div class="pod-name" id="pod2-name">লোড হচ্ছে</div>
+    <div class="pod-pts" id="pod2-pts">—</div>
+    <div class="pod-sub" id="pod2-sub">গড়: —</div>
+    <div class="pod-base"><div class="pod-bar"></div></div>
+  </div>
+  <!-- 1st -->
+  <div class="podium-card p1" id="pod1">
+    <span class="pod-crown">👑</span>
+    <div class="pod-rank-badge">1</div>
+    <div class="pod-av">
+      <img id="pod1-img" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+      <div class="pod-dot"></div>
+    </div>
+    <div class="pod-name" id="pod1-name">লোড হচ্ছে</div>
+    <div class="pod-pts" id="pod1-pts">—</div>
+    <div class="pod-sub" id="pod1-sub">গড়: —</div>
+    <div class="pod-base"><div class="pod-bar"></div></div>
+  </div>
+  <!-- 3rd -->
+  <div class="podium-card p3" id="pod3">
+    <span class="pod-crown">🥉</span>
+    <div class="pod-rank-badge">3</div>
+    <div class="pod-av">
+      <img id="pod3-img" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+    </div>
+    <div class="pod-name" id="pod3-name">লোড হচ্ছে</div>
+    <div class="pod-pts" id="pod3-pts">—</div>
+    <div class="pod-sub" id="pod3-sub">গড়: —</div>
+    <div class="pod-base"><div class="pod-bar"></div></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <i class="fas fa-search"></i>
+    <input type="text" id="searchInput" placeholder="নাম দিয়ে খুঁজুন...">
+  </div>
+</div>
+
+<!-- RANK LIST -->
+<div class="sec-div"><div class="sec-icon">📋</div>৪ম থেকে ৫০তম</div>
+<div class="rank-list" id="rankList">
+  <div class="spinner-wrap"><div class="spinner"></div></div>
+</div>
+
+<!-- MY RANK STICKY BAR -->
+<div class="my-rank-bar" id="myBar" style="display:none">
+  <div class="mrb-left">
+    <div class="mrb-rank" id="mrbRank">#—</div>
+    <img class="mrb-av" id="mrbAv" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+    <div class="mrb-info">
+      <div class="mrb-name" id="mrbName">আমার অবস্থান</div>
+      <div class="mrb-meta" id="mrbMeta">গড়: — | পরীক্ষা: —</div>
+    </div>
+  </div>
+  <div>
+    <div class="mrb-score" id="mrbScore">0.0</div>
+    <span class="mrb-lbl">পয়েন্ট</span>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="home.html"        class="nav-it"><i class="fas fa-home"></i>হোম</a>
+  <a href="leaderboard.html" class="nav-it on"><i class="fas fa-trophy"></i>র‍্যাংকিং</a>
+  <a href="notice.html"      class="nav-it"><i class="fas fa-bullhorn"></i>নোটিশ</a>
+  <a href="support.html" class="nav-it"><i class="fas fa-headset"></i><span>সাপোর্ট</span></a>
+  <a href="profile.html"     class="nav-it"><i class="fas fa-user-circle"></i>প্রোফাইল</a>
+</nav>
+
+<script type="module">
+import { initializeApp }    from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, limit, onSnapshot, doc, getDoc, getCountFromServer, where } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+const app  = initializeApp({
+  apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",
+  authDomain:"sbopnporn.firebaseapp.com",
+  projectId:"sbopnporn",
+  storageBucket:"sbopnporn.firebasestorage.app",
+  messagingSenderId:"217423916538",
+  appId:"1:217423916538:web:9f8dc21358c2ad03cec843"
+});
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+let myUid        = null;
+let allUsers     = [];
+let filteredUsers = [];
+let curTab       = 'all';
+let maxPts       = 1;
+let searchVal    = '';
+
+// ── toast ──
+function toast(msg, type='info', dur=3000){
+  const box = document.getElementById('toastBox');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  const icons = {info:'ℹ️', success:'✅', warn:'⚠️', err:'❌'};
+  t.innerHTML = `<span>${icons[type]||'ℹ️'}</span>${msg}`;
+  box.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)}, dur);
+}
+
+// ── confetti ──
+function launchConfetti(){
+  const colors=['#6c3bff','#f59e0b','#0ea5e9','#10b981','#f43f5e','#a78bfa'];
+  for(let i=0;i<40;i++){
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.cssText = `
+      left:${Math.random()*100}vw;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${1.5+Math.random()*2}s;
+      animation-delay:${Math.random()*.8}s;
+      transform:rotate(${Math.random()*360}deg);
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3500);
+  }
+}
+
+// ── search ──
+document.getElementById('searchInput').addEventListener('input', e=>{
+  searchVal = e.target.value.trim().toLowerCase();
+  renderList();
+});
+
+// ── tab switch ──
+window.switchTab = function(tab, btn){
+  curTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderAll();
+};
+
+// ── Auth ──
+onAuthStateChanged(auth, async user=>{
+  if(!user){ window.location.href='index.html'; return; }
+  myUid = user.uid;
+
+  // premium expiry check
+  try{
+    const snap = await getDoc(doc(db,'users',user.uid));
+    if(snap.exists()){
+      const d = snap.data();
+      if(d.isPremium && d.premiumExpiry && new Date() > new Date(d.premiumExpiry)){
+        toast('প্রিমিয়াম মেয়াদ শেষ হয়েছে!','warn');
+      }
+    }
+  }catch(e){}
+
+  loadBoard();
+  loadMyBar(user.uid);
+});
+
+// ── Load leaderboard ──
+function loadBoard(){
+  const q = query(collection(db,'users'), orderBy('points','desc'), limit(50));
+  onSnapshot(q, snap=>{
+    allUsers = [];
+    snap.forEach(d=> allUsers.push({id:d.id,...d.data()}));
+    maxPts = allUsers[0]?.points || 1;
+    document.getElementById('totalCount').textContent = allUsers.length;
+    computeStats();
+    renderAll();
+    if(allUsers.length >= 3) launchConfetti();
+  });
+}
+
+function computeStats(){
+  const total = allUsers.reduce((a,u)=>a+parseInt(u.examCount||0),0);
+  const avgArr = allUsers.map(u=>{
+    const pts = parseFloat(u.points||0);
+    const ex  = parseInt(u.examCount||0);
+    return ex>0? pts/ex : 0;
+  });
+  const overallAvg = avgArr.length? (avgArr.reduce((a,b)=>a+b,0)/avgArr.length).toFixed(1) : '—';
+  const topName = allUsers[0]?.name?.split(' ')[0] || '—';
+  document.getElementById('statExams').textContent = total || '—';
+  document.getElementById('statAvg').textContent   = overallAvg;
+  document.getElementById('statTop').textContent   = topName;
+}
+
+function renderAll(){
+  // Podium
+  if(allUsers[0]) setPod('pod1', allUsers[0]);
+  if(allUsers[1]) setPod('pod2', allUsers[1]);
+  if(allUsers[2]) setPod('pod3', allUsers[2]);
+  renderList();
+}
+
+function setPod(id, u){
+  const pts  = parseFloat(u.points||0);
+  const ex   = parseInt(u.examCount||0);
+  const avg  = ex>0?(pts/ex).toFixed(1):'0.0';
+  const firstName = (u.name||'Student').split(' ')[0];
+  document.getElementById(id+'-img').src  = u.profilePic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+  document.getElementById(id+'-name').textContent = firstName;
+  document.getElementById(id+'-pts').textContent  = pts.toFixed(1)+' pts';
+  document.getElementById(id+'-sub').textContent  = 'গড়: '+avg+' | '+ex+' পরীক্ষা';
+}
+
+function renderList(){
+  const list  = document.getElementById('rankList');
+  const rest  = allUsers.slice(3);
+  const query = searchVal;
+  filteredUsers = query
+    ? allUsers.filter(u=>(u.name||'').toLowerCase().includes(query))
+    : rest;
+
+  const showAll = !!query; // if searching, show from rank 1
+  const display = query ? allUsers.filter(u=>(u.name||'').toLowerCase().includes(query)) : rest;
+
+  if(!display.length){
+    list.innerHTML = `<div class="empty"><i class="fas fa-search"></i>কোনো ফলাফল পাওয়া যায়নি</div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  display.forEach((u,i)=>{
+    const rank   = query ? allUsers.indexOf(u)+1 : i+4;
+    const pts    = parseFloat(u.points||0);
+    const ex     = parseInt(u.examCount||0);
+    const avg    = ex>0?(pts/ex).toFixed(2):'0.00';
+    const isMe   = u.id === myUid;
+    const pw     = Math.min(pts/maxPts, 1).toFixed(3);
+    const trend  = Math.random()>.5?'up':Math.random()>.5?'dn':'eq'; // placeholder (real: compare stored rank)
+
+    const card = document.createElement('div');
+    card.className = 'r-card'+(isMe?' me':'');
+    card.style.animationDelay = Math.min(i*30,300)+'ms';
+    card.style.setProperty('--pw', pw);
+
+    const trendHTML = trend==='up'
+      ? `<div class="r-trend trend-up"><i class="fas fa-arrow-up"></i></div>`
+      : trend==='dn'
+        ? `<div class="r-trend trend-dn"><i class="fas fa-arrow-down"></i></div>`
+        : `<div class="r-trend trend-eq"><i class="fas fa-minus"></i></div>`;
+
+    card.innerHTML = `
+      <div class="r-num ${rank<=10?'top':''}">${rank<=3?['🥇','🥈','🥉'][rank-1]:'#'+rank}</div>
+      <div class="r-av-wrap">
+        <img src="${u.profilePic||'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+        ${isMe?'<div class="r-online"></div>':''}
+      </div>
+      <div class="r-info">
+        <div class="r-name">
+          ${u.name||'Student'}
+          ${isMe?'<span class="me-tag">তুমি</span>':''}
+          ${rank<=3?'<span class="badge-new">NEW</span>':''}
+        </div>
+        <div class="r-meta">
+          <span><i class="fas fa-chart-line"></i> গড়: ${avg}</span>
+          <span><i class="fas fa-file-alt"></i> ${ex}টি পরীক্ষা</span>
+        </div>
+      </div>
+      ${trendHTML}
+      <div class="r-score-wrap">
+        <span class="r-score">${pts.toFixed(1)}</span>
+        <span class="r-score-lbl">পয়েন্ট</span>
+      </div>
+      <div class="r-prog-wrap"><div class="r-prog"></div></div>
+    `;
+    list.appendChild(card);
+  });
+
+  // Intersection Observer for progress bar animation
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis') });
+  },{threshold:.1});
+  list.querySelectorAll('.r-card').forEach(c=>io.observe(c));
+}
+
+// ── My sticky bar ──
+function loadMyBar(uid){
+  onSnapshot(doc(db,'users',uid), async snap=>{
+    const bar = document.getElementById('myBar');
+    bar.style.display='flex';
+    if(!snap.exists()) return;
+    const d   = snap.data();
+    const pts = parseFloat(d.points||0);
+    const ex  = parseInt(d.examCount||0);
+    const avg = ex>0?(pts/ex).toFixed(2):'0.00';
+
+    let rank = '—';
+    try{
+      const cSnap = await getCountFromServer(query(collection(db,'users'),where('points','>',pts)));
+      rank = cSnap.data().count+1;
+    }catch(e){}
+
+    document.getElementById('mrbRank').textContent = '#'+rank;
+    document.getElementById('mrbAv').src   = d.profilePic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+    document.getElementById('mrbName').textContent = (d.name||'User')+' (তুমি)';
+    document.getElementById('mrbMeta').textContent = `গড়: ${avg} | পরীক্ষা: ${ex}`;
+    document.getElementById('mrbScore').textContent = pts.toFixed(1);
+  });
+}
+</script>
+</body>
+</html>
