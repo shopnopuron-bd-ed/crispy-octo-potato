@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সুপার মডেল টেস্ট - স্বপ্নপূরণ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;--p2:#8b5cf6;--p3:#a78bfa;--p4:#ede9fe;
+  --acc:#f59e0b;--acc2:#fbbf24;--acc3:#fef3c7;
+  --teal:#0ea5e9;--green:#10b981;--rose:#f43f5e;
+  --bg:#f0f4ff;--bg2:#e8eeff;--card:#fff;
+  --text:#1e1b4b;--text2:#4c4b73;--text3:#7c7a9e;
+  --border:#ddd8ff;--nav-h:64px;
+  --shadow:0 4px 24px rgba(108,59,255,.10);
+  --shadow2:0 12px 40px rgba(108,59,255,.20);
+  --locked:#94a3b8;
+  --locked-light:#e2e8f0;
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  padding-bottom:90px;
+}
+
+.orb{position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0;animation:orbFloat 8s ease-in-out infinite}
+.orb1{width:320px;height:320px;background:rgba(108,59,255,.09);top:-80px;left:-80px}
+.orb2{width:260px;height:260px;background:rgba(14,165,233,.07);bottom:140px;right:-60px}
+.orb3{width:180px;height:180px;background:rgba(245,158,11,.06);top:45%;left:45%}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-24px) scale(1.05)}}
+
+header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;height:var(--nav-h);
+}
+.hdr-left{display:flex;align-items:center;gap:12px;cursor:pointer}
+.avatar-ring{width:40px;height:40px;border-radius:50%;border:2.5px solid var(--p1);overflow:hidden}
+.avatar-ring img{width:100%;height:100%;object-fit:cover}
+.hdr-user-name{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:800;color:var(--text)}
+.hdr-online{font-size:.62rem;color:var(--green);display:flex;align-items:center;gap:4px}
+.hamburger{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--bg2);border:1.5px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  cursor:pointer;
+}
+.hamburger span{width:20px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.drawer-overlay{
+  position:fixed;inset:0;background:rgba(30,27,75,.35);
+  backdrop-filter:blur(4px);z-index:300;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.drawer-overlay.show{opacity:1;pointer-events:all}
+.drawer{
+  position:fixed;top:0;right:-310px;width:290px;height:100vh;
+  background:var(--card);z-index:301;
+  border-left:2px solid var(--border);
+  transition:right .38s cubic-bezier(.34,1.2,.64,1);
+  display:flex;flex-direction:column;
+}
+.drawer.open{right:0}
+.drawer-top{
+  background:linear-gradient(135deg,var(--p1),var(--p2),var(--teal));
+  padding:50px 20px 22px;position:relative;
+}
+.drawer-avatar{width:56px;height:56px;border-radius:50%;border:3px solid rgba(255,255,255,.5);overflow:hidden;margin-bottom:10px}
+.drawer-avatar img{width:100%;height:100%;object-fit:cover}
+.drawer-name{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:#fff}
+.drawer-email{font-size:.7rem;color:rgba(255,255,255,.75);margin-top:2px}
+.drawer-close{
+  position:absolute;top:14px;right:14px;
+  width:30px;height:30px;border-radius:10px;
+  background:rgba(255,255,255,.2);border:none;color:#fff;cursor:pointer;
+}
+.drawer-body{flex:1;overflow-y:auto;padding:14px 12px}
+.drawer-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:14px;
+  text-decoration:none;color:var(--text2);font-weight:600;font-size:.85rem;
+}
+.drawer-item:hover{background:var(--bg2);color:var(--p1)}
+.drawer-item-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.drawer-pill{font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:20px;margin-left:auto}
+.pill-offer{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
+.drawer-divider{height:1px;background:var(--border);margin:8px 0}
+.drawer-version{text-align:center;font-size:.65rem;color:var(--text3);padding:12px}
+
+.content{position:relative;z-index:10;padding:0 18px;max-width:560px;margin:0 auto}
+.back-row{display:flex;align-items:center;gap:12px;padding:18px 0 8px}
+.back-btn{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--card);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.back-btn:hover{border-color:var(--p1);color:var(--p1)}
+
+.hero-banner{
+  background:linear-gradient(135deg,var(--p1) 0%,var(--p2) 55%,var(--teal) 100%);
+  border-radius:24px;padding:24px 22px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.hero-icon{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.hero-free-tag{background:rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:.68rem;font-weight:800;color:#fff}
+.hero-title{font-family:'Sora',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;margin:14px 0 4px}
+.hero-sub{font-size:.78rem;color:rgba(255,255,255,.8);margin-bottom:16px}
+.hero-stats{display:flex;gap:10px}
+.hero-stat{background:rgba(255,255,255,.15);border-radius:12px;padding:7px 12px;display:flex;align-items:center;gap:6px}
+.hero-stat span{font-size:.72rem;font-weight:700;color:#fff}
+
+.search-wrap{position:relative;margin-bottom:14px}
+.search-input{width:100%;padding:13px 18px 13px 44px;border:2px solid var(--border);border-radius:16px;background:var(--card);outline:none}
+.search-input:focus{border-color:var(--p1)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3)}
+
+.filter-tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px}
+.filter-tabs::-webkit-scrollbar{display:none}
+.ftab{
+  flex-shrink:0;padding:7px 16px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--border);background:var(--card);color:var(--text3);
+}
+.ftab.on{background:linear-gradient(135deg,var(--p1),var(--p2));border-color:transparent;color:#fff}
+
+.progress-card{
+  background:var(--card);border:2px solid var(--border);border-radius:20px;padding:16px 18px;margin-bottom:14px;
+  display:flex;align-items:center;gap:16px;
+}
+.prog-ring-wrap{position:relative;flex-shrink:0}
+.prog-ring{width:62px;height:62px}
+.prog-ring-track{fill:none;stroke:var(--bg2);stroke-width:5}
+.prog-ring-fill{fill:none;stroke:url(#ringGrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:163;stroke-dashoffset:163;transform:rotate(-90deg);transform-origin:50% 50%}
+.prog-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:.78rem;font-weight:800;color:var(--p1)}
+.prog-info{flex:1}
+.prog-title{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:800}
+.prog-bar-wrap{margin-top:8px;background:var(--bg2);border-radius:20px;height:6px;overflow:hidden}
+.prog-bar-fill{height:100%;background:linear-gradient(90deg,var(--p1),var(--teal));border-radius:20px;width:0%}
+
+.sec-label{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;color:var(--text2);padding:4px 0 10px}
+.sec-label::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--border),transparent)}
+
+.test-grid{display:flex;flex-direction:column;gap:10px}
+.test-card{
+  background:var(--card);border:2px solid var(--border);border-radius:18px;padding:16px;
+  cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:14px;
+  position:relative;
+}
+.test-card:hover{border-color:var(--p2);transform:translateX(3px)}
+.test-card.locked{opacity:0.85;background:linear-gradient(135deg,#f8fafc,#f1f5f9)}
+.test-num{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:.95rem;font-weight:800}
+.test-num.default{background:linear-gradient(135deg,var(--p4),rgba(167,139,250,.2));color:var(--p1)}
+.test-num.locked-num{background:var(--locked-light);color:var(--locked)}
+.test-body{flex:1}
+.test-name{font-family:'Sora',sans-serif;font-size:.92rem;font-weight:800;margin-bottom:4px}
+.meta-chip{display:flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;color:var(--text3)}
+.test-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.free-pill{background:linear-gradient(135deg,var(--green),#34d399);color:#fff;font-size:.62rem;font-weight:800;border-radius:20px;padding:3px 10px}
+.lock-pill{background:var(--locked);color:#fff;font-size:.62rem;font-weight:800;border-radius:20px;padding:3px 10px;display:flex;align-items:center;gap:3px}
+.done-pill{background:linear-gradient(135deg,var(--green),#34d399);color:#fff;font-size:.62rem;font-weight:800;border-radius:20px;padding:3px 10px}
+.arrow-btn{width:28px;height:28px;border-radius:10px;background:var(--bg2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--p1);font-size:.7rem}
+
+.model-grid{display:flex;flex-direction:column;gap:10px}
+.model-card{
+  background:var(--card);border:2px solid var(--border);border-radius:18px;padding:16px;
+  cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:14px;
+}
+.model-card.locked{opacity:0.85;background:linear-gradient(135deg,#f8fafc,#f1f5f9)}
+.model-badge{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--p1),var(--p2));display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:#fff}
+.model-body{flex:1}
+.model-name{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:800}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;padding:12px 0 4px;font-size:.72rem;font-weight:700;color:var(--text3)}
+.breadcrumb .bc-item{cursor:pointer;color:var(--p2)}
+.model-hero{background:linear-gradient(135deg,var(--acc) 0%,var(--acc2) 60%,#fcd34d 100%);border-radius:20px;padding:18px 20px;margin-bottom:14px}
+.model-hero-title{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:#fff}
+
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:rgba(255,255,255,.95);backdrop-filter:blur(20px);
+  border-top:2px solid var(--border);
+  display:flex;padding:8px 18px 12px;gap:4px;
+}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border-radius:14px;cursor:pointer;text-decoration:none;font-size:.6rem;font-weight:700;color:var(--text3)}
+.nav-item.active{color:var(--p1);background:var(--p4)}
+.nav-item i{font-size:1.1rem}
+
+#toastBox{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:999;pointer-events:none}
+.toast{background:#fff;border-radius:24px;padding:10px 18px;font-size:.82rem;font-weight:600;box-shadow:0 8px 24px rgba(108,59,255,.18);border:1.5px solid var(--border);margin-bottom:8px}
+.toast.warning{border-color:var(--acc);background:#fffbeb;color:#92400e}
+.no-result{text-align:center;padding:40px 20px;display:none}
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+<div id="toastBox"></div>
+
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6c3bff"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient></defs></svg>
+
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-top">
+    <button class="drawer-close" onclick="closeDrawer()"><i class="fas fa-times"></i></button>
+    <div class="drawer-avatar"><img id="drawerAvatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"></div>
+    <div class="drawer-name" id="drawerName">লোড হচ্ছে...</div>
+    <div class="drawer-email" id="drawerEmail">—</div>
+  </div>
+  <div class="drawer-body">
+    <a href="profile.html" class="drawer-item"><div class="drawer-item-icon" style="background:var(--p4)"><i class="fas fa-user-circle"></i></div>প্রোফাইল <i class="fas fa-chevron-right"></i></a>
+    <a href="home.html" class="drawer-item"><div class="drawer-item-icon" style="background:#f0fdf4"><i class="fas fa-home"></i></div>হোম</a>
+    <a href="notice.html" class="drawer-item"><div class="drawer-item-icon" style="background:#fff7ed"><i class="fas fa-bullhorn"></i></div>নোটিশ</a>
+    <a href="support.html" class="drawer-item"><div class="drawer-item-icon" style="background:#f0f9ff"><i class="fas fa-headset"></i></div>সাপোর্ট</a>
+    <div class="drawer-divider"></div>
+    <a href="subscription.html" class="drawer-item"><div class="drawer-item-icon" style="background:linear-gradient(135deg,var(--acc),var(--acc2))"><i class="fas fa-crown"></i></div>প্রিমিয়াম<span class="drawer-pill pill-offer">OFFER</span></a>
+    <div class="drawer-version"><i class="fas fa-code"></i> ভার্সন ২.০.০</div>
+  </div>
+
+</div>
+
+<header>
+  <div class="hdr-left" onclick="window.location.href='profile.html'">
+    <div class="avatar-ring"><img id="hdrAvatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"></div>
+    <div><div class="hdr-user-name" id="hdrName">লোড হচ্ছে...</div><div class="hdr-online"><i class="fas fa-circle"></i> অনলাইন</div></div>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="openDrawer()"><span></span><span></span><span></span></div>
+</header>
+
+<div class="content">
+  <div class="back-row"><div class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></div><div class="back-page-title" id="pageTitle">হোম / সুপার মডেল টেস্ট</div></div>
+
+  <div id="view-main">
+    <div class="hero-banner"><div class="hero-icon">📋</div><div class="hero-free-tag"><i class="fas fa-gift"></i> সম্পূর্ণ ফ্রি</div>
+      <div class="hero-title">সুপার মডেল টেস্ট সিরিজ</div>
+      <div class="hero-sub">২০টি ফুল মডেল টেস্ট — বিসিএস সহ সকল প্রতিযোগিতামূলক পরীক্ষার প্রস্তুতি নিন</div>
+      <div class="hero-stats"><div class="hero-stat"><i class="fas fa-layer-group"></i><span>২০টি টেস্ট</span></div><div class="hero-stat"><i class="fas fa-question-circle"></i><span>১০০০+ প্রশ্ন</span></div><div class="hero-stat"><i class="fas fa-clock"></i><span>৬০ মিনিট/টেস্ট</span></div></div>
+    </div>
+
+    <div class="progress-card">
+      <div class="prog-ring-wrap"><svg class="prog-ring" viewBox="0 0 62 62"><circle class="prog-ring-track" cx="31" cy="31" r="26"/><circle class="prog-ring-fill" id="ringFill" cx="31" cy="31" r="26"/></svg><div class="prog-pct" id="progPct">০%</div></div>
+      <div class="prog-info"><div class="prog-title">আপনার অগ্রগতি</div><div class="prog-sub" id="progSub">০/২০ টেস্ট সম্পন্ন</div><div class="prog-bar-wrap"><div class="prog-bar-fill" id="progBar"></div></div></div>
+    </div>
+
+    <div class="search-wrap"><i class="fas fa-search search-icon"></i><input class="search-input" id="searchInput" placeholder="টেস্ট খুঁজুন..." oninput="handleSearch()"></div>
+    <div class="filter-tabs"><div class="ftab on" onclick="filterTests('all',this)">সব</div><div class="ftab" onclick="filterTests('done',this)">সম্পন্ন</div><div class="ftab" onclick="filterTests('pending',this)">বাকি</div></div>
+    <div class="sec-label"><i class="fas fa-list-check"></i>মডেল টেস্ট সমূহ</div>
+    <div class="test-grid" id="testGrid"></div>
+    <div class="no-result" id="noResult">🔍 কোনো টেস্ট পাওয়া যায়নি</div>
+  </div>
+
+  <div id="view-models" style="display:none">
+    <div class="breadcrumb"><span class="bc-item" onclick="showMain()"><i class="fas fa-home"></i> সব টেস্ট</span><i class="fas fa-chevron-right"></i><span class="bc-cur" id="bcCurrent">সুপার মডেল টেস্ট ১</span></div>
+    <div class="model-hero"><div class="model-hero-title" id="modelHeroTitle">সুপার মডেল টেস্ট ১</div></div>
+    <div class="sec-label"><i class="fas fa-layer-group"></i>মডেল বেছে নিন</div>
+    <div class="model-grid" id="modelGrid"></div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="home.html"        class="nav-item"><i class="fas fa-home"></i><span>হোম</span></a>
+  <a href="leaderboard.html" class="nav-item active"><i class="fas fa-trophy"></i><span>র‍্যাংকিং</span></a>
+  <a href="notice.html"      class="nav-item"><i class="fas fa-bullhorn"></i><span>নোটিশ</span></a>
+  <a href="support.html"     class="nav-item"><i class="fas fa-headset"></i><span>সাপোর্ট</span></a>
+  <a href="profile.html"     class="nav-item"><i class="fas fa-user-circle"></i><span>প্রোফাইল</span></a>
+</nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+const app = initializeApp({apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",authDomain:"sbopnporn.firebaseapp.com",projectId:"sbopnporn",storageBucket:"sbopnporn.firebasestorage.app",messagingSenderId:"217423916538",appId:"1:217423916538:web:9f8dc21358c2ad03cec843"});
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let isPremiumUser = false;
+let completedTests = new Set();
+let activeFilter = 'all';
+let searchVal = '';
+
+function toast(msg,type='warning'){const box=document.getElementById('toastBox');const t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`<span>⚠️</span>${msg}`;box.appendChild(t);setTimeout(()=>{t.remove()},3000);}
+window.openDrawer=function(){document.getElementById('drawer').classList.add('open');document.getElementById('drawerOverlay').classList.add('show');document.getElementById('hamburger').classList.add('open');}
+window.closeDrawer=function(){document.getElementById('drawer').classList.remove('open');document.getElementById('drawerOverlay').classList.remove('show');document.getElementById('hamburger').classList.remove('open');}
+window.goBack=function(){const vm=document.getElementById('view-models');if(vm.style.display!=='none'){showMain();return;}if(document.referrer&&document.referrer.includes(window.location.hostname)) history.back();else window.location.href='home.html';}
+
+function setProgress(){let done=completedTests.size;const pct=Math.round(done/20*100);const circumference=163;const offset=circumference-(pct/100)*circumference;const fill=document.getElementById('ringFill');if(fill)fill.style.strokeDashoffset=offset;document.getElementById('progBar').style.width=pct+'%';document.getElementById('progPct').textContent=pct+'%';document.getElementById('progSub').textContent=done+'/'+20+' টেস্ট সম্পন্ন';}
+
+function startTest(testNum){if(!isPremiumUser){toast(`টেস্ট ${testNum} দেখতে প্রিমিয়াম সাবস্ক্রিপশন প্রয়োজন!`,'warning');return;}if(testNum===1){showModels(1);}else{window.location.href=`exam.html?cat=SuperModel&val=${testNum}`;}}
+
+function buildTestList(){const grid=document.getElementById('testGrid');const noRes=document.getElementById('noResult');grid.innerHTML='';let count=0;for(let i=1;i<=20;i++){const isDone=completedTests.has(i);if(activeFilter==='done'&&!isDone)continue;if(activeFilter==='pending'&&isDone)continue;const name=`সুপার মডেল টেস্ট ${i}`;if(searchVal&&!name.includes(searchVal))continue;count++;const card=document.createElement('div');card.className=`test-card ${!isPremiumUser?'locked':''}`;card.innerHTML=`<div class="test-num ${isPremiumUser?'default':'locked-num'}">${i}</div><div class="test-body"><div class="test-name">${name}</div><div class="test-meta"><div class="meta-chip"><i class="fas fa-clock"></i>৬০ মিনিট</div>${isDone?'<div class="meta-chip"><i class="fas fa-check-circle"></i>সম্পন্ন</div>':''}</div></div><div class="test-right">${isPremiumUser?`<span class="free-pill">ফ্রি</span>${isDone?'<span class="done-pill">সম্পন্ন</span>':''}<div class="arrow-btn"><i class="fas fa-chevron-right"></i></div>`:`<span class="lock-pill"><i class="fas fa-lock"></i> প্রিমিয়াম প্রয়োজন</span><div class="arrow-btn" style="opacity:0.5"><i class="fas fa-lock"></i></div>`}</div>`;card.onclick=(()=>{if(isPremiumUser){if(i===1)showModels(1);else window.location.href=`exam.html?cat=SuperModel&val=${i}`;}else{toast(`প্রিমিয়াম সাবস্ক্রাইব করে টেস্ট ${i} আনলক করুন!`,'warning');}});grid.appendChild(card);}noRes.style.display=count===0?'block':'none';}
+
+function showModels(testNum){document.getElementById('view-main').style.display='none';document.getElementById('view-models').style.display='block';document.getElementById('bcCurrent').textContent='সুপার মডেল টেস্ট '+testNum;document.getElementById('modelHeroTitle').textContent='সুপার মডেল টেস্ট '+testNum;buildModelList(testNum);}
+window.showMain=function(){document.getElementById('view-main').style.display='block';document.getElementById('view-models').style.display='none';buildTestList();};
+
+function buildModelList(testNum){const grid=document.getElementById('modelGrid');grid.innerHTML='';for(let m=1;m<=5;m++){const card=document.createElement('div');card.className=`model-card ${!isPremiumUser?'locked':''}`;card.innerHTML=`<div class="model-badge">${m}</div><div class="model-body"><div class="model-name">মডেল টেস্ট ${m}</div><div class="model-meta"><div class="meta-chip"><i class="fas fa-question-circle"></i>৫০ প্রশ্ন</div><span class="free-pill">ফ্রি</span></div></div><div class="test-right">${isPremiumUser?`<div class="arrow-btn"><i class="fas fa-chevron-right"></i></div>`:`<span class="lock-pill"><i class="fas fa-lock"></i> প্রিমিয়াম প্রয়োজন</span>`}</div>`;card.onclick=()=>{if(isPremiumUser)window.location.href=`exam.html?cat=SuperModel&val=1&model=${m}`;else toast('প্রিমিয়াম সাবস্ক্রাইব করে মডেল আনলক করুন!','warning');};grid.appendChild(card);}}
+
+window.filterTests=function(f,el){activeFilter=f;document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));el.classList.add('on');buildTestList();};
+window.handleSearch=function(){searchVal=document.getElementById('searchInput').value;buildTestList();};
+
+onAuthStateChanged(auth,async user=>{if(!user){window.location.href='index.html';return;}try{const snap=await getDoc(doc(db,'users',user.uid));if(snap.exists()){const d=snap.data();if(d.isPremium&&d.premiumExpiry&&new Date()>new Date(d.premiumExpiry)){await updateDoc(doc(db,'users',user.uid),{isPremium:false,premiumExpiry:null});toast('প্রিমিয়াম মেয়াদ শেষ হয়েছে','warning');isPremiumUser=false;}else if(d.isPremium){isPremiumUser=true;}else{isPremiumUser=false;}if(d.completedTests)completedTests=new Set(d.completedTests);const name=d.name||user.displayName||'User';const email=d.email||user.email||'';const pic=d.profilePic||'https://cdn-icons-png.flaticon.com/512/149/149071.png';document.getElementById('hdrName').textContent=name;document.getElementById('drawerName').textContent=name;document.getElementById('drawerEmail').textContent=email;document.getElementById('hdrAvatar').src=pic;document.getElementById('drawerAvatar').src=pic;}}catch(e){}finally{setProgress();buildTestList();}});
+</script>
+</body>
+</html>

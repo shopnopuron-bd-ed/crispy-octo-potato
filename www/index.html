@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>স্বপ্নপূরণ - লগইন | স্মার্ট প্রস্তুতির নতুন অভিজ্ঞতা</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ===== আপনার বিদ্যমান CSS (অপরিবর্তিত) ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --p1:#6c3bff;--p2:#8b5cf6;--p3:#a78bfa;--p4:#ede9fe;
+  --acc:#f59e0b;--acc2:#fbbf24;--teal:#0ea5e9;--green:#10b981;--rose:#f43f5e;
+  --bg:#f0f4ff;--bg2:#e8eeff;--card:#ffffff;
+  --text:#1e1b4b;--text2:#4c4b73;--text3:#7c7a9e;
+  --border:#ddd8ff;
+  --shadow:0 10px 30px rgba(108,59,255,.05);
+  --shadow3:0 25px 50px -12px rgba(108,59,255,.15);
+  --glass:rgba(255,255,255,0.85);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Hind Siliguri',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;animation:orbFloat 12s ease-in-out infinite;will-change:transform}
+.orb1{width:350px;height:350px;background:rgba(108,59,255,.12);top:-100px;left:-100px}
+.orb2{width:300px;height:300px;background:rgba(14,165,233,.1);bottom:100px;right:-80px;animation-delay:-4s}
+.orb3{width:200px;height:200px;background:rgba(245,158,11,.08);top:40%;left:30%;animation-delay:-8s}
+@keyframes orbFloat{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(0,-30px,0) scale(1.05)}}
+
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(108,59,255,.1);display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px}
+.hdr-brand{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+.brand-dot{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--p1),var(--p2));display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 4px 12px rgba(108,59,255,.25)}
+.brand-name{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:800;color:var(--text)}
+.brand-name span{color:var(--p1)}
+.brand-tag{font-size:.62rem;color:var(--text3)}
+
+.promo-notice{margin:16px 18px 12px;background:linear-gradient(135deg,#6c3bff,#8b5cf6,#0ea5e9);border-radius:20px;overflow:hidden;box-shadow:0 15px 30px -12px rgba(108,59,255,0.3);position:relative;animation:fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) both;will-change:transform, opacity}
+.promo-glow{position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,rgba(255,255,255,0.2) 0%,transparent 60%);pointer-events:none}
+.promo-content{position:relative;padding:18px 20px;display:flex;align-items:center;flex-wrap:wrap;gap:14px}
+.promo-icon{width:55px;height:55px;background:rgba(255,255,255,0.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border:1.5px solid rgba(255,255,255,0.4);flex-shrink:0}
+.promo-text{flex:1;min-width:160px}
+.promo-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:#fff;margin-bottom:4px}
+.promo-desc{font-size:0.7rem;color:rgba(255,255,255,0.92)}
+
+.main-wrap{display:flex;align-items:center;justify-content:center;padding:16px 20px 40px}
+.auth-card{max-width:480px;width:100%;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.5);border-radius:24px;padding:36px 32px 40px;box-shadow:var(--shadow3);animation:fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.1s both;position:relative;will-change:transform, opacity}
+.avatar-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
+.avatar{width:70px;height:70px;background:linear-gradient(135deg,var(--p4),rgba(108,59,255,.2));border:2px solid var(--p1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--p1);box-shadow:0 8px 20px rgba(108,59,255,.15)}
+.card-title{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;text-align:center;color:var(--text);margin-bottom:6px}
+.card-subtitle{font-size:.8rem;text-align:center;color:var(--text3);margin-bottom:28px}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes fadeOutDown {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to { opacity: 0; transform: translate3d(0, 20px, 0); }
+}
+
+.field-group{display:flex;flex-direction:column;gap:16px;margin-bottom:20px}
+.field{position:relative}
+.field-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:1rem}
+.field input{width:100%;padding:14px 18px 14px 48px;background:rgba(240,244,255,0.6);border:1px solid var(--border);border-radius:16px;font-family:'Hind Siliguri',sans-serif;font-size:.95rem;color:var(--text);outline:none;transition:all .25s ease}
+.field input:focus{border-color:var(--p1);box-shadow:0 0 0 4px rgba(108,59,255,.08);background:#fff}
+.eye-btn{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:0}
+.eye-btn:hover{color:var(--p1)}
+
+.signup-fields{overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease}
+.signup-fields.open{max-height:250px;opacity:1}
+.signup-inner{display:flex;flex-direction:column;gap:14px;padding-bottom:6px}
+
+.btn-main{width:100%;padding:15px;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border:none;border-radius:16px;font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.25s cubic-bezier(0.25, 1, 0.5, 1);margin-top:8px;box-shadow:0 6px 20px rgba(108,59,255,.25);position:relative;overflow:hidden}
+.btn-main:hover{box-shadow:0 12px 24px rgba(108,59,255,.35);transform:translate3d(0,-1px,0)}
+.btn-main:active{transform:scale(0.98)}
+.btn-loader{display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;margin:0 auto;animation:spin 0.6s linear infinite}
+
+.social-section{margin:24px 0 16px}
+.divider{display:flex;align-items:center;gap:12px;margin:16px 0 20px;color:var(--text3);font-size:.75rem;font-weight:500}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.social-buttons{display:flex;gap:14px}
+
+.google-btn, .fb-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:13px 18px;border-radius:16px;font-size:.88rem;font-weight:700;
+  cursor:pointer;transition:all 0.2s ease;
+  border:1px solid var(--border);background:#fff;color:var(--text);
+  font-family:'Hind Siliguri',sans-serif;position:relative;overflow:hidden;
+}
+.google-btn:hover{background:#f8f9fa;border-color:#db4437;color:#db4437;transform:scale(1.02);box-shadow:0 6px 15px rgba(219,68,55,.1)}
+.fb-btn:hover{background:#f8f9fa;border-color:#1877f2;color:#1877f2;transform:scale(1.02);box-shadow:0 6px 15px rgba(24,119,242,.1)}
+.google-btn:active, .fb-btn:active{transform:scale(0.98)}
+.google-icon{width:22px;height:22px;flex-shrink:0}
+@media(max-width:480px){.social-buttons{flex-direction:column;gap:12px}}
+
+.redirect-overlay{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(255,255,255,0.4);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);
+  flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  transition:opacity 0.3s ease;
+}
+.redirect-overlay.show{display:flex}
+.redirect-spinner{width:50px;height:50px;border:4px solid rgba(108,59,255,0.1);border-top-color:var(--p1);border-radius:50%;animation:spin 0.8s linear infinite}
+.redirect-text{font-family:'Hind Siliguri',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text)}
+.redirect-sub{font-size:.85rem;color:var(--text3);font-weight:500}
+
+.toast{
+  position:fixed;top:24px;left:50%;transform:translate3d(-50%, -20px, 0);
+  opacity:0;z-index:10000;padding:14px 24px;border-radius:16px;
+  font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:12px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.08);
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events:none;width:calc(100% - 36px);max-width:400px;
+}
+.toast.show{opacity:1;transform:translate3d(-50%, 0, 0)}
+.toast.error{background:#fff;border-left:4px solid var(--rose);color:var(--rose);box-shadow:0 10px 25px rgba(244,63,94,0.15)}
+.toast.success{background:#fff;border-left:4px solid var(--green);color:var(--green);box-shadow:0 10px 25px rgba(16,185,129,0.15)}
+.toast.warning{background:#fff;border-left:4px solid var(--acc);color:var(--acc);box-shadow:0 10px 25px rgba(245,158,11,0.15)}
+.toast.info{background:#fff;border-left:4px solid var(--p1);color:var(--p1);box-shadow:0 10px 25px rgba(108,59,255,0.15)}
+
+.card-links{text-align:center;margin-top:20px}
+.card-links p{font-size:.82rem;color:var(--text3);margin-bottom:8px}
+.link-btn{background:none;border:none;color:var(--p1);font-weight:700;cursor:pointer;font-family:inherit;font-size:.82rem;transition:color 0.2s}
+.link-btn:hover{color:var(--p2);text-decoration:none}
+.reset-btn{background:none;border:none;color:var(--text3);font-size:.72rem;cursor:pointer;margin-top:6px;transition:color 0.2s}
+.reset-btn:hover{color:var(--p1)}
+
+.floating-badge{position:fixed;bottom:16px;left:50%;transform:translate3d(-50%,0,0);background:rgba(255,255,255,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:50px;padding:8px 24px;display:flex;gap:24px;font-size:.7rem;color:var(--text2);z-index:50;box-shadow:var(--shadow)}
+.floating-badge i{color:var(--p1);margin-right:5px}
+@media(max-width:480px){.floating-badge{display:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="redirect-overlay" id="redirectOverlay">
+  <div class="redirect-spinner"></div>
+  <div class="redirect-text" id="overlayMainText">Google-এ যাচ্ছে...</div>
+  <div class="redirect-sub" id="overlaySubText">একটু অপেক্ষা করুন</div>
+</div>
+
+<header>
+  <div class="hdr-brand" id="headerBrand">
+    <div class="brand-dot">🎯</div>
+    <div>
+      <div class="brand-name">স্বপ্ন<span>পূরণ</span></div>
+      <div class="brand-tag">তোমার সাফল্যের সঙ্গী</div>
+    </div>
+  </div>
+</header>
+
+<div class="promo-notice">
+  <div class="promo-glow"></div>
+  <div class="promo-content">
+    <div class="promo-icon">🏆</div>
+    <div class="promo-text">
+      <div class="promo-title">স্মার্ট প্রস্তুতির নতুন অভিজ্ঞতা</div>
+      <div class="promo-desc">বিশ্ববিদ্যালয় · বিসিএস · ব্যাংক · সরকারি চাকরি · প্রিলি. প্রশ্নব্যাংক · লিডারবোর্ড · অ্যানালিটিক্স</div>
+    </div>
+  </div>
+</div>
+
+<main class="main-wrap">
+  <div class="auth-card" id="authCard">
+    <div class="avatar-wrap"><div class="avatar">👤</div></div>
+    <h2 class="card-title" id="cardTitle">স্বাগতম!</h2>
+    <p class="card-subtitle" id="cardSubtitle">আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
+
+    <div class="field-group">
+      <div class="signup-fields" id="signupFields">
+        <div class="signup-inner">
+          <div class="field"><i class="fas fa-user field-icon"></i><input type="text" id="name" placeholder="আপনার পুরো নাম"></div>
+          <div class="field"><i class="fas fa-phone field-icon"></i><input type="tel" id="phone" placeholder="11 সংখ্যার ফোন নাম্বার (যেমন: 017xxxxxxxx)"></div>
+        </div>
+      </div>
+      <div class="field"><i class="fas fa-envelope field-icon"></i><input type="email" id="email" placeholder="ইমেইল এড্রেস" autocomplete="email"></div>
+      <div class="field">
+        <i class="fas fa-lock field-icon"></i>
+        <input type="password" id="password" placeholder="পাসওয়ার্ড (6+ অক্ষর)" autocomplete="current-password">
+        <button class="eye-btn" id="togglePass" type="button"><i class="fas fa-eye" id="eyeIcon"></i></button>
+      </div>
+    </div>
+
+    <button class="btn-main" id="mainBtn">
+      <span id="btnText">লগইন করুন</span>
+      <div class="btn-loader" id="btnLoader"></div>
+    </button>
+
+    <div class="social-section">
+      <div class="divider"><span>অথবা সোশ্যাল অ্যাকাউন্ট ব্যবহার করুন</span></div>
+      <div class="social-buttons">
+        <button class="google-btn" id="googleBtn">
+          <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Google দিয়ে লগইন
+        </button>
+        <button class="fb-btn" id="facebookBtn">
+          <i class="fab fa-facebook" style="color:#1877f2;font-size:1.2rem"></i> Facebook দিয়ে লগইন
+        </button>
+      </div>
+    </div>
+
+    <div class="card-links">
+      <p><span id="toggleLabel">অ্যাকাউন্ট নেই?</span> <button class="link-btn" id="toggleLink">রেজিস্ট্রেশন করুন</button></p>
+      <button class="reset-btn" id="resetBtn"><i class="fas fa-key"></i> পাসওয়ার্ড ভুলে গেছেন?</button>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="msgToast"><i id="toastIcon" class="fas fa-circle-info"></i><span id="msgText"></span></div>
+
+<div class="floating-badge">
+  <span><i class="fas fa-book-open"></i> ১০,০০০+ টেস্ট</span>
+  <span><i class="fas fa-trophy"></i> লাইভ লিডারবোর্ড</span>
+  <span><i class="fas fa-bolt"></i> স্মার্ট টেস্ট</span>
+</div>
+
+<script type="module">
+// ==========================================
+// FIREBASE IMPORTS
+// ==========================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  sendPasswordResetEmail, sendEmailVerification,
+  signInWithPopup, signInWithRedirect, getRedirectResult,
+  signInWithCredential,
+  GoogleAuthProvider, FacebookAuthProvider,
+  setPersistence, browserLocalPersistence, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+// ==========================================
+// FIREBASE CONFIG (অপরিবর্তিত)
+// ==========================================
+const firebaseConfig = {
+  apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",
+  authDomain:"sbopnporn.firebaseapp.com",
+  projectId:"sbopnporn",
+  storageBucket:"sbopnporn.firebasestorage.app",
+  messagingSenderId:"217423916538",
+  appId:"1:217423916538:web:9f8dc21358c2ad03cec843"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
+
+// ==========================================
+// GOOGLE ACCOUNT PICKER
+// ==========================================
+googleProvider.setCustomParameters({ 
+  prompt: 'select_account' 
+});
+
+// ==========================================
+// ✅ উন্নত WebView Detection
+// ==========================================
+function isAppWebView(){
+  // 1. AppCreator24 / Kodular
+  if (typeof window.AppInventor !== 'undefined') return true;
+  if (typeof window.AppCreator !== 'undefined') return true;
+  
+  // 2. HopWeb
+  if (typeof window.HopWeb !== 'undefined') return true;
+  
+  // 3. User Agent Check
+  const ua = navigator.userAgent || '';
+  if (ua.includes('wv') || ua.includes('WebView')) return true;
+  
+  // 4. Iframe Check
+  try {
+    if (window !== window.parent) return true;
+  } catch(e) {}
+  
+  // 5. Android WebView specific
+  if (typeof Android !== 'undefined') return true;
+  
+  return false;
+}
+
+function isMobileBrowser(){
+  const ua = navigator.userAgent || '';
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(ua) && !isAppWebView();
+}
+
+// ==========================================
+// DOM Elements (অপরিবর্তিত)
+// ==========================================
+const togglePass = document.getElementById('togglePass');
+const passwordInput = document.getElementById('password');
+const eyeIcon = document.getElementById('eyeIcon');
+const mainBtn = document.getElementById('mainBtn');
+const btnText = document.getElementById('btnText');
+const btnLoader = document.getElementById('btnLoader');
+const msgToast = document.getElementById('msgToast');
+const msgText = document.getElementById('msgText');
+const toastIcon = document.getElementById('toastIcon');
+const toggleLink = document.getElementById('toggleLink');
+const toggleLabel = document.getElementById('toggleLabel');
+const signupFields = document.getElementById('signupFields');
+const cardTitle = document.getElementById('cardTitle');
+const cardSubtitle = document.getElementById('cardSubtitle');
+const resetBtn = document.getElementById('resetBtn');
+const googleBtn = document.getElementById('googleBtn');
+const facebookBtn = document.getElementById('facebookBtn');
+const redirectOverlay = document.getElementById('redirectOverlay');
+const overlayMainText = document.getElementById('overlayMainText');
+const overlaySubText = document.getElementById('overlaySubText');
+const headerBrand = document.getElementById('headerBrand');
+
+let isLogin = true;
+let toastTimeout;
+let isRedirecting = false;
+
+// ==========================================
+// NAVIGATION (অপরিবর্তিত)
+// ==========================================
+function navigateTo(url) {
+  const card = document.getElementById('authCard');
+  card.style.animation = 'fadeOutDown 0.4s cubic-bezier(0.25, 1, 0.5, 1) both';
+  setTimeout(() => {
+    if (isAppWebView() && typeof window.AppInventor?.setWebViewString === 'function') {
+      window.AppInventor.setWebViewString('navigate:' + url);
+    }
+    if (typeof window.HopWeb !== 'undefined' && window.HopWeb.navigate) {
+      window.HopWeb.navigate(url);
+    }
+    window.location.href = url;
+  }, 400);
+}
+
+headerBrand.onclick = () => navigateTo('index.html');
+
+// ==========================================
+// TOGGLE PASSWORD (অপরিবর্তিত)
+// ==========================================
+togglePass.onclick = () => {
+  const isPrivate = passwordInput.type === 'password';
+  passwordInput.type = isPrivate ? 'text' : 'password';
+  eyeIcon.className = isPrivate ? 'fas fa-eye-slash' : 'fas fa-eye';
+};
+
+// ==========================================
+// TOAST & OVERLAY (অপরিবর্তিত)
+// ==========================================
+function showMsg(text, type='error'){
+  clearTimeout(toastTimeout);
+  msgToast.className = `toast ${type} show`;
+  msgText.textContent = text;
+  if(type === 'error') toastIcon.className = "fas fa-circle-exclamation";
+  else if(type === 'success') toastIcon.className = "fas fa-circle-check";
+  else if(type === 'warning') toastIcon.className = "fas fa-triangle-exclamation";
+  else toastIcon.className = "fas fa-circle-info";
+  toastTimeout = setTimeout(() => msgToast.classList.remove('show'), 4000);
+}
+
+function showOverlay(main, sub) {
+  overlayMainText.textContent = main;
+  overlaySubText.textContent = sub;
+  redirectOverlay.classList.add('show');
+}
+function hideOverlay() {
+  redirectOverlay.classList.remove('show');
+}
+
+function setLoading(on){
+  mainBtn.disabled = on;
+  btnText.style.display = on ? 'none' : 'block';
+  btnLoader.style.display = on ? 'block' : 'none';
+}
+
+// ==========================================
+// TOGGLE LOGIN/SIGNUP (অপরিবর্তিত)
+// ==========================================
+toggleLink.onclick = () => {
+  isLogin = !isLogin;
+  cardTitle.textContent = isLogin ? 'স্বাগতম!' : 'জয়েন করুন';
+  cardSubtitle.textContent = isLogin ? 'আপনার অ্যাকাউন্টে প্রবেশ করুন' : 'নতুন অ্যাকাউন্ট তৈরি করুন';
+  btnText.textContent = isLogin ? 'লগইন করুন' : 'রেজিস্ট্রেশন করুন';
+  toggleLabel.textContent = isLogin ? 'অ্যাকাউন্ট নেই?' : 'অ্যাকাউন্ট আছে?';
+  toggleLink.textContent = isLogin ? 'রেজিস্ট্রেশন করুন' : 'লগইন করুন';
+  signupFields.classList.toggle('open', !isLogin);
+  msgToast.classList.remove('show');
+};
+
+// ==========================================
+// FIRESTORE FUNCTIONS (অপরিবর্তিত)
+// ==========================================
+async function saveUserToDB(user, extra={}){
+  try {
+    const ref = doc(db,'users',user.uid);
+    const snap = await getDoc(ref);
+    if(!snap.exists()){
+      await setDoc(ref,{
+        uid: user.uid, 
+        email: user.email,
+        name: extra.name || user.displayName || 'User',
+        phone: extra.phone || '',
+        isPremium: false, 
+        examCount: 0, 
+        points: 0,
+        joinedAt: new Date(), 
+        lastLogin: new Date()
+      });
+    } else {
+      await updateDoc(ref,{ lastLogin: new Date() });
+    }
+    return true;
+  } catch (err) {
+    console.error('Firestore Error:', err);
+    showMsg('ডেটাবেস সংযোগ সমস্যা! কিন্তু লগইন সফল।', 'warning');
+    return true;
+  }
+}
+
+async function goHome(user){
+  await saveUserToDB(user);
+  navigateTo('home.html');
+}
+
+// ==========================================
+// ERROR MESSAGES (অপরিবর্তিত)
+// ==========================================
+const ERR = {
+  'auth/user-not-found' : 'এই ইমেইলে কোনো অ্যাকাউন্ট নেই!',
+  'auth/wrong-password' : 'পাসওয়ার্ড ভুল!',
+  'auth/email-already-in-use' : 'এই ইমেইল আগে থেকেই আছে!',
+  'auth/weak-password' : 'পাসওয়ার্ড ৬+ ক্যারেক্টার হতে হবে!',
+  'auth/invalid-email' : 'সঠিক ইমেইল দিন!',
+  'auth/invalid-credential' : 'ভুল ইমেইল বা পাসওয়ার্ড!',
+  'auth/popup-blocked' : 'পপআপ ব্লক হয়েছে! রিডাইরেক্ট করা হচ্ছে...',
+  'auth/popup-closed-by-user' : 'লগইন বাতিল হয়েছে।',
+  'auth/cancelled-popup-request' : 'আগের লগইন রিকোয়েস্টটি প্রসেস হচ্ছে...',
+  'auth/network-request-failed' : 'নেটওয়ার্ক সংযোগ নেই! আবার চেষ্টা করুন।',
+  'auth/account-exists-with-different-credential' : 'এই ইমেইল অন্য পদ্ধতিতে আগে থেকেই ব্যবহৃত হয়েছে!',
+  'auth/operation-not-supported-in-this-environment' : 'এই পরিবেশে সাপোর্টেড নয়! রিডাইরেক্ট হচ্ছে...',
+  'auth/unauthorized-domain' : '⚠️ এই ডোমেইন অনুমোদিত নয়! Firebase Console-এ ডোমেইন যোগ করুন।'
+};
+
+// ==========================================
+// EMAIL / PASSWORD AUTH (অপরিবর্তিত)
+// ==========================================
+mainBtn.onclick = async () => {
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('password').value;
+
+  if(!email || !pass){ showMsg('ইমেইল ও পাসওয়ার্ড দিন!'); return; }
+
+  setLoading(true);
+  try{
+    await setPersistence(auth, browserLocalPersistence);
+    if(isLogin){
+      const cred = await signInWithEmailAndPassword(auth,email,pass);
+      if(!cred.user.emailVerified){
+        showMsg('ইমেইল ভেরিফাই করা হয়নি! ইনবক্স চেক করুন।','warning');
+        setLoading(false); return;
+      }
+      showOverlay('প্রবেশ করা হচ্ছে...', 'আপনার ড্যাশবোর্ড প্রস্তুত হচ্ছে');
+      await goHome(cred.user);
+    } else {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if(!name || !phone){ showMsg('নাম ও ফোন নাম্বার দিন!'); setLoading(false); return; }
+
+      const bdPhoneRegex = /^(01)[3-9]\d{8}$/;
+      if(!bdPhoneRegex.test(phone)){
+        showMsg('সঠিক ১১ সংখ্যার বাংলাদেশি মোবাইল নাম্বার দিন! (উদা: 01712345678)');
+        setLoading(false); return;
+      }
+
+      if(pass.length < 6){ showMsg('পাসওয়ার্ড কমপক্ষে ৬ অক্ষর!'); setLoading(false); return; }
+
+      const cred = await createUserWithEmailAndPassword(auth,email,pass);
+      await sendEmailVerification(cred.user);
+      await saveUserToDB(cred.user,{name,phone});
+      showMsg('রেজিস্ট্রেশন সফল! ইমেইল ভেরিফাই করুন।','success');
+      setTimeout(() => navigateTo('home.html'), 2000);
+    }
+  }catch(err){
+    showMsg(ERR[err.code] || 'লগইন ব্যর্থ! আবার চেষ্টা করুন।');
+    setLoading(false);
+  }
+};
+
+// ==========================================
+// ✅ NATIVE TOKEN HANDLER (WebView-এর জন্য)
+// ==========================================
+window.handleNativeAuthToken = async function(idToken, accessToken, provider){
+  try{
+    showOverlay('যাচাই করা হচ্ছে...', 'অ্যাকাউন্টে প্রবেশ করা হচ্ছে');
+    await setPersistence(auth, browserLocalPersistence);
+
+    let credential;
+    if(provider === 'facebook'){
+      credential = FacebookAuthProvider.credential(accessToken);
+    } else {
+      credential = GoogleAuthProvider.credential(idToken, accessToken);
+    }
+
+    const result = await signInWithCredential(auth, credential);
+    await goHome(result.user);
+  }catch(err){
+    console.error('Native auth error:', err);
+    hideOverlay();
+    showMsg(ERR[err.code] || 'নেটিভ লগইন ব্যর্থ হয়েছে!');
+  }
+};
+
+window.handleNativeAuthError = function(message){
+  hideOverlay();
+  showMsg(message || 'লগইন বাতিল হয়েছে।', 'warning');
+};
+
+// ==========================================
+// ✅ GOOGLE SIGN-IN (Browser + WebView Support)
+// ==========================================
+googleBtn.onclick = async () => {
+  if (isRedirecting) return;
+  
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+    
+    // ===== WebView / AppCreator24 / HopWeb → Native =====
+    if (isAppWebView()) {
+      isRedirecting = true;
+      showOverlay('Google-এ যাচ্ছে...', 'অ্যাকাউন্ট নির্বাচন করুন');
+      
+      // HopWeb specific
+      if (typeof window.HopWeb !== 'undefined' && window.HopWeb.openGoogleLogin) {
+        window.HopWeb.openGoogleLogin();
+        return;
+      }
+      
+      // AppCreator24 / Kodular specific
+      if (typeof window.AppInventor?.setWebViewString === 'function') {
+        window.AppInventor.setWebViewString('open_google_picker');
+        return;
+      }
+      
+      // Generic WebView → Native Bridge কল করবে
+      if (window.nativeBridge && window.nativeBridge.openGoogleLogin) {
+        window.nativeBridge.openGoogleLogin();
+        return;
+      }
+      
+      showMsg('এই অ্যাপে Google Login সাপোর্টেড নয়।', 'error');
+      isRedirecting = false;
+      hideOverlay();
+      return;
+    }
+
+    // ===== Mobile Browser → Redirect =====
+    if (isMobileBrowser()) {
+      isRedirecting = true;
+      showOverlay('Google-এ যাচ্ছে...', 'অ্যাকাউন্ট নির্বাচন করুন');
+      await signInWithRedirect(auth, googleProvider);
+      return;
+    }
+
+    // ===== Desktop → Popup =====
+    googleBtn.disabled = true;
+    const result = await signInWithPopup(auth, googleProvider);
+    showOverlay('যাচাই করা হচ্ছে...', 'অ্যাকাউন্টে প্রবেশ করা হচ্ছে');
+    await goHome(result.user);
+    
+  } catch (error) {
+    console.error('Google Error:', error);
+    googleBtn.disabled = false;
+    isRedirecting = false;
+    hideOverlay();
+    
+    if (error.code === 'auth/unauthorized-domain') {
+      showMsg(ERR['auth/unauthorized-domain'], 'error');
+      return;
+    }
+    
+    if (error.code === 'auth/popup-blocked' || 
+        error.code === 'auth/operation-not-supported-in-this-environment') {
+      showOverlay('Google-এ যাচ্ছে...', 'পপআপ ব্লক! রিডাইরেক্ট হচ্ছে');
+      try {
+        isRedirecting = true;
+        await signInWithRedirect(auth, googleProvider);
+      } catch (e2) {
+        isRedirecting = false;
+        hideOverlay();
+        showMsg(ERR[e2.code] || 'Google লগইন ব্যর্থ!', 'error');
+      }
+    } else if (error.code === 'auth/popup-closed-by-user') {
+      showMsg('লগইন বাতিল করা হয়েছে।', 'warning');
+    } else {
+      showMsg(ERR[error.code] || 'Google লগইন ব্যর্থ!', 'error');
+    }
+  }
+};
+
+// ==========================================
+// ✅ FACEBOOK SIGN-IN (Browser + WebView Support)
+// ==========================================
+facebookBtn.onclick = async () => {
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+    
+    if (isAppWebView()) {
+      showOverlay('Facebook-এ যাচ্ছে...', 'একটু অপেক্ষা করুন');
+      
+      if (typeof window.HopWeb !== 'undefined' && window.HopWeb.openFacebookLogin) {
+        window.HopWeb.openFacebookLogin();
+        return;
+      }
+      
+      if (typeof window.AppInventor?.setWebViewString === 'function') {
+        window.AppInventor.setWebViewString('open_facebook_picker');
+        return;
+      }
+      
+      if (window.nativeBridge && window.nativeBridge.openFacebookLogin) {
+        window.nativeBridge.openFacebookLogin();
+        return;
+      }
+      
+      showMsg('এই অ্যাপে Facebook Login সাপোর্টেড নয়।', 'error');
+      hideOverlay();
+      return;
+    }
+
+    if (isMobileBrowser()) {
+      showOverlay('Facebook-এ যাচ্ছে...', 'একটু অপেক্ষা করুন');
+      await signInWithRedirect(auth, facebookProvider);
+      return;
+    }
+
+    facebookBtn.disabled = true;
+    const result = await signInWithPopup(auth, facebookProvider);
+    showOverlay('যাচাই করা হচ্ছে...', 'অ্যাকাউন্টে প্রবেশ করা হচ্ছে');
+    await goHome(result.user);
+    
+  } catch (error) {
+    console.error('Facebook Error:', error);
+    facebookBtn.disabled = false;
+    hideOverlay();
+    
+    if (error.code === 'auth/unauthorized-domain') {
+      showMsg(ERR['auth/unauthorized-domain'], 'error');
+      return;
+    }
+    
+    if (error.code === 'auth/popup-blocked' || 
+        error.code === 'auth/operation-not-supported-in-this-environment') {
+      showOverlay('Facebook-এ যাচ্ছে...', 'পপআপ ব্লক! রিডাইরেক্ট হচ্ছে');
+      try {
+        await signInWithRedirect(auth, facebookProvider);
+      } catch (e2) {
+        hideOverlay();
+        showMsg(ERR[e2.code] || 'Facebook লগইন ব্যর্থ!', 'error');
+      }
+    } else if (error.code === 'auth/popup-closed-by-user') {
+      showMsg('লগইন বাতিল করা হয়েছে।', 'warning');
+    } else {
+      showMsg(ERR[error.code] || 'Facebook লগইন ব্যর্থ!', 'error');
+    }
+  }
+};
+
+// ==========================================
+// PASSWORD RESET (অপরিবর্তিত)
+// ==========================================
+resetBtn.onclick = async () => {
+  const email = document.getElementById('email').value.trim();
+  if(!email){ showMsg('আগে ইমেইল দিন!'); return; }
+  try{
+    await sendPasswordResetEmail(auth, email);
+    showMsg('পাসওয়ার্ড রিসেট লিঙ্ক ইমেইলে পাঠানো হয়েছে!','success');
+  }catch(e){ showMsg('ত্রুটি! সঠিক ইমেইল দিন।'); }
+};
+
+// ==========================================
+// ✅ REDIRECT RESULT HANDLER (অপরিবর্তিত)
+// ==========================================
+(async()=>{
+  try{
+    const result = await getRedirectResult(auth);
+    if(result && result.user){
+      isRedirecting = false;
+      showOverlay('সফলভাবে যাচাইকৃত!', 'ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...');
+      await goHome(result.user);
+      return;
+    }
+  }catch(err){
+    console.error('Redirect result error:', err.code);
+    isRedirecting = false;
+    if(err.code && err.code !== 'auth/no-current-user'){
+      showMsg(ERR[err.code] || 'সোশ্যাল লগইন ব্যর্থ হয়েছে।');
+    }
+  }finally{
+    hideOverlay();
+  }
+
+  // ==========================================
+  // ✅ SESSION CHECK (Auto Login)
+  // ==========================================
+  onAuthStateChanged(auth, async user => {
+    if(user && user.uid && !window._navigating && !isRedirecting){
+      window._navigating = true;
+      if(user.email === 'admin@sopnopuron.com'){
+        navigateTo('home.html');
+        return;
+      }
+      const isSocial = user.providerData?.some(p => p.providerId !== 'password');
+      if(user.emailVerified || isSocial){
+        showOverlay('স্বয়ংক্রিয় লগইন...', 'আপনার প্রোফাইল চেক করা হচ্ছে');
+        await goHome(user);
+      }
+    }
+  });
+})();
+
+// ==========================================
+// ✅ APP BRIDGE (AppCreator24 / HopWeb / Kodular)
+// ==========================================
+window.appBridge = {
+  googleLogin: () => googleBtn.click(),
+  facebookLogin: () => facebookBtn.click(),
+  getAuth: () => auth,
+  getCurrentUser: () => auth.currentUser,
+  handleToken: window.handleNativeAuthToken,
+  handleError: window.handleNativeAuthError,
+  logout: async () => {
+    await auth.signOut();
+    window.location.reload();
+  }
+};
+
+// ==========================================
+// ✅ HOPWEB SPECIFIC BRIDGE
+// ==========================================
+window.HopWebBridge = {
+  loginWithGoogle: (idToken, accessToken) => {
+    window.handleNativeAuthToken(idToken, accessToken, 'google');
+  },
+  loginWithFacebook: (accessToken) => {
+    window.handleNativeAuthToken(null, accessToken, 'facebook');
+  },
+  loginWithEmail: (email, password) => {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = password;
+    mainBtn.click();
+  }
+};
+
+// ==========================================
+// ✅ NATIVE BRIDGE (Generic WebView)
+// ==========================================
+window.nativeBridge = {
+  openGoogleLogin: () => {
+    // Android Native থেকে কল করার জন্য
+    if (typeof Android !== 'undefined' && Android.openGoogleLogin) {
+      Android.openGoogleLogin();
+    } else {
+      showMsg('Native Google Login সাপোর্টেড নয়।', 'error');
+    }
+  },
+  openFacebookLogin: () => {
+    if (typeof Android !== 'undefined' && Android.openFacebookLogin) {
+      Android.openFacebookLogin();
+    }
+  }
+};
+
+console.log('✅ স্বপ্নপূরণ লগইন সিস্টেম রেডি!');
+console.log('📱 HopWeb: window.HopWebBridge.loginWithGoogle(idToken, accessToken)');
+console.log('📱 AppCreator24: window.appBridge.googleLogin()');
+console.log('📱 Kodular: window.appBridge.googleLogin()');
+</script>
+
+</body>
+</html>

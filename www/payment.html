@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>পেমেন্ট - স্বপ্নপূরণ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;--p2:#8b5cf6;--p3:#a78bfa;--p4:#ede9fe;
+  --acc:#f59e0b;--acc2:#fbbf24;--acc3:#fef3c7;
+  --teal:#0ea5e9;--green:#10b981;--rose:#f43f5e;
+  --bg:#f0f4ff;--bg2:#e8eeff;--card:#fff;
+  --text:#1e1b4b;--text2:#4c4b73;--text3:#7c7a9e;
+  --border:#ddd8ff;
+  --bkash:#E2136E;--bkash-soft:#fce4f0;--bkash-mid:#f472b6;
+  --nagad:#F5842E;--nagad-soft:#fff0e5;
+  --shadow:0 4px 24px rgba(108,59,255,.10);
+  --shadow2:0 12px 40px rgba(108,59,255,.20);
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  padding-bottom:40px;
+}
+
+/* ── Orbs ── */
+.orb{position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0;animation:orbFloat 8s ease-in-out infinite}
+.orb1{width:320px;height:320px;background:rgba(108,59,255,.10);top:-80px;left:-80px;animation-delay:0s}
+.orb2{width:260px;height:260px;background:rgba(14,165,233,.08);bottom:100px;right:-60px;animation-delay:3s}
+.orb3{width:200px;height:200px;background:rgba(245,158,11,.07);top:50%;left:40%;animation-delay:5s}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-24px) scale(1.05)}}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+  padding:0 18px;height:64px;
+  box-shadow:0 2px 16px rgba(108,59,255,.07);
+}
+.hdr-back{
+  width:38px;height:38px;border-radius:12px;flex-shrink:0;
+  background:var(--bg2);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text2);font-size:.9rem;text-decoration:none;
+  transition:all .22s;cursor:pointer;
+}
+.hdr-back:hover{border-color:var(--p1);color:var(--p1)}
+.hdr-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;color:var(--text)}
+.hdr-title span{color:var(--p1)}
+.hdr-secure{
+  margin-left:auto;display:flex;align-items:center;gap:5px;
+  font-size:.7rem;font-weight:700;color:var(--green);
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);
+  border-radius:20px;padding:4px 10px;
+}
+
+/* ── CONTENT ── */
+.content{position:relative;z-index:10;padding:0 18px;max-width:540px;margin:0 auto}
+
+/* ── PROGRESS STEPS ── */
+.progress-wrap{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;padding:20px 0 4px;
+}
+.step{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  position:relative;
+}
+.step-dot{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;transition:all .3s;
+}
+.step.done .step-dot{
+  background:linear-gradient(135deg,var(--green),#34d399);
+  color:#fff;box-shadow:0 4px 12px rgba(16,185,129,.3);
+}
+.step.active .step-dot{
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  color:#fff;box-shadow:0 4px 12px rgba(108,59,255,.3);
+}
+.step.pending .step-dot{background:var(--bg2);border:2px solid var(--border);color:var(--text3)}
+.step-label{font-size:.62rem;font-weight:700;color:var(--text3);white-space:nowrap}
+.step.done .step-label,.step.active .step-label{color:var(--text2)}
+.step-line{width:40px;height:2px;background:var(--border);margin-bottom:18px;transition:all .3s}
+.step-line.done{background:linear-gradient(90deg,var(--green),var(--p2))}
+
+/* ── PLAN SUMMARY CARD ── */
+.plan-summary-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:22px;padding:0;overflow:hidden;
+  box-shadow:var(--shadow);margin-top:16px;
+  animation:cardIn .4s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.plan-summary-card.delay1{animation-delay:.05s}
+.plan-summary-card.delay2{animation-delay:.1s}
+.plan-summary-card.delay3{animation-delay:.15s}
+
+.plan-header-banner{
+  background:linear-gradient(135deg,var(--p1) 0%,var(--p2) 55%,var(--teal) 100%);
+  padding:18px 20px;display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.plan-header-banner::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='20' cy='20' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+.banner-left{position:relative;z-index:1}
+.banner-label{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:3px;letter-spacing:.04em;text-transform:uppercase}
+.banner-name{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:#fff}
+.banner-days{
+  font-size:.72rem;color:rgba(255,255,255,.8);margin-top:4px;
+  display:flex;align-items:center;gap:5px;
+}
+.banner-price-wrap{position:relative;z-index:1;text-align:right}
+.banner-price{
+  font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;
+  color:#fff;line-height:1;
+}
+.banner-per{font-size:.68rem;color:rgba(255,255,255,.7);margin-top:2px}
+
+.plan-perks{
+  padding:14px 18px;display:flex;gap:8px;flex-wrap:wrap;
+  border-bottom:1.5px solid var(--border);
+}
+.perk-pill{
+  display:flex;align-items:center;gap:5px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:20px;padding:5px 11px;
+  font-size:.68rem;font-weight:700;color:var(--text2);
+}
+.perk-pill i{color:var(--p1);font-size:.62rem}
+
+.plan-expiry-row{
+  padding:12px 18px;display:flex;align-items:center;gap:10px;
+}
+.expiry-icon{
+  width:32px;height:32px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;color:#fff;
+}
+.expiry-text{font-size:.75rem;color:var(--text2);font-weight:600}
+.expiry-date{font-family:'Sora',sans-serif;font-size:.82rem;font-weight:800;color:var(--p1)}
+
+/* ── PAYMENT METHOD SELECTOR ── */
+.method-label{
+  font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--text2);padding:20px 0 10px;
+  display:flex;align-items:center;gap:8px;
+}
+.method-label::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--border),transparent)}
+
+.methods-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
+
+.method-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:18px;padding:16px 14px;
+  cursor:pointer;transition:all .25s;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.method-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
+.method-card.active-bkash{
+  border-color:var(--bkash);
+  background:linear-gradient(135deg,rgba(226,19,110,.04),rgba(226,19,110,.01));
+}
+.method-card.active-nagad{
+  border-color:var(--nagad);
+  background:linear-gradient(135deg,rgba(245,132,46,.04),rgba(245,132,46,.01));
+}
+.method-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  opacity:0;transition:opacity .25s;border-radius:18px 18px 0 0;
+}
+.method-card.active-bkash::before{background:linear-gradient(90deg,var(--bkash),var(--bkash-mid));opacity:1}
+.method-card.active-nagad::before{background:linear-gradient(90deg,var(--nagad),#f59e0b);opacity:1}
+
+.method-logo-wrap{
+  width:52px;height:52px;border-radius:14px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+.method-logo-wrap img{width:100%;height:100%;object-fit:cover}
+.method-name{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:800;color:var(--text)}
+.method-tag{
+  font-size:.62rem;font-weight:700;padding:2px 9px;border-radius:20px;
+}
+.method-card.active-bkash .method-tag{background:var(--bkash-soft);color:var(--bkash)}
+.method-card.active-nagad .method-tag{background:var(--nagad-soft);color:var(--nagad)}
+.method-card:not(.active-bkash):not(.active-nagad) .method-tag{background:var(--bg2);color:var(--text3)}
+.method-check{
+  position:absolute;top:10px;right:10px;
+  width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;color:transparent;transition:all .25s;
+}
+.method-card.active-bkash .method-check{background:var(--bkash);border-color:var(--bkash);color:#fff}
+.method-card.active-nagad .method-check{background:var(--nagad);border-color:var(--nagad);color:#fff}
+
+/* ── PAYMENT DETAILS PANEL ── */
+.payment-panel{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:22px;overflow:hidden;
+  box-shadow:var(--shadow);margin-top:12px;
+  display:none;animation:slideUp .3s cubic-bezier(.34,1.2,.64,1) both;
+}
+.payment-panel.show{display:block}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.panel-method-header{
+  padding:14px 18px;display:flex;align-items:center;gap:10px;
+  border-bottom:1.5px solid var(--border);
+}
+.panel-method-icon{
+  width:36px;height:36px;border-radius:10px;overflow:hidden;flex-shrink:0;
+}
+.panel-method-icon img{width:100%;height:100%;object-fit:cover}
+.panel-method-name{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:800;color:var(--text)}
+.panel-method-sub{font-size:.68rem;color:var(--text3);font-weight:600}
+
+/* Number box */
+.send-money-box{
+  margin:16px 18px;border-radius:16px;overflow:hidden;
+  border:2px solid;
+}
+.send-money-box.bkash-border{border-color:var(--bkash)}
+.send-money-box.nagad-border{border-color:var(--nagad)}
+.send-label{
+  padding:9px 16px;font-size:.7rem;font-weight:700;
+  display:flex;align-items:center;gap:6px;
+}
+.bkash-label-bg{background:linear-gradient(135deg,var(--bkash),#f472b6);color:#fff}
+.nagad-label-bg{background:linear-gradient(135deg,var(--nagad),#f59e0b);color:#fff}
+.number-row{
+  padding:12px 16px;display:flex;align-items:center;
+  justify-content:space-between;background:var(--card);
+}
+.number-display{
+  font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;
+  letter-spacing:.05em;
+}
+.bkash-num-color{color:var(--bkash)}
+.nagad-num-color{color:var(--nagad)}
+.copy-btn{
+  border:none;border-radius:12px;padding:9px 16px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.8rem;font-weight:700;
+  color:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;
+  transition:all .22s;flex-shrink:0;
+}
+.copy-btn:hover{transform:scale(1.05);filter:brightness(1.08)}
+.copy-btn:active{transform:scale(.97)}
+.bkash-copy{background:var(--bkash);box-shadow:0 4px 12px rgba(226,19,110,.3)}
+.nagad-copy{background:var(--nagad);box-shadow:0 4px 12px rgba(245,132,46,.3)}
+.copy-btn.copied{background:var(--green)!important;box-shadow:0 4px 12px rgba(16,185,129,.3)!important}
+
+/* Amount reminder */
+.amount-reminder{
+  margin:0 18px 14px;border-radius:14px;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  border:1.5px dashed;
+}
+.amount-reminder.bkash-dash{border-color:rgba(226,19,110,.3);background:var(--bkash-soft)}
+.amount-reminder.nagad-dash{border-color:rgba(245,132,46,.3);background:var(--nagad-soft)}
+.reminder-ico{font-size:1.1rem}
+.reminder-text{font-size:.75rem;font-weight:600;color:var(--text2)}
+.reminder-amount{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800}
+.bkash-reminder-amount{color:var(--bkash)}
+.nagad-reminder-amount{color:var(--nagad)}
+
+/* Form inputs */
+.form-section{padding:0 18px 18px}
+.input-group{margin-bottom:16px}
+.input-label{
+  font-size:.78rem;font-weight:700;color:var(--text2);
+  margin-bottom:7px;display:flex;align-items:center;gap:6px;
+}
+.input-label i{font-size:.72rem}
+.bkash-i{color:var(--bkash)}
+.nagad-i{color:var(--nagad)}
+.input-wrap{position:relative}
+.form-input{
+  width:100%;padding:14px 18px 14px 46px;
+  border:2px solid var(--border);border-radius:14px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.95rem;font-weight:600;
+  color:var(--text);background:var(--bg2);
+  outline:none;transition:all .22s;
+}
+.form-input:focus{
+  border-color:var(--p1);background:var(--card);
+  box-shadow:0 0 0 4px rgba(108,59,255,.08);
+}
+.form-input.error{border-color:var(--rose)!important;background:rgba(244,63,94,.05)!important;animation:shake .3s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.input-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-size:.85rem;pointer-events:none;
+}
+.input-hint{font-size:.65rem;color:var(--text3);font-weight:600;margin-top:5px;padding-left:4px}
+
+/* Submit button */
+.confirm-btn{
+  width:100%;padding:16px;border:none;border-radius:16px;
+  font-family:'Hind Siliguri',sans-serif;font-size:1rem;font-weight:700;
+  color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,var(--green),#0d9488);
+  box-shadow:0 8px 24px rgba(16,185,129,.3);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .25s;margin-top:4px;
+}
+.confirm-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(16,185,129,.38)}
+.confirm-btn:active{transform:translateY(0)}
+.confirm-btn:disabled{opacity:.65;cursor:not-allowed;transform:none}
+
+/* ── SECURITY TRUST BAR ── */
+.trust-bar{
+  display:flex;gap:10px;margin-top:14px;
+  justify-content:center;flex-wrap:wrap;
+}
+.trust-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:.67rem;font-weight:700;color:var(--text3);
+}
+.trust-item i{color:var(--p3);font-size:.65rem}
+
+/* ── HOW TO PAY ACCORDION ── */
+.how-to-wrap{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  box-shadow:var(--shadow);margin-top:14px;
+}
+.how-to-toggle{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 18px;cursor:pointer;
+  font-weight:700;font-size:.85rem;color:var(--text2);
+  transition:background .2s;
+}
+.how-to-toggle:hover{background:var(--bg2)}
+.how-to-toggle i.toggle-icon{margin-left:auto;color:var(--text3);transition:transform .25s}
+.how-to-toggle.open i.toggle-icon{transform:rotate(180deg)}
+.how-to-toggle .step-ico{
+  width:28px;height:28px;border-radius:9px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:#fff;
+}
+.how-to-body{display:none;padding:0 18px 16px;border-top:1.5px solid var(--border)}
+.how-to-body.open{display:block}
+.how-step{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--bg2);
+}
+.how-step:last-child{border-bottom:none}
+.how-num{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:800;color:#fff;margin-top:1px;
+}
+.how-text{font-size:.77rem;font-weight:600;color:var(--text2);line-height:1.5}
+.how-text strong{color:var(--p1)}
+
+/* ── FAQ SECTION ── */
+.faq-wrap{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  box-shadow:var(--shadow);margin-top:14px;
+}
+.faq-item{border-bottom:1.5px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 18px;cursor:pointer;
+  font-size:.8rem;font-weight:700;color:var(--text2);
+  transition:background .2s;
+}
+.faq-q:hover{background:var(--bg2)}
+.faq-q i.faq-arr{margin-left:auto;color:var(--text3);font-size:.7rem;transition:transform .25s;flex-shrink:0}
+.faq-q.open{color:var(--p1)}
+.faq-q.open i.faq-arr{transform:rotate(180deg);color:var(--p1)}
+.faq-a{
+  display:none;padding:0 18px 12px 18px;
+  font-size:.77rem;color:var(--text3);font-weight:600;line-height:1.6;
+}
+.faq-a.open{display:block}
+
+/* ── TOAST ── */
+#toastBox{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);
+  z-index:999;display:flex;flex-direction:column;gap:8px;
+  pointer-events:none;width:max-content;max-width:90vw;
+}
+.toast{
+  background:#fff;border-radius:24px;padding:10px 18px;
+  font-size:.82rem;font-weight:600;color:var(--text);
+  box-shadow:0 8px 24px rgba(108,59,255,.18);
+  border:1.5px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+  animation:toastIn .3s ease both;
+  transition:opacity .3s,transform .3s;
+}
+@keyframes toastIn{from{transform:translateY(-14px);opacity:0}to{transform:translateY(0);opacity:1}}
+.toast.hiding{opacity:0;transform:translateY(-10px)}
+.toast.ok{border-color:var(--green);background:#f0fdf4;color:#065f46}
+.toast.warn{border-color:var(--acc);background:#fffbeb;color:#92400e}
+.toast.err{border-color:var(--rose);background:#fff1f2;color:#9f1239}
+
+/* ── SPINNER ── */
+.spinner{
+  width:18px;height:18px;border:2.5px solid rgba(255,255,255,.35);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin .7s linear infinite;display:inline-block;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── SUCCESS OVERLAY ── */
+.success-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;padding:30px;
+  opacity:0;pointer-events:none;transition:opacity .4s;
+  text-align:center;
+}
+.success-overlay.show{opacity:1;pointer-events:all}
+.success-icon-wrap{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),#34d399);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;color:#fff;
+  box-shadow:0 16px 48px rgba(16,185,129,.35);
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.success-title{font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text)}
+.success-desc{font-size:.85rem;color:var(--text2);max-width:280px;line-height:1.6}
+.success-trx{
+  font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;
+  background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:12px;padding:8px 18px;color:var(--text3);
+}
+.success-btn{
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  border:none;border-radius:16px;padding:14px 32px;
+  font-family:'Hind Siliguri',sans-serif;font-size:.95rem;font-weight:700;
+  color:#fff;cursor:pointer;margin-top:6px;
+  box-shadow:0 8px 24px rgba(108,59,255,.3);
+  transition:all .22s;
+}
+.success-btn:hover{transform:translateY(-2px)}
+
+.spacer{height:30px}
+
+@media(max-width:400px){
+  .banner-price{font-size:1.6rem}
+  .number-display{font-size:1.15rem}
+  .methods-grid{grid-template-columns:1fr 1fr;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- BG Orbs -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div id="toastBox"></div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon-wrap">✓</div>
+  <div class="success-title">পেমেন্ট সফল হয়েছে! 🎉</div>
+  <div class="success-desc">আপনার রিকোয়েস্ট পাওয়া গেছে। ভেরিফিকেশনের পর প্রিমিয়াম অ্যাক্টিভ হবে।</div>
+  <div class="success-trx" id="successTrxDisplay"></div>
+  <div style="font-size:.72rem;color:var(--text3);font-weight:600">সাধারণত 5-15 মিনিটের মধ্যে অ্যাক্টিভ হয়</div>
+  <button class="success-btn" onclick="window.location.href='home.html'">
+    <i class="fas fa-home"></i> হোমে যান
+  </button>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
+  <div class="hdr-title">💳 <span>পেমেন্ট</span></div>
+  <div class="hdr-secure"><i class="fas fa-shield-alt"></i> নিরাপদ</div>
+</header>
+
+<div class="content">
+
+  <!-- PROGRESS STEPS -->
+  <div class="progress-wrap">
+    <div class="step done">
+      <div class="step-dot"><i class="fas fa-check" style="font-size:.6rem"></i></div>
+      <div class="step-label">প্ল্যান</div>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step active">
+      <div class="step-dot">২</div>
+      <div class="step-label">পেমেন্ট</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step pending">
+      <div class="step-dot">৩</div>
+      <div class="step-label">অ্যাক্টিভ</div>
+    </div>
+  </div>
+
+  <!-- PLAN SUMMARY CARD -->
+  <div class="plan-summary-card delay1">
+    <div class="plan-header-banner">
+      <div class="banner-left">
+        <div class="banner-label">নির্বাচিত প্ল্যান</div>
+        <div class="banner-name" id="bannerName">লোড হচ্ছে...</div>
+        <div class="banner-days"><i class="far fa-clock"></i><span id="bannerDays">—</span> দিনের সদস্যতা</div>
+      </div>
+      <div class="banner-price-wrap">
+        <div class="banner-price" id="bannerPrice">৳—</div>
+        <div class="banner-per" id="bannerPerDay"></div>
+      </div>
+    </div>
+    <div class="plan-perks">
+      <div class="perk-pill"><i class="fas fa-infinity"></i>আনলিমিটেড পরীক্ষা</div>
+      <div class="perk-pill"><i class="fas fa-chart-bar"></i>বিস্তারিত রিপোর্ট</div>
+      <div class="perk-pill"><i class="fas fa-trophy"></i>র‍্যাংকিং</div>
+      <div class="perk-pill"><i class="fas fa-headset"></i>২৪/৭ সাপোর্ট</div>
+    </div>
+    <div class="plan-expiry-row">
+      <div class="expiry-icon"><i class="fas fa-calendar-check"></i></div>
+      <div>
+        <div class="expiry-text">মেয়াদ শেষ হবে</div>
+        <div class="expiry-date" id="expiryDate">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT METHOD -->
+  <div class="method-label"><i class="fas fa-wallet" style="color:var(--p1)"></i>পেমেন্ট পদ্ধতি</div>
+
+  <div class="methods-grid">
+    <div class="method-card active-bkash" id="card-bkash" onclick="selectMethod('bkash')">
+      <div class="method-check"><i class="fas fa-check" style="font-size:.5rem"></i></div>
+      <div class="method-logo-wrap">
+        <img src="https://i.postimg.cc/bwgdxTYS/BKash-Logo-icon-700x662.png" alt="bKash" onerror="this.style.display='none'">
+      </div>
+      <div class="method-name">bKash</div>
+      <div class="method-tag">Send Money</div>
+    </div>
+    <div class="method-card" id="card-nagad" onclick="selectMethod('nagad')">
+      <div class="method-check"><i class="fas fa-check" style="font-size:.5rem"></i></div>
+      <div class="method-logo-wrap">
+        <img src="https://i.postimg.cc/J4qRvzfT/logo.png" alt="Nagad" onerror="this.style.display='none'">
+      </div>
+      <div class="method-name">Nagad</div>
+      <div class="method-tag">Send Money</div>
+    </div>
+  </div>
+
+  <!-- BKASH PANEL -->
+  <div class="payment-panel show" id="panel-bkash">
+    <div class="panel-method-header">
+      <div class="panel-method-icon">
+        <img src="https://i.postimg.cc/bwgdxTYS/BKash-Logo-icon-700x662.png" alt="bKash">
+      </div>
+      <div>
+        <div class="panel-method-name">bKash পেমেন্ট</div>
+        <div class="panel-method-sub">নিচের নম্বরে Send Money করুন</div>
+      </div>
+    </div>
+
+    <div class="send-money-box bkash-border">
+      <div class="send-label bkash-label-bg">
+        <i class="fas fa-mobile-alt"></i> bKash নম্বর (Send Money)
+      </div>
+      <div class="number-row">
+        <span class="number-display bkash-num-color" id="bkash-number">01613932684</span>
+        <button class="copy-btn bkash-copy" onclick="copyNumber('bkash-number','bkash')">
+          <i class="far fa-copy"></i> কপি
+        </button>
+      </div>
+    </div>
+
+    <div class="amount-reminder bkash-dash">
+      <span class="reminder-ico">💰</span>
+      <div class="reminder-text">
+        পাঠাতে হবে ঠিক:
+        <span class="reminder-amount bkash-reminder-amount" id="bkash-amount-reminder">৳—</span>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="input-group">
+        <div class="input-label"><i class="fas fa-phone bkash-i"></i>আপনার বিকাশ নম্বর <span style="color:var(--rose)">*</span></div>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-sim-card bkash-i"></i>
+          <input class="form-input" type="tel" id="bkash-sender" placeholder="01XXXXXXXXX" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        </div>
+        <div class="input-hint">যে নম্বর থেকে টাকা পাঠিয়েছেন</div>
+      </div>
+      <div class="input-group">
+        <div class="input-label"><i class="fas fa-hashtag bkash-i"></i>ট্রানজেকশন আইডি (TrxID) <span style="color:var(--rose)">*</span></div>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-receipt bkash-i"></i>
+          <input class="form-input" type="text" id="bkash-trx" placeholder="যেমন: 8G7H5J4K2L" maxlength="20">
+        </div>
+        <div class="input-hint">bKash SMS-এ পাওয়া TrxID লিখুন</div>
+      </div>
+      <button class="confirm-btn" id="bkash-submit-btn" onclick="submitPayment('bkash')">
+        <i class="fas fa-lock"></i> পেমেন্ট কনফার্ম করুন
+      </button>
+    </div>
+  </div>
+
+  <!-- NAGAD PANEL -->
+  <div class="payment-panel" id="panel-nagad">
+    <div class="panel-method-header">
+      <div class="panel-method-icon">
+        <img src="https://i.postimg.cc/J4qRvzfT/logo.png" alt="Nagad">
+      </div>
+      <div>
+        <div class="panel-method-name">Nagad পেমেন্ট</div>
+        <div class="panel-method-sub">নিচের নম্বরে Send Money করুন</div>
+      </div>
+    </div>
+
+    <div class="send-money-box nagad-border">
+      <div class="send-label nagad-label-bg">
+        <i class="fas fa-mobile-alt"></i> Nagad নম্বর (Send Money)
+      </div>
+      <div class="number-row">
+        <span class="number-display nagad-num-color" id="nagad-number">01613932684</span>
+        <button class="copy-btn nagad-copy" onclick="copyNumber('nagad-number','nagad')">
+          <i class="far fa-copy"></i> কপি
+        </button>
+      </div>
+    </div>
+
+    <div class="amount-reminder nagad-dash">
+      <span class="reminder-ico">💰</span>
+      <div class="reminder-text">
+        পাঠাতে হবে ঠিক:
+        <span class="reminder-amount nagad-reminder-amount" id="nagad-amount-reminder">৳—</span>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="input-group">
+        <div class="input-label"><i class="fas fa-phone nagad-i" style="color:var(--nagad)"></i>আপনার নগদ নম্বর <span style="color:var(--rose)">*</span></div>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-sim-card" style="color:var(--nagad)"></i>
+          <input class="form-input" type="tel" id="nagad-sender" placeholder="01XXXXXXXXX" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        </div>
+        <div class="input-hint">যে নম্বর থেকে টাকা পাঠিয়েছেন</div>
+      </div>
+      <div class="input-group">
+        <div class="input-label"><i class="fas fa-hashtag" style="color:var(--nagad)"></i>ট্রানজেকশন আইডি (TrxID) <span style="color:var(--rose)">*</span></div>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-receipt" style="color:var(--nagad)"></i>
+          <input class="form-input" type="text" id="nagad-trx" placeholder="যেমন: 8G7H5J4K2L" maxlength="20">
+        </div>
+        <div class="input-hint">Nagad SMS-এ পাওয়া TrxID লিখুন</div>
+      </div>
+      <button class="confirm-btn" id="nagad-submit-btn" onclick="submitPayment('nagad')">
+        <i class="fas fa-lock"></i> পেমেন্ট কনফার্ম করুন
+      </button>
+    </div>
+  </div>
+
+  <!-- HOW TO PAY -->
+  <div class="how-to-wrap" style="margin-top:14px;animation:cardIn .4s .2s ease both">
+    <div class="how-to-toggle" id="howToggle" onclick="toggleHow()">
+      <div class="step-ico"><i class="fas fa-question"></i></div>
+      কিভাবে পেমেন্ট করবেন?
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="how-to-body" id="howBody">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-text">উপরের নম্বরটি <strong>কপি</strong> করুন অথবা মনে রাখুন</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">২</div>
+        <div class="how-text">bKash/Nagad অ্যাপ খুলুন → <strong>Send Money</strong> অপশন সিলেক্ট করুন</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">৩</div>
+        <div class="how-text">নম্বর দিন এবং ঠিক <strong id="howAmount">—</strong> টাকা পাঠান</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">৪</div>
+        <div class="how-text">SMS-এ পাওয়া <strong>TrxID</strong> এবং আপনার নম্বর উপরের ফর্মে লিখুন</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">৫</div>
+        <div class="how-text"><strong>কনফার্ম</strong> বাটন চাপুন — 5-15 মিনিটের মধ্যে প্রিমিয়াম অ্যাক্টিভ হবে</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-wrap" style="animation:cardIn .4s .25s ease both">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <i class="fas fa-circle-question" style="color:var(--p3);font-size:.8rem"></i>
+        পেমেন্টের পর কতক্ষণে অ্যাক্টিভ হবে?
+        <i class="fas fa-chevron-down faq-arr"></i>
+      </div>
+      <div class="faq-a">সাধারণত 5-15 মিনিটের মধ্যে। রাতে একটু বেশি সময় লাগতে পারে। 30 মিনিটেও না হলে সাপোর্টে যোগাযোগ করুন।</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <i class="fas fa-circle-question" style="color:var(--p3);font-size:.8rem"></i>
+        ভুল TrxID দিলে কি হবে?
+        <i class="fas fa-chevron-down faq-arr"></i>
+      </div>
+      <div class="faq-a">SMS থেকে সঠিক TrxID কপি করুন। ভুল দিলে ভেরিফিকেশন হবে না। সমস্যা হলে সাপোর্টে যোগাযোগ করুন।</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <i class="fas fa-circle-question" style="color:var(--p3);font-size:.8rem"></i>
+        রিফান্ড পাওয়া যাবে?
+        <i class="fas fa-chevron-down faq-arr"></i>
+      </div>
+      <div class="faq-a">টেকনিক্যাল সমস্যার ক্ষেত্রে রিফান্ড বা প্ল্যান এক্সটেনশন দেওয়া হয়। সাপোর্টে যোগাযোগ করুন।</div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar" style="margin-bottom:8px">
+    <div class="trust-item"><i class="fas fa-shield-alt"></i>SSL নিরাপদ</div>
+    <div class="trust-item"><i class="fas fa-lock"></i>তথ্য এনক্রিপ্টেড</div>
+    <div class="trust-item"><i class="fas fa-headset"></i>২৪/৭ সাপোর্ট</div>
+    <div class="trust-item"><i class="fas fa-undo"></i>রিফান্ড গ্যারান্টি</div>
+  </div>
+
+  <div class="spacer"></div>
+</div>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+const app  = initializeApp({apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",authDomain:"sbopnporn.firebaseapp.com",projectId:"sbopnporn",storageBucket:"sbopnporn.firebasestorage.app",messagingSenderId:"217423916538",appId:"1:217423916538:web:9f8dc21358c2ad03cec843"});
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// URL params
+const params  = new URLSearchParams(window.location.search);
+const amount  = params.get('amount') || '0';
+const name    = decodeURIComponent(params.get('name') || 'প্ল্যান');
+const days    = params.get('days')   || '0';
+
+let currentUser = null;
+let activeMethod = 'bkash';
+
+// ── Populate plan info ──
+function populatePlan(){
+  document.getElementById('bannerName').textContent  = name;
+  document.getElementById('bannerDays').textContent  = days;
+  document.getElementById('bannerPrice').textContent = '৳'+amount;
+
+  const perDay = days > 0 ? '৳'+(amount/days).toFixed(1)+'/দিন' : '';
+  document.getElementById('bannerPerDay').textContent = perDay;
+
+  const exp = new Date();
+  exp.setDate(exp.getDate()+parseInt(days));
+  const opts = {day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Dhaka'};
+  document.getElementById('expiryDate').textContent = exp.toLocaleDateString('bn-BD',opts);
+
+  document.getElementById('bkash-amount-reminder').textContent = '৳'+amount;
+  document.getElementById('nagad-amount-reminder').textContent = '৳'+amount;
+  const howAmountEl = document.getElementById('howAmount');
+  if(howAmountEl) howAmountEl.textContent = amount;
+}
+populatePlan();
+
+// ── Toast ──
+window.toast = function(msg,type='ok',dur=3200){
+  const box=document.getElementById('toastBox');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;
+  const icons={ok:'✅',warn:'⚠️',err:'❌'};
+  t.innerHTML=`<span>${icons[type]||'ℹ️'}</span>${msg}`;
+  box.appendChild(t);
+  setTimeout(()=>{t.classList.add('hiding');setTimeout(()=>t.remove(),320)},dur);
+};
+
+// ── Select Method ──
+window.selectMethod = function(method){
+  activeMethod = method;
+  ['bkash','nagad'].forEach(m=>{
+    const card  = document.getElementById('card-'+m);
+    const panel = document.getElementById('panel-'+m);
+    if(m===method){
+      card.className = 'method-card active-'+m;
+      panel.classList.add('show');
+    } else {
+      card.className = 'method-card';
+      panel.classList.remove('show');
+    }
+  });
+};
+
+// ── Copy Number ──
+window.copyNumber = async function(elId, method){
+  const num = document.getElementById(elId).textContent;
+  try{ await navigator.clipboard.writeText(num); }
+  catch{
+    const ta=document.createElement('textarea');
+    ta.value=num;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+  }
+  const btn = document.querySelector(`#panel-${method} .copy-btn`);
+  const orig = btn.innerHTML;
+  btn.innerHTML='<i class="fas fa-check"></i> কপি হয়েছে';
+  btn.classList.add('copied');
+  setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied')},2000);
+  toast('নম্বর কপি হয়েছে!','ok',2000);
+};
+
+// ── Validate ──
+function validate(method){
+  const sender = document.getElementById(`${method}-sender`).value.trim();
+  const trx    = document.getElementById(`${method}-trx`).value.trim().toUpperCase();
+  if(!sender||!trx){
+    toast('সব তথ্য পূরণ করুন','warn');
+    if(!sender) shake(`${method}-sender`);
+    if(!trx)    shake(`${method}-trx`);
+    return false;
+  }
+  if(sender.length!==11||!/^[0-9]+$/.test(sender)){
+    toast('সঠিক 11 ডিজিটের নম্বর দিন','warn');
+    shake(`${method}-sender`);return false;
+  }
+  if(trx.length<8){
+    toast('TrxID কমপক্ষে ৮ অক্ষরের হতে হবে','warn');
+    shake(`${method}-trx`);return false;
+  }
+  return {sender,trx};
+}
+function shake(id){
+  const el=document.getElementById(id);
+  el.classList.add('error');
+  setTimeout(()=>el.classList.remove('error'),700);
+}
+
+// ── Submit ──
+window.submitPayment = async function(method){
+  if(!currentUser){
+    toast('দয়া করে লগইন করুন','err');
+    setTimeout(()=>window.location.href='index.html',1500);
+    return;
+  }
+  if(!amount||amount==='0'){
+    toast('প্ল্যান সিলেক্ট করা নেই','warn');
+    setTimeout(()=>window.location.href='subscription.html',1500);
+    return;
+  }
+  const v = validate(method);
+  if(!v) return;
+
+  const btn = document.getElementById(`${method}-submit-btn`);
+  const orig = btn.innerHTML;
+  btn.innerHTML='<span class="spinner"></span> প্রসেসিং...';
+  btn.disabled=true;
+
+  try{
+    const userSnap = await getDoc(doc(db,'users',currentUser.uid));
+    let userName = currentUser.displayName||'User';
+    let userEmail = currentUser.email||'';
+    if(userSnap.exists()){
+      const d = userSnap.data();
+      userName = d.name||userName;
+      userEmail = d.email||userEmail;
+    }
+
+    const now = new Date();
+    const payload = {
+      userId:currentUser.uid,
+      userName,userEmail,
+      userPhone:v.sender,
+      planName:name,
+      amount:parseInt(amount),
+      durationDays:parseInt(days),
+      paymentMethod:method==='bkash'?'bKash':'Nagad',
+      transactionId:v.trx,
+      senderNumber:v.sender,
+      status:'pending',
+      createdAt:serverTimestamp(),
+      createdAtBangla:now.toLocaleString('bn-BD',{timeZone:'Asia/Dhaka'}),
+      isProcessed:false
+    };
+
+    const docRef = await addDoc(collection(db,'payments'),payload);
+
+    // Show success overlay
+    document.getElementById('successTrxDisplay').textContent = 'TrxID: '+v.trx;
+    document.getElementById('successOverlay').classList.add('show');
+
+    setTimeout(()=>window.location.href='home.html',4000);
+
+  }catch(e){
+    console.error(e);
+    if(e.code==='permission-denied') toast('পারমিশন ডিনাই! Firestore rules চেক করুন','err');
+    else if(e.code==='unavailable') toast('নেটওয়ার্ক সমস্যা, পরে চেষ্টা করুন','err');
+    else toast('সমস্যা হয়েছে: '+e.message,'err');
+    btn.innerHTML=orig;
+    btn.disabled=false;
+  }
+};
+
+// ── Auth check ──
+onAuthStateChanged(auth,user=>{
+  if(user){ currentUser=user; }
+  else{
+    toast('দয়া করে লগইন করুন','err');
+    setTimeout(()=>window.location.href='index.html',1500);
+  }
+});
+
+// ── How-to accordion ──
+window.toggleHow = function(){
+  const toggle = document.getElementById('howToggle');
+  const body   = document.getElementById('howBody');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+};
+
+// ── FAQ accordion ──
+window.toggleFaq = function(qEl){
+  const aEl = qEl.nextElementSibling;
+  const wasOpen = qEl.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(q=>q.classList.remove('open'));
+  document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));
+  if(!wasOpen){qEl.classList.add('open');aEl.classList.add('open');}
+};
+
+// default bkash
+selectMethod('bkash');
+</script>
+</body>
+</html>

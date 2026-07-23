@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>স্বপ্নপূরণ - সাপোর্ট সেন্টার</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --p1: #6c3bff;
+        --p2: #8b5cf6;
+        --p3: #a78bfa;
+        --p4: #ede9fe;
+        --acc: #f59e0b;
+        --acc2: #fbbf24;
+        --teal: #0ea5e9;
+        --green: #10b981;
+        --rose: #f43f5e;
+        --bg: #f0f4ff;
+        --bg2: #e8eeff;
+        --card: #ffffff;
+        --text: #1e1b4b;
+        --text2: #4c4b73;
+        --text3: #7c7a9e;
+        --border: #ddd8ff;
+        --shadow-sm: 0 4px 20px rgba(108, 59, 255, 0.08);
+        --shadow-md: 0 12px 28px rgba(108, 59, 255, 0.12);
+        --shadow-hover: 0 16px 32px rgba(108, 59, 255, 0.2);
+        --nav-h: 70px;
+        --head-h: 64px;
+        --radius-sm: 14px;
+        --radius-md: 20px;
+    }
+
+    body {
+        font-family: 'Hind Siliguri', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding-bottom: calc(var(--nav-h) + 30px);
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: 
+            radial-gradient(ellipse 70% 50% at 0% 20%, rgba(108, 59, 255, 0.06) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 100% 80%, rgba(14, 165, 233, 0.05) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    /* Header */
+    .glass-header {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(20px);
+        border-bottom: 2px solid var(--border);
+        height: var(--head-h);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        gap: 14px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .back-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: var(--radius-sm);
+        background: rgba(108, 59, 255, 0.08);
+        border: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--p1);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .back-btn:hover {
+        background: var(--p1);
+        color: white;
+        transform: translateX(-4px);
+    }
+
+    .hdr-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--text), var(--p1));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Container */
+    .container {
+        max-width: 650px;
+        margin: 0 auto;
+        padding: 24px 20px 40px;
+    }
+
+    .sec-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+        animation: fadeSlideUp 0.5s ease both;
+    }
+
+    .sec-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(108, 59, 255, 0.08);
+        padding: 6px 16px;
+        border-radius: 40px;
+    }
+
+    .sec-title i {
+        color: var(--p1);
+    }
+
+    .badge-support {
+        background: var(--p4);
+        padding: 5px 14px;
+        border-radius: 30px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--p1);
+    }
+
+    @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Support Cards */
+    .support-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .support-card {
+        background: var(--card);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .support-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: currentColor;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .support-card:hover::before {
+        opacity: 0.8;
+    }
+
+    .support-card:hover {
+        transform: translateX(8px) translateY(-3px);
+        border-color: currentColor;
+        box-shadow: var(--shadow-hover);
+    }
+
+    .card-icon {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, rgba(108, 59, 255, 0.08), rgba(139, 92, 246, 0.05));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        flex-shrink: 0;
+    }
+
+    .support-card:hover .card-icon {
+        transform: scale(1.05) rotate(2deg);
+    }
+
+    .support-card i {
+        font-size: 1.8rem;
+        transition: transform 0.2s;
+    }
+
+    .support-card:hover i {
+        transform: scale(1.1);
+    }
+
+    .card-info {
+        flex: 1;
+    }
+
+    .card-info h3 {
+        font-family: 'Sora', sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 6px;
+        color: var(--text);
+    }
+
+    .card-info p {
+        font-size: 0.72rem;
+        color: var(--text3);
+        line-height: 1.4;
+    }
+
+    .arrow-indicator {
+        width: 32px;
+        height: 32px;
+        background: var(--bg2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text3);
+        transition: all 0.2s;
+        flex-shrink: 0;
+    }
+
+    .support-card:hover .arrow-indicator {
+        background: var(--p1);
+        color: white;
+        transform: translateX(4px);
+    }
+
+    .whatsapp-card { color: #25D366; }
+    .telegram-card { color: #0088cc; }
+    .facebook-card { color: #1877F2; }
+
+    .info-banner {
+        margin-top: 32px;
+        background: linear-gradient(135deg, var(--p4), rgba(108, 59, 255, 0.08));
+        border-radius: var(--radius-md);
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border: 1px solid var(--border);
+        animation: fadeSlideUp 0.5s ease 0.2s both;
+    }
+
+    .info-banner i {
+        font-size: 1.5rem;
+        color: var(--p1);
+    }
+
+    .info-banner-text h4 {
+        font-family: 'Sora', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .info-banner-text p {
+        font-size: 0.7rem;
+        color: var(--text2);
+    }
+
+    /* Loading State */
+    .loading-card {
+        background: var(--card);
+        border-radius: var(--radius-md);
+        padding: 30px;
+        text-align: center;
+        color: var(--text3);
+        border: 1px solid var(--border);
+    }
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;height:var(--nav-h);background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-top:2px solid var(--border);display:flex;justify-content:space-around;align-items:center;box-shadow:0 -4px 20px rgba(108,59,255,.1)}
+.nav-it{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--text3);font-size:.6rem;font-weight:600;letter-spacing:.03em;text-decoration:none;padding:8px 14px;border-radius:14px;transition:all .25s}
+.nav-it i{font-size:1.2rem;transition:transform .3s}
+.nav-it:hover i,.nav-it:hover{color:var(--p1)}
+.nav-it:hover i{transform:translateY(-3px)}
+.nav-it.on{color:var(--p1);background:linear-gradient(135deg,rgba(108,59,255,.1),rgba(139,92,246,.07));border:1.5px solid rgba(108,59,255,.2)}
+.nav-it.on i{filter:drop-shadow(0 0 6px rgba(108,59,255,.4))}
+.verified{color:var(--teal);font-size:.9rem}
+.spacer{height:20px;position:relative;z-index:10}
+@media(max-width:400px){
+  .av-actions{gap:6px}.av-act-btn{padding:7px 10px;font-size:.68rem}
+  .pts-val{font-size:1.7rem}.history-list{padding:0 14px}
+}
+</style>
+</head>
+<body>
+
+<header class="glass-header">
+    <div class="back-btn" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i>
+    </div>
+    <div class="hdr-title">সাপোর্ট <span>সেন্টার</span></div>
+</header>
+
+<main class="container">
+    <div class="sec-header">
+        <div class="sec-title">
+            <i class="fas fa-headset"></i>
+            যেকোনো প্রয়োজনে যোগাযোগ করুন
+        </div>
+        <div class="badge-support">
+            <i class="fas fa-clock"></i> ২৪/৭ সাপোর্ট
+        </div>
+    </div>
+
+    <div class="support-grid" id="supportGrid">
+        <div class="loading-card">
+            <i class="fas fa-spinner fa-pulse"></i> লোড হচ্ছে...
+        </div>
+    </div>
+
+    <div class="info-banner">
+        <i class="fas fa-shield-alt"></i>
+        <div class="info-banner-text">
+            <h4>আমরা ২৪/৭ আপনার পাশে</h4>
+            <p>যেকোনো টেকনিক্যাল সমস্যা বা পরামর্শের জন্য নির্দ্বিধায় যোগাযোগ করুন। আমাদের টিম দ্রুত সাড়া দেবে।</p>
+        </div>
+    </div>
+</main>
+
+<nav class="bottom-nav">
+    <a href="home.html" class="nav-it"><i class="fas fa-home"></i><span>হোম</span></a>
+    <a href="leaderboard.html" class="nav-it"><i class="fas fa-trophy"></i><span>র‍্যাংকিং</span></a>
+    <a href="notice.html" class="nav-it"><i class="fas fa-bullhorn"></i><span>নোটিশ</span></a>
+    <a href="support.html" class="nav-it on"><i class="fas fa-headset"></i><span>সাপোর্ট</span></a>
+    <a href="profile.html" class="nav-it"><i class="fas fa-user-circle"></i><span>প্রোফাইল</span></a>
+</nav>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getFirestore, doc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",
+        authDomain: "sbopnporn.firebaseapp.com",
+        projectId: "sbopnporn",
+        storageBucket: "sbopnporn.firebasestorage.app",
+        messagingSenderId: "217423916538",
+        appId: "1:217423916538:web:9f8dc21358c2ad03cec843"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ডিফল্ট মান (যদি Firebase এ না থাকে)
+    let supportData = {
+        whatsapp: { value: "https://wa.me/8801XXXXXXXXX", display: "8801XXXXXXXXX" },
+        telegram: { value: "https://t.me/swapnopuron", display: "@swapnopuron" },
+        facebook: { value: "https://facebook.com/swapnopuron", display: "/swapnopuron" }
+    };
+
+    // Firebase থেকে সাপোর্ট ডাটা লোড
+    async function loadSupportData() {
+        try {
+            const platforms = ['whatsapp', 'telegram', 'facebook'];
+            
+            for (const platform of platforms) {
+                const docRef = doc(db, "settings", `support_${platform}`);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    let rawValue = docSnap.data().value;
+                    let displayValue = rawValue;
+                    let linkValue = rawValue;
+                    
+                    // WhatsApp নম্বর ফরম্যাটিং
+                    if (platform === 'whatsapp') {
+                        let number = rawValue.replace(/\D/g, '');
+                        if (number.startsWith('0')) number = '88' + number;
+                        if (!number.startsWith('88')) number = '88' + number;
+                        linkValue = `https://wa.me/${number}`;
+                        displayValue = rawValue;
+                    }
+                    // Telegram ইউজারনেম ফরম্যাটিং
+                    else if (platform === 'telegram') {
+                        let username = rawValue.replace('@', '');
+                        linkValue = `https://t.me/${username}`;
+                        displayValue = '@' + username;
+                    }
+                    // Facebook লিংক
+                    else if (platform === 'facebook') {
+                        let page = rawValue;
+                        if (!page.includes('facebook.com')) {
+                            if (page.startsWith('/')) page = page.substring(1);
+                            linkValue = `https://facebook.com/${page}`;
+                        } else {
+                            linkValue = rawValue;
+                        }
+                        displayValue = rawValue.replace('https://', '').replace('http://', '').replace('www.facebook.com/', '');
+                    }
+                    
+                    supportData[platform] = {
+                        value: linkValue,
+                        display: displayValue
+                    };
+                }
+            }
+        } catch (error) {
+            console.error("Error loading support data:", error);
+        }
+        
+        renderSupportCards();
+    }
+
+    // কার্ড রেন্ডার
+    function renderSupportCards() {
+        const grid = document.getElementById('supportGrid');
+        
+        const cards = [
+            {
+                platform: 'whatsapp',
+                name: 'WhatsApp',
+                desc: 'সরাসরি মেসেজ করুন আমাদের হোয়াটসঅ্যাপে। দ্রুত উত্তর পেতে এখানে যোগাযোগ করুন।',
+                icon: 'fab fa-whatsapp',
+                color: '#25D366',
+                link: supportData.whatsapp.value,
+                display: supportData.whatsapp.display
+            },
+            {
+                platform: 'telegram',
+                name: 'Telegram',
+                desc: 'সাপোর্ট গ্রুপে জয়েন করুন যেকোনো তথ্য ও আপডেট পেতে।',
+                icon: 'fab fa-telegram',
+                color: '#0088cc',
+                link: supportData.telegram.value,
+                display: supportData.telegram.display
+            },
+            {
+                platform: 'facebook',
+                name: 'Facebook',
+                desc: 'ফেসবুক পেজে ইনবক্স করুন। আমাদের সাথে থাকুন সবার সাথে।',
+                icon: 'fab fa-facebook-f',
+                color: '#1877F2',
+                link: supportData.facebook.value,
+                display: supportData.facebook.display
+            }
+        ];
+        
+        grid.innerHTML = cards.map(card => `
+            <a href="${card.link}" target="_blank" class="support-card ${card.platform}-card" style="color: ${card.color};">
+                <div class="card-icon">
+                    <i class="${card.icon}"></i>
+                </div>
+                <div class="card-info">
+                    <h3>${card.name}</h3>
+                    <p>${card.desc}</p>
+                    <small style="color: var(--text3); font-size: 0.65rem; margin-top: 4px; display: block;">
+                        <i class="fas fa-link"></i> ${card.display}
+                    </small>
+                </div>
+                <div class="arrow-indicator">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        `).join('');
+        
+        // অ্যানিমেশন ইফেক্ট
+        const cardsEl = document.querySelectorAll('.support-card');
+        cardsEl.forEach((card, idx) => {
+            card.style.animation = `fadeSlideUp 0.4s ease ${idx * 0.1}s both`;
+        });
+    }
+
+    // Firebase রিয়েল-টাইম লিসেনার (settings এ পরিবর্তন হলে auto update)
+    const platforms = ['whatsapp', 'telegram', 'facebook'];
+    platforms.forEach(platform => {
+        const docRef = doc(db, "settings", `support_${platform}`);
+        onSnapshot(docRef, (docSnap) => {
+            if (docSnap.exists()) {
+                let rawValue = docSnap.data().value;
+                let displayValue = rawValue;
+                let linkValue = rawValue;
+                
+                if (platform === 'whatsapp') {
+                    let number = rawValue.replace(/\D/g, '');
+                    if (number.startsWith('0')) number = '88' + number;
+                    if (!number.startsWith('88')) number = '88' + number;
+                    linkValue = `https://wa.me/${number}`;
+                    displayValue = rawValue;
+                } else if (platform === 'telegram') {
+                    let username = rawValue.replace('@', '');
+                    linkValue = `https://t.me/${username}`;
+                    displayValue = '@' + username;
+                } else if (platform === 'facebook') {
+                    if (!rawValue.includes('facebook.com')) {
+                        let page = rawValue;
+                        if (page.startsWith('/')) page = page.substring(1);
+                        linkValue = `https://facebook.com/${page}`;
+                    } else {
+                        linkValue = rawValue;
+                    }
+                    displayValue = rawValue.replace('https://', '').replace('http://', '').replace('www.facebook.com/', '');
+                }
+                
+                supportData[platform] = {
+                    value: linkValue,
+                    display: displayValue
+                };
+                renderSupportCards();
+            }
+        }, (error) => {
+            console.error("Snapshot error:", error);
+        });
+    });
+
+    // ব্যাক বাটন ফাংশন
+    window.goBack = function() {
+        if (document.referrer && document.referrer.includes(window.location.hostname)) {
+            window.history.back();
+        } else {
+            window.location.href = 'home.html';
+        }
+    };
+
+    // লোড করুন
+    loadSupportData();
+</script>
+</body>
+</html>

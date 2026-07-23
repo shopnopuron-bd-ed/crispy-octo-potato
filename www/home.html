@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>স্বপ্নপূরণ - হোম</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --p1:#6c3bff;
+  --p2:#8b5cf6;
+  --p3:#a78bfa;
+  --acc:#f59e0b;
+  --acc2:#fbbf24;
+  --teal:#0ea5e9;
+  --green:#10b981;
+  --rose:#f43f5e;
+  --bg:#f0f4ff;
+  --bg2:#e8eeff;
+  --card:#ffffff;
+  --text:#1e1b4b;
+  --text2:#4c4b73;
+  --text3:#7c7a9e;
+  --border:#ddd8ff;
+  --border2:#c4b8ff;
+  --shadow:0 4px 20px rgba(108,59,255,.10);
+  --shadow2:0 8px 32px rgba(108,59,255,.18);
+  --nav-h:68px;
+  --head-h:64px;
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  padding-bottom:calc(var(--nav-h)+120px);
+}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 40% at 0% 0%,rgba(108,59,255,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%,rgba(14,165,233,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%,rgba(245,158,11,.05) 0%,transparent 70%);
+}
+
+/* ═══ HEADER ═══ */
+header{
+  position:sticky;top:0;z-index:200;
+  height:var(--head-h);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(20px);
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;
+  box-shadow:0 2px 16px rgba(108,59,255,.08);
+  animation:hdrIn .4s ease both;
+}
+@keyframes hdrIn{from{transform:translateY(-64px)}to{transform:translateY(0)}}
+
+.hdr-brand{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+.brand-dot{
+  width:38px;height:38px;border-radius:12px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  box-shadow:0 4px 12px rgba(108,59,255,.35);
+}
+.brand-name{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:800;color:var(--text);line-height:1.1}
+.brand-name span{color:var(--p1)}
+.brand-tag{font-size:.62rem;color:var(--text3);letter-spacing:.04em}
+
+.hdr-right{display:flex;align-items:center;gap:10px}
+.avatar-btn{
+  width:40px;height:40px;border-radius:50%;
+  border:2.5px solid var(--p2);
+  overflow:hidden;cursor:pointer;
+  box-shadow:0 0 0 3px rgba(108,59,255,.12);
+  transition:box-shadow .25s;
+}
+.avatar-btn:hover{box-shadow:0 0 0 5px rgba(108,59,255,.2)}
+.avatar-btn img{width:100%;height:100%;object-fit:cover}
+
+.menu-btn{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--bg2);border:1.5px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  cursor:pointer;transition:all .25s;
+}
+.menu-btn:hover{background:var(--border);border-color:var(--p2)}
+.menu-btn span{width:17px;height:2px;background:var(--p1);border-radius:2px;transition:all .3s}
+.menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ═══ SIDE MENU ═══ */
+.overlay{position:fixed;inset:0;z-index:300;background:rgba(30,27,75,.45);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.on{opacity:1;pointer-events:all}
+
+.side-menu{
+  position:fixed;top:0;right:-290px;z-index:400;
+  width:270px;height:100vh;
+  background:#fff;
+  border-left:2px solid var(--border);
+  transition:right .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-8px 0 40px rgba(108,59,255,.15);
+}
+.side-menu.on{right:0}
+.sm-head{
+  padding:50px 20px 20px;
+  background:linear-gradient(135deg,rgba(108,59,255,.07),rgba(14,165,233,.05));
+  border-bottom:1.5px solid var(--border);
+}
+.sm-av{width:56px;height:56px;border-radius:50%;border:3px solid var(--p2);overflow:hidden;margin-bottom:12px;box-shadow:0 4px 16px rgba(108,59,255,.2)}
+.sm-av img{width:100%;height:100%;object-fit:cover}
+.sm-name{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--text)}
+.sm-email{font-size:.72rem;color:var(--text3);margin-top:2px}
+.sm-body{flex:1;padding:14px 10px;overflow-y:auto}
+.sm-link{
+  display:flex;align-items:center;gap:13px;
+  padding:13px 14px;border-radius:14px;
+  text-decoration:none;color:var(--text2);
+  font-size:.9rem;font-weight:500;
+  transition:all .22s;margin-bottom:3px;
+}
+.sm-link i{width:20px;text-align:center;color:var(--text3);font-size:.9rem;transition:color .22s}
+.sm-link:hover{background:rgba(108,59,255,.07);color:var(--p1)}
+.sm-link:hover i{color:var(--p1)}
+.sm-premium{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(251,191,36,.07));border:1.5px solid rgba(245,158,11,.3)}
+.sm-premium i{color:var(--acc)!important}
+.sm-foot{padding:14px 10px;border-top:1.5px solid var(--border)}
+.btn-logout{
+  display:flex;align-items:center;gap:12px;
+  width:100%;padding:12px 14px;border-radius:14px;
+  background:rgba(244,63,94,.07);border:1.5px solid rgba(244,63,94,.2);
+  color:var(--rose);font-family:'Hind Siliguri',sans-serif;
+  font-size:.88rem;font-weight:600;cursor:pointer;transition:all .22s;
+}
+.btn-logout:hover{background:rgba(244,63,94,.13)}
+
+/* ═══ NOTICE TICKER ═══ */
+.notice-bar{
+  position:relative;z-index:10;height:42px;
+  background:linear-gradient(90deg,rgba(108,59,255,.1),rgba(14,165,233,.07));
+  border-bottom:1.5px solid var(--border);
+  display:flex;align-items:center;overflow:hidden;
+}
+.notice-tag{
+  flex-shrink:0;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  color:#fff;font-weight:700;font-size:.7rem;letter-spacing:.05em;
+  padding:5px 14px;border-radius:0 20px 20px 0;margin-right:10px;white-space:nowrap;
+}
+.ticker-wrap{flex:1;overflow:hidden}
+.ticker-inner{
+  display:inline-flex;align-items:center;white-space:nowrap;
+  animation:tick 32s linear infinite;
+  font-size:.8rem;font-weight:600;color:var(--p1);
+}
+.ticker-inner:hover{animation-play-state:paused}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ═══ BANNER ═══ */
+.banner-wrap{overflow:hidden;padding:16px 0;background:transparent;position:relative;z-index:10}
+.banner-track{display:flex;gap:13px;animation:bscroll 26s linear infinite;width:fit-content}
+.banner-track:hover{animation-play-state:paused}
+@keyframes bscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.banner-track img{width:250px;height:150px;border-radius:16px;object-fit:cover;border:2px solid var(--border);flex-shrink:0;transition:transform .3s,border-color .3s}
+.banner-track img:hover{transform:scale(1.04);border-color:var(--p2)}
+
+/* ═══ PAGE / VIEWS ═══ */
+.page{position:relative;z-index:10}
+.view{display:none}
+.view.on{display:block}
+
+/* ── Section title ── */
+.sec-title{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;
+  color:var(--text);padding:26px 18px 12px;
+}
+.sec-title::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--border),transparent)}
+.sec-icon{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(108,59,255,.25);
+}
+
+/* ── Card grid ── */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px}
+
+.u-card{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:18px;
+  padding:0;
+  height:110px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  text-align:center;cursor:pointer;
+  transition:all .25s ease;position:relative;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.u-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--p1),var(--teal));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+.u-card:hover{
+  border-color:var(--p2);
+  transform:translateY(-4px);
+  box-shadow:var(--shadow2);
+}
+.u-card:hover::after{transform:scaleX(1)}
+.u-card:active{transform:translateY(-1px)}
+.u-card img{
+  width:46px;height:46px;object-fit:contain;flex-shrink:0;
+  border-radius:10px;
+  background:linear-gradient(135deg,rgba(108,59,255,.06),rgba(14,165,233,.05));
+  padding:5px;
+}
+.u-card span{display:block;font-family:'Sora',sans-serif;font-size:.75rem;font-weight:700;color:var(--text);line-height:1.2}
+
+/* Super model card */
+.s-card{
+  flex-direction:row;height:70px;
+  gap:13px;text-align:left;padding:0 16px;
+}
+.s-card img{width:40px;height:40px;flex-shrink:0;margin:0;padding:4px}
+.s-card .sc-t{flex:1}
+.s-card .sc-t span{font-size:.82rem}
+.s-card .sc-arr{color:var(--text3);font-size:.8rem;transition:all .22s;flex-shrink:0}
+.s-card:hover .sc-arr{transform:translateX(5px);color:var(--p1)}
+
+/* ── Sub-view sticky header ── */
+.sub-hdr{
+  position:sticky;top:var(--head-h);z-index:100;
+  background:rgba(240,244,255,.96);
+  backdrop-filter:blur(16px);
+  border-bottom:2px solid var(--border);
+  padding:14px 18px 12px;
+}
+.sub-hdr-row{display:flex;align-items:center;gap:12px}
+.back-btn{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--card);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;color:var(--text2);font-size:.9rem;
+  transition:all .22s;box-shadow:var(--shadow);
+}
+.back-btn:hover{border-color:var(--p1);color:var(--p1);background:rgba(108,59,255,.06)}
+
+.sub-hdr-txt h3{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub-hdr-txt p{font-size:.7rem;color:var(--text3);margin-top:1px}
+
+/* Breadcrumb */
+.breadcrumb{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  padding:8px 18px 0;font-size:.71rem;color:var(--text3);
+}
+.bc-item{cursor:pointer;transition:color .2s;padding:2px 4px;border-radius:4px}
+.bc-item:hover{color:var(--p1);background:rgba(108,59,255,.07)}
+.bc-item.cur{color:var(--p1);font-weight:600}
+.bc-sep{color:var(--border2);font-size:.65rem}
+
+/* List */
+.list-wrap{padding:14px 18px calc(var(--nav-h) + 20px);display:flex;flex-direction:column;gap:10px}
+
+.l-item{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:16px;padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:all .22s;
+  box-shadow:0 2px 10px rgba(108,59,255,.06);
+  animation:liIn .3s ease both;
+}
+@keyframes liIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+.l-item:hover{border-color:var(--p2);transform:translateX(5px);box-shadow:var(--shadow2)}
+.l-item:active{transform:translateX(2px)}
+
+.l-left{display:flex;align-items:center;gap:12px}
+.l-num{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(108,59,255,.1),rgba(139,92,246,.08));
+  border:1.5px solid rgba(108,59,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;font-size:.72rem;font-weight:700;color:var(--p1);
+}
+.l-item span{font-size:.9rem;font-weight:500;color:var(--text)}
+.l-arr{color:var(--text3);font-size:.8rem;transition:all .22s;flex-shrink:0}
+.l-item:hover .l-arr{transform:translateX(5px);color:var(--p1)}
+
+/* ═══ PREMIUM POPUP ═══ */
+.pm-backdrop{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(15,10,40,.6);
+  backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .28s;
+}
+.pm-backdrop.on{opacity:1;pointer-events:all}
+.pm-sheet{
+  width:100%;max-width:480px;
+  background:#fff;
+  border-radius:28px 28px 0 0;
+  padding:0 0 34px;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+.pm-backdrop.on .pm-sheet{transform:translateY(0)}
+
+.pm-top{
+  background:linear-gradient(135deg,#6c3bff 0%,#8b5cf6 50%,#0ea5e9 100%);
+  padding:30px 24px 28px;
+  text-align:center;
+  position:relative;
+}
+.pm-close{
+  position:absolute;top:14px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.2);border:none;
+  color:#fff;font-size:.9rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.pm-close:hover{background:rgba(255,255,255,.35)}
+
+.pm-top h2{
+  font-family:'Sora',sans-serif;
+  font-size:1.25rem;font-weight:800;
+  color:#fff;margin-bottom:6px;
+}
+.pm-top p{font-size:.82rem;color:rgba(255,255,255,.85);line-height:1.5}
+
+.pm-body{padding:22px 24px 0}
+.pm-feat{display:flex;flex-direction:column;gap:11px;margin-bottom:22px}
+.pm-feat-row{
+  display:flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,rgba(108,59,255,.06),rgba(14,165,233,.04));
+  border:1.5px solid rgba(108,59,255,.12);
+  border-radius:14px;padding:12px 14px;
+}
+.pm-feat-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(108,59,255,.25);
+}
+.pm-feat-txt{flex:1}
+.pm-feat-txt strong{display:block;font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;color:var(--text)}
+.pm-feat-txt small{font-size:.72rem;color:var(--text3)}
+
+.pm-note{
+  font-size:.73rem;color:var(--text3);text-align:center;
+  margin-bottom:16px;
+}
+.pm-note span{color:var(--green);font-weight:600}
+
+.btn-pm-sub{
+  display:block;width:100%;
+  padding:15px;border-radius:16px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  color:#fff;font-family:'Sora',sans-serif;
+  font-size:1rem;font-weight:700;
+  border:none;cursor:pointer;
+  box-shadow:0 6px 20px rgba(108,59,255,.35);
+  transition:all .22s;text-align:center;
+  text-decoration:none;letter-spacing:.02em;
+}
+.btn-pm-sub:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(108,59,255,.45)}
+.btn-pm-sub:active{transform:translateY(0)}
+
+.btn-pm-later{
+  display:block;width:100%;margin-top:10px;
+  padding:12px;border-radius:14px;
+  background:transparent;border:none;
+  color:var(--text3);font-family:'Hind Siliguri',sans-serif;
+  font-size:.85rem;cursor:pointer;transition:color .2s;
+}
+.btn-pm-later:hover{color:var(--text2)}
+
+/* ═══ BOTTOM NAV ═══ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(20px);
+  border-top:2px solid var(--border);
+  display:flex;justify-content:space-around;align-items:center;
+  box-shadow:0 -4px 20px rgba(108,59,255,.1);
+}
+.nav-it{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--text3);font-size:.6rem;font-weight:600;letter-spacing:.03em;
+  text-decoration:none;padding:8px 14px;border-radius:14px;
+  transition:all .25s;cursor:pointer;
+}
+.nav-it i{font-size:1.2rem;transition:transform .3s}
+.nav-it:hover i,.nav-it:hover{color:var(--p1)}
+.nav-it:hover i{transform:translateY(-3px)}
+.nav-it.on{
+  color:var(--p1);
+  background:linear-gradient(135deg,rgba(108,59,255,.1),rgba(139,92,246,.07));
+  border:1.5px solid rgba(108,59,255,.2);
+}
+.nav-it.on i{filter:drop-shadow(0 0 6px rgba(108,59,255,.4))}
+
+/* ── Card anchor for scroll restore ── */
+[data-cat-id]{scroll-margin-top:calc(var(--head-h) + 10px)}
+
+/* ── Solo card wrapper ── */
+.solo-wrap{
+  grid-column: 1 / -1;
+  display:flex;
+  justify-content:center;
+  padding:0;
+}
+.u-card.solo{
+  width: calc(50% - 6px);
+  flex-shrink:0;
+}
+
+@media(max-width:400px){
+  .grid{gap:9px;padding:0 14px}
+  .list-wrap{padding:10px 14px}
+  .sec-title{padding:20px 14px 10px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="hdr-brand" href="profile.html">
+    <div class="brand-dot">🎯</div>
+    <div>
+      <div class="brand-name">স্বপ্ন<span>পূরণ</span></div>
+      <div class="brand-tag">তোমার সাফল্যের সঙ্গী</div>
+    </div>
+  </a>
+  <div class="hdr-right">
+    <div class="avatar-btn" onclick="window.location.href='profile.html'">
+      <img id="hdr-av" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+    </div>
+    <div class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="side-menu" id="sideMenu">
+  <div class="sm-head">
+    <div class="sm-av"><img id="sm-av" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"></div>
+    <div class="sm-name" id="sm-name">লোড হচ্ছে...</div>
+    <div class="sm-email" id="sm-email"></div>
+  </div>
+  <div class="sm-body">
+    <a href="profile.html"      class="sm-link"><i class="fas fa-user-circle"></i>প্রোফাইল</a>
+    <a href="leaderboard.html"  class="sm-link"><i class="fas fa-trophy"></i>লিডারবোর্ড</a>
+    <a href="notice.html"       class="sm-link"><i class="fas fa-bullhorn"></i>নোটিশ</a>
+    <a href="support.html"      class="sm-link"><i class="fas fa-headset"></i>সাপোর্ট (Support)</a>
+    <a href="subscription.html" class="sm-link sm-premium"><i class="fas fa-crown"></i>প্রিমিয়াম</a>
+  </div>
+  <div class="sm-foot">
+    <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i>লগআউট</button>
+  </div>
+</div>
+
+<!-- NOTICE -->
+<div class="notice-bar" id="noticeBar">
+  <div class="notice-tag">📢 নোটিশ</div>
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="tickerText">লোড হচ্ছে...</div>
+  </div>
+</div>
+
+<!-- BANNER -->
+<div class="banner-wrap" id="bannerWrap">
+  <div class="banner-track" id="bannerTrack"></div>
+</div>
+
+<!-- ═══ PREMIUM POPUP ═══ -->
+<div class="pm-backdrop" id="pmBackdrop" onclick="closePremiumPopup(event)">
+  <div class="pm-sheet">
+    <div class="pm-top">
+      <button class="pm-close" onclick="closePremiumPopup()"><i class="fas fa-times"></i></button>
+      <h2>প্রিমিয়াম দরকার</h2>
+      <p>এই কনটেন্টটি অ্যাক্সেস করতে<br>প্রিমিয়াম সদস্যতা নিন</p>
+    </div>
+    <div class="pm-body">
+      <div class="pm-feat">
+        <div class="pm-feat-row">
+          <div class="pm-feat-icon">🏛️</div>
+          <div class="pm-feat-txt">
+            <strong>সব বিশ্ববিদ্যালয় অ্যাক্সেস</strong>
+            <small>DU, BUET, RUET সহ সকল বিশ্ববিদ্যালয়ের প্রশ্ন</small>
+          </div>
+        </div>
+        <div class="pm-feat-row">
+          <div class="pm-feat-icon">🏛️</div>
+          <div class="pm-feat-txt">
+            <strong>BCS ও সরকারি চাকরি</strong>
+            <small> 10তম–50তম BCS সহ সব সরকারি চাকরির সমাধান</small>
+          </div>
+        </div>
+        <div class="pm-feat-row">
+          <div class="pm-feat-icon">⚡</div>
+          <div class="pm-feat-txt">
+            <strong>সীমাহীন প্র্যাকটিস</strong>
+            <small>হাজারো প্রশ্ন, বিস্তারিত ব্যাখ্যা ও রেজাল্ট ট্র্যাকিং</small>
+          </div>
+        </div>
+      </div>
+      <p class="pm-note">✨ Super Model Test 1 সবসময় <span>ফ্রি</span> থাকবে!</p>
+      <a href="subscription.html" class="btn-pm-sub">
+        <i class="fas fa-crown" style="margin-right:8px"></i>প্রিমিয়াম সদস্যতা নিন
+      </a>
+      <button class="btn-pm-later" onclick="closePremiumPopup()">এখন না, পরে দেখব</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- HOME VIEW -->
+  <div class="view on" id="vHome">
+    <div class="sec-title"><div class="sec-icon">⚡</div>Super Model Test</div>
+    <div class="grid" data-cat-id="super">
+      <!-- Super Model Test 1 — FREE -->
+      <div class="u-card s-card" onclick="goExam('super-model.html?test=1','super')">
+        <img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/88aa0576-d4ed-42fc-857b-9cf406630b33.png" loading="eager">
+        <div class="sc-t"><span>Super Model Test 1</span></div>
+        <i class="fas fa-chevron-right sc-arr"></i>
+      </div>
+      <!-- Super Model Test 2 — PREMIUM (গোল চিহ্ন সরানো হয়েছে) -->
+      <div class="u-card s-card" onclick="requirePremium('super-model1.html?test=2','super')">
+        <img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/88aa0576-d4ed-42fc-857b-9cf406630b33.png" loading="eager">
+        <div class="sc-t"><span>Super Model Test 2</span></div>
+        <i class="fas fa-chevron-right sc-arr"></i>
+      </div>
+    </div>
+
+    <div class="sec-title"><div class="sec-icon">🏛️</div>Govt. Job & BCS</div>
+    <div class="grid" data-cat-id="bcs-job">
+      <div class="u-card" onclick="requirePremium(null,'BCS')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/9a1ec27b-4602-4a72-9af3-81729c3af2d9.png" loading="eager"><span>BCS</span></div>
+      <div class="u-card" onclick="requirePremium(null,'Job')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/9a1ec27b-4602-4a72-9af3-81729c3af2d9.png" loading="eager"><span>Bank &amp; Govt</span></div>
+    </div>
+
+    <div class="sec-title"><div class="sec-icon">🎓</div>University Admission</div>
+    <div class="grid" data-cat-id="DU">
+      <div class="u-card" onclick="requirePremium(null,'DU')"><img src="https://i.postimg.cc/j5PTCDjf/pngtree-dhaka-university-logo-vector-png-image-20909053.png" loading="lazy"><span>DU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'RU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/78820e24-2ff7-43bc-b922-39b6cf59139c.png" loading="lazy"><span>RU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'CU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/67c6a1bf-3c7f-4da6-a916-2fc9b661e23a.png" loading="lazy"><span>CU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'JU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/213a4b86-44f7-4c9c-8d6c-7a29d1277206.webp" loading="lazy"><span>JU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'JNU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/5fb85ded-1709-4cca-937c-61f8c2f6ab40.png" loading="lazy"><span>JnU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'KU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/7bbeaa0f-af53-461d-9ca0-05f5fe76f470.png" loading="lazy"><span>KU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'COU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/05e291a1-393c-4f10-8148-25ad8c394eb3.png" loading="lazy"><span>CoU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'HSTU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/9248bfb5-66a7-4de2-ab29-92916f0c48b8.png" loading="lazy"><span>HSTU</span></div>
+      <div class="solo-wrap"><div class="u-card solo" onclick="requirePremium(null,'GST')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/f233105d-bb68-4aa2-83e9-26f4fe185af4.webp" loading="lazy"><span>GST</span></div></div>
+    </div>
+
+    <div class="sec-title"><div class="sec-icon">🔬</div>Science & Technology</div>
+    <div class="grid" data-cat-id="SUST">
+      <div class="u-card" onclick="requirePremium(null,'SUST')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/d2c6b222-eab3-4109-9b2c-4e6c6edcce10.png" loading="lazy"><span>SUST</span></div>
+      <div class="u-card" onclick="requirePremium(null,'NSTU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/5fe122e2-8c1c-458d-b401-d6828a6a66f2.png" loading="lazy"><span>NSTU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'PSTU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/912f6078-9c90-41ea-9414-671e0cf98dd5.png" loading="lazy"><span>PSTU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'JUST')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/937db3be-2765-4a7b-ba06-04f02f4061fe.png" loading="lazy"><span>JUST</span></div>
+    </div>
+
+    <div class="sec-title"><div class="sec-icon">⚙️</div>Engineering University</div>
+    <div class="grid" data-cat-id="BUET">
+      <div class="u-card" onclick="requirePremium(null,'BUET')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/4f12e294-a54b-49da-a84b-4026feb4eebf.png" loading="lazy"><span>BUET</span></div>
+      <div class="u-card" onclick="requirePremium(null,'RUET')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/69b7deed-aae5-4069-bffc-33dbe990c226.png" loading="lazy"><span>RUET</span></div>
+      <div class="u-card" onclick="requirePremium(null,'KUET')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/d2d0273a-97d4-477b-a8b1-4e41a2017595.png" loading="lazy"><span>KUET</span></div>
+      <div class="u-card" onclick="requirePremium(null,'CUET')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/46e4608c-d567-469a-9b91-5daaf68fc1f2.png" loading="lazy"><span>CUET</span></div>
+      <div class="solo-wrap"><div class="u-card solo" onclick="requirePremium(null,'DUET')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/9733ace5-66eb-405e-9fb8-71af54ba728e.png" loading="lazy"><span>DUET</span></div></div>
+    </div>
+
+    <div class="sec-title"><div class="sec-icon">🌾</div>Agriculture University</div>
+    <div class="grid" data-cat-id="BAU">
+      <div class="u-card" onclick="requirePremium(null,'BAU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/039c7170-c8c9-4660-a99c-301d57997037.png" loading="lazy"><span>BAU</span></div>
+      <div class="u-card" onclick="requirePremium(null,'SAU')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/ce6aac93-daa1-4fff-a6d2-c579173dd373.png" loading="lazy"><span>SAU</span></div>
+      <div class="solo-wrap"><div class="u-card solo" onclick="requirePremium(null,'SAU_SB')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/e53062ea-9216-46c2-a14f-637c935dc290.png" loading="lazy"><span>SAU(SB)</span></div></div>
+    </div>
+
+    <div class="sec-title"><div class="sec-icon">🏫</div>Other Universities</div>
+    <div class="grid" data-cat-id="BUP">
+      <div class="u-card" onclick="requirePremium(null,'BUP')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/f492fd43-cf21-42cf-bb04-6bd89636accb.png" loading="lazy"><span>BUP</span></div>
+      <div class="u-card" onclick="requirePremium(null,'BUTEX')"><img src="https://i.supaimg.com/7b3ad22d-f9a8-4ef2-b9f7-e123cccc03f9/0e68e30c-26c4-4d0a-8d7b-c960f096ea27.png" loading="lazy"><span>BUTEX</span></div>
+    </div>
+    <div style="height:100px"></div>
+  </div>
+
+  <!-- UNITS VIEW -->
+  <div class="view" id="vUnits">
+    <div class="sub-hdr">
+      <div class="sub-hdr-row">
+        <div class="back-btn" id="backFromUnits" onclick="goBack()"><i class="fas fa-arrow-left"></i></div>
+        <div class="sub-hdr-txt">
+          <h3 id="unitsTitle">ইউনিট বেছে নিন</h3>
+          <p id="unitsSub"></p>
+        </div>
+      </div>
+      <div class="breadcrumb" id="unitsBc"></div>
+    </div>
+    <div class="list-wrap" id="unitsList"></div>
+  </div>
+
+  <!-- YEARS VIEW -->
+  <div class="view" id="vYears">
+    <div class="sub-hdr">
+      <div class="sub-hdr-row">
+        <div class="back-btn" id="backFromYears" onclick="goBack()"><i class="fas fa-arrow-left"></i></div>
+        <div class="sub-hdr-txt">
+          <h3 id="yearsTitle">সেশন বেছে নিন</h3>
+          <p id="yearsSub"></p>
+        </div>
+      </div>
+      <div class="breadcrumb" id="yearsBc"></div>
+    </div>
+    <div class="list-wrap" id="yearsList"></div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="home.html"        class="nav-it on"><i class="fas fa-home"></i>হোম</a>
+  <a href="leaderboard.html" class="nav-it"><i class="fas fa-trophy"></i>র‍্যাংকিং</a>
+  <a href="notice.html"      class="nav-it"><i class="fas fa-bullhorn"></i>নোটিশ</a>
+  <a href="support.html"     class="nav-it"><i class="fas fa-headset"></i><span>সাপোর্ট</span></a>
+  <a href="profile.html"     class="nav-it"><i class="fas fa-user-circle"></i>প্রোফাইল</a>
+</nav>
+
+<script type="module">
+import { initializeApp }    from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+const app  = initializeApp({
+  apiKey:"AIzaSyDJY_M208hg5KTHf749DlkM99w64Fna7CY",
+  authDomain:"sbopnporn.firebaseapp.com",
+  projectId:"sbopnporn",
+  storageBucket:"sbopnporn.firebasestorage.app",
+  messagingSenderId:"217423916538",
+  appId:"1:217423916538:web:9f8dc21358c2ad03cec843"
+});
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+/* ══════════════════════════════════
+   PREMIUM CHECK
+   isPremium = true  → এক্সেস দাও
+   isPremium = false → popup দেখাও
+══════════════════════════════════ */
+let isPremium = false;
+
+window.requirePremium = function(url, catId) {
+  if (isPremium) {
+    if (url) goExam(url);
+    else if (catId) openCatDirect(catId, getCatName(catId));
+  } else {
+    showPremiumPopup();
+  }
+};
+
+/* Premium popup */
+window.showPremiumPopup = function() {
+  document.getElementById('pmBackdrop').classList.add('on');
+  document.body.style.overflow = 'hidden';
+};
+window.closePremiumPopup = function(e) {
+  if (e && e.target !== document.getElementById('pmBackdrop')) return;
+  document.getElementById('pmBackdrop').classList.remove('on');
+  document.body.style.overflow = '';
+};
+
+function getCatName(catId) {
+  const map = {
+    BCS:'BCS Preliminary', Job:'Bank & Govt Job',
+    DU:'Dhaka University', RU:'Rajshahi University', CU:'Chittagong University',
+    JU:'Jahangirnagar University', JNU:'Jagannath University', KU:'Khulna University',
+    COU:'Comilla University', HSTU:'HSTU', GST:'GST',
+    SUST:'SUST', NSTU:'NSTU', PSTU:'PSTU', JUST:'JUST',
+    BUET:'BUET', RUET:'RUET', KUET:'KUET', CUET:'CUET', DUET:'DUET',
+    BAU:'BAU', SAU:'Sylhet Agricultural University', SAU_SB:'Sher-e-Bangla Agricultural University',
+    BUP:'BUP', BUTEX:'BUTEX',
+  };
+  return map[catId] || catId;
+}
+
+/* ── Unit map ── */
+const UNITS = {
+  DU:    ['A (বিজ্ঞান)','B (মানবিক)','C (বাণিজ্য)','D (সামাজিক বিজ্ঞান)','E (চারুকলা)'],
+  RU:    ['A (মানবিক সকাল)','A (মানবিক বিকাল)','B (বাণিজ্য)','C (বিজ্ঞান)'],
+  CU:    ['A (বিজ্ঞান)','B (মানবিক)','B(1)','B(2)','C (বাণিজ্য)','D','D(1)'],
+  JU:    ['A (বিজ্ঞান)','B (মানবিক)','C (বাণিজ্য)','D (সামাজিক বিজ্ঞান)','E (চারুকলা)'],
+  JNU:   ['A (বিজ্ঞান)','B (মানবিক)','C (বাণিজ্য)','D (সামাজিক বিজ্ঞান)','E (চারুকলা অনুষদ)'],
+  KU:    ['A (বিজ্ঞান)','B (মানবিক)','C (বাণিজ্য)','D (সামাজিক বিজ্ঞান)'],
+  COU:   ['A (বিজ্ঞান)','B (মানবিক)','C (বাণিজ্য)'],
+  HSTU:  ['A (বিজ্ঞান)','B (মানবিক)','C (বাণিজ্য)','D (সামাজিক বিজ্ঞান)'],
+  GST:   ['A ইউনিট','B ইউনিট'],
+  SUST:  ['A ইউনিট (বিজ্ঞান)','B ইউনিট (মানবিক)'],
+  NSTU:  ['A ইউনিট (বিজ্ঞান)','B ইউনিট (মানবিক)'],
+  PSTU:  ['A ইউনিট (বিজ্ঞান)','B ইউনিট (মানবিক)'],
+  JUST:  ['A ইউনিট (বিজ্ঞান)','B ইউনিট (মানবিক)'],
+  BUET:  ['প্রকৌশল','স্থাপত্য'],
+  RUET:  ['প্রকৌশল'], KUET:['প্রকৌশল'],
+  CUET:  ['প্রকৌশল'], DUET:['প্রকৌশল'],
+  BAU:   ['কৃষি'], SAU:['কৃষি'], SAU_SB:['কৃষি'],
+  BUP:   ['FASS','FBS','FST'],
+  BUTEX: ['প্রকৌশল'],
+};
+
+const CAT_TO_SECTION = {
+  BCS:'bcs-job', Job:'bcs-job',
+  DU:'DU', RU:'DU', CU:'DU', JU:'DU', JNU:'DU', KU:'DU', COU:'DU', HSTU:'DU', GST:'DU',
+  SUST:'SUST', NSTU:'SUST', PSTU:'SUST', JUST:'SUST',
+  BUET:'BUET', RUET:'BUET', KUET:'BUET', CUET:'BUET', DUET:'BUET',
+  BAU:'BAU', SAU:'BAU', SAU_SB:'BAU',
+  BUP:'BUP', BUTEX:'BUP',
+};
+
+let curView    = 'home';
+let curCatId   = '';
+let curCatName = '';
+let curUnit    = '';
+let homeScrollY = 0;
+
+function switchView(to) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.getElementById('v' + to[0].toUpperCase() + to.slice(1)).classList.add('on');
+  const onHome = to === 'home';
+  document.getElementById('bannerWrap').style.display = onHome ? '' : 'none';
+  document.getElementById('noticeBar').style.display  = onHome ? '' : 'none';
+  curView = to;
+}
+
+function openCatDirect(catId, catName) {
+  homeScrollY = window.scrollY;
+  curCatId   = catId;
+  curCatName = catName;
+  curUnit    = '';
+  history.pushState({view:'units', catId, catName, homeScrollY}, '', '#units');
+  renderUnits();
+}
+
+window.openCat = function(catId, catName) {
+  requirePremium(null, catId);
+};
+
+function openUnit(unit) {
+  curUnit = unit;
+  history.pushState({view:'years', catId:curCatId, catName:curCatName, unit, homeScrollY}, '', '#years');
+  renderYears();
+}
+
+window.goBack = function() {
+  if (curView === 'years') {
+    history.pushState({view:'units', catId:curCatId, catName:curCatName, homeScrollY}, '', '#units');
+    renderUnits();
+  } else if (curView === 'units') {
+    history.pushState({view:'home'}, '', location.pathname);
+    switchView('home');
+    restoreHomeScroll();
+  }
+};
+
+window.addEventListener('popstate', (e) => {
+  const st = e.state;
+  if (!st || st.view === 'home') {
+    if (st && st.homeScrollY != null) homeScrollY = st.homeScrollY;
+    switchView('home');
+    restoreHomeScroll();
+  } else if (st.view === 'units') {
+    curCatId   = st.catId;
+    curCatName = st.catName;
+    curUnit    = '';
+    if (st.homeScrollY != null) homeScrollY = st.homeScrollY;
+    renderUnits();
+  } else if (st.view === 'years') {
+    curCatId   = st.catId;
+    curCatName = st.catName;
+    curUnit    = st.unit;
+    if (st.homeScrollY != null) homeScrollY = st.homeScrollY;
+    renderYears();
+  }
+});
+
+function restoreHomeScroll() {
+  if (homeScrollY > 0) {
+    requestAnimationFrame(() => { window.scrollTo({top: homeScrollY, behavior: 'instant'}); });
+    return;
+  }
+  const sectionId = CAT_TO_SECTION[curCatId];
+  if (sectionId) {
+    const el = document.querySelector(`[data-cat-id="${sectionId}"]`);
+    if (el) requestAnimationFrame(() => { el.scrollIntoView({behavior:'smooth', block:'start'}); });
+  }
+}
+
+function renderUnits() {
+  switchView('units');
+  window.scrollTo({top:0, behavior:'instant'});
+  document.getElementById('unitsTitle').textContent = curCatName;
+  document.getElementById('unitsSub').textContent   = 'ইউনিট বেছে নিন';
+  document.getElementById('unitsBc').innerHTML =
+    `<span class="bc-item" onclick="goBack()">🏠 হোম</span>
+     <span class="bc-sep">›</span>
+     <span class="bc-item cur">${curCatName}</span>`;
+
+  const list = document.getElementById('unitsList');
+  list.innerHTML = '';
+
+  if (curCatId === 'BCS') {
+    for (let i = 50; i >= 10; i--) {
+      const url = `exam.html?cat=BCS&val=${i}th`;
+      addItem(list, `${i}তম BCS প্রিলিমিনারি`, 51-i, () => goExam(url));
+    }
+  } else if (curCatId === 'Job') {
+    for (let i = 1; i <= 30; i++) {
+      const url = `exam.html?cat=Job&val=Job-${i}`;
+      addItem(list, `চাকরি সমাধান সেট - ${i}`, i, () => goExam(url));
+    }
+  } else {
+    (UNITS[curCatId] || []).forEach((unit, idx) => {
+      addItem(list, unit, idx+1, () => openUnit(unit));
+    });
+  }
+}
+
+function renderYears() {
+  switchView('years');
+  window.scrollTo({top:0, behavior:'instant'});
+  document.getElementById('yearsTitle').textContent = curUnit;
+  document.getElementById('yearsSub').textContent   = curCatName + ' · সেশন বেছে নিন';
+  document.getElementById('yearsBc').innerHTML =
+    `<span class="bc-item" onclick="goHome()">🏠 হোম</span>
+     <span class="bc-sep">›</span>
+     <span class="bc-item" onclick="goBack()">${curCatName}</span>
+     <span class="bc-sep">›</span>
+     <span class="bc-item cur">${curUnit}</span>`;
+
+  const list = document.getElementById('yearsList');
+  list.innerHTML = '';
+  let idx = 1;
+  for (let yr = 2026; yr >= 2010; yr--) {
+    const url = `exam.html?cat=${encodeURIComponent(curCatId)}&val=${yr}&unit=${encodeURIComponent(curUnit)}`;
+    addItem(list, `সেশন: ${yr}-${yr+1}`, idx++, () => goExam(url));
+  }
+}
+
+function addItem(wrap, text, num, fn) {
+  const d = document.createElement('div');
+  d.className = 'l-item';
+  d.style.animationDelay = Math.min(num*25, 250)+'ms';
+  d.innerHTML =
+    `<div class="l-left">
+       <div class="l-num">${num}</div>
+       <span>${text}</span>
+     </div>
+     <i class="fas fa-chevron-right l-arr"></i>`;
+  d.onclick = fn;
+  wrap.appendChild(d);
+}
+
+function goExam(url) {
+  sessionStorage.setItem('hmState', JSON.stringify({
+    view: curView,
+    catId: curCatId,
+    catName: curCatName,
+    unit: curUnit,
+    homeScrollY: homeScrollY
+  }));
+  window.location.href = url;
+}
+
+window.goHome = function() {
+  history.pushState({view:'home'}, '', location.pathname);
+  switchView('home');
+  restoreHomeScroll();
+};
+window.goExam = goExam;
+
+const saved = sessionStorage.getItem('hmState');
+if (saved) {
+  sessionStorage.removeItem('hmState');
+  try {
+    const s = JSON.parse(saved);
+    curCatId    = s.catId   || '';
+    curCatName  = s.catName || '';
+    curUnit     = s.unit    || '';
+    homeScrollY = s.homeScrollY || 0;
+    if (s.view === 'years')      renderYears();
+    else if (s.view === 'units') renderUnits();
+    else { switchView('home'); restoreHomeScroll(); }
+  } catch(e){}
+}
+
+window.toggleMenu = function() {
+  document.getElementById('menuBtn').classList.toggle('open');
+  document.getElementById('sideMenu').classList.toggle('on');
+  document.getElementById('overlay').classList.toggle('on');
+};
+window.doLogout = async function() {
+  await signOut(auth);
+  window.location.href = 'index.html';
+};
+
+onAuthStateChanged(auth, user => {
+  if (!user) { window.location.href = 'index.html'; return; }
+
+  onSnapshot(doc(db,'users',user.uid), snap => {
+    const d = snap.data(); if(!d) return;
+    document.getElementById('hdr-av').src  = d.profilePic || document.getElementById('hdr-av').src;
+    document.getElementById('sm-av').src   = d.profilePic || document.getElementById('sm-av').src;
+    document.getElementById('sm-name').textContent  = d.name  || 'User';
+    document.getElementById('sm-email').textContent = d.email || '';
+
+    isPremium = !!(d.isPremium || d.plan === 'premium' || d.subscriptionActive);
+  });
+});
+
+onSnapshot(doc(db,'settings','homeNotice'), snap => {
+  if (!snap.exists()) return;
+  const t = snap.data().text || '';
+  document.getElementById('tickerText').textContent = t + '   ·   ' + t;
+});
+
+onSnapshot(collection(db,'banners'), snap => {
+  const track = document.getElementById('bannerTrack');
+  track.innerHTML = '';
+  const urls = [];
+  snap.forEach(d => urls.push(d.data().url));
+  if (!urls.length) { document.getElementById('bannerWrap').style.display='none'; return; }
+  [...urls,...urls].forEach(url => {
+    const img = document.createElement('img');
+    img.src = url; img.loading = 'lazy';
+    track.appendChild(img);
+  });
+});
+</script>
+</body>
+</html>
